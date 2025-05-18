@@ -1,1 +1,3 @@
 # bewertungsrechner
+
+weitere Informationen für den Nutzer...
