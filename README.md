@@ -1,6 +1,6 @@
 ## Bewertungsrechner
 ### Code-Anforderungen
-#### Variablen
+#### Variablen- und Funktionsnamen
 - Bezeichner in Englisch
 - Trennungen mit Unterstrichen 
 - alles kleingeschrieben
@@ -8,10 +8,11 @@
 - maximal 120 Zeichen lang
 - maximal 3 Einrückungen
 #### Kommentare
-- in der Form: `"""..."""`
-- Nutzung: Funktion zusammenfassen, spezifisches Erklären
+- in der Form: `"""..."""` ab der ersten Zeile einer Funktion
+- bitte ein einheitliches Docstring-Format nutzen (z.B. google oder sphinx)
+- Nutzung: Funktion zusammenfassen, spezifisches Erklären, Angabe von Rückgabewert auch hier, sowie Erklärung der Parameter etc.
 #### Misc.
-- Rückgabewert für Funktionen festlegen
+- Rückgabewert für Funktionen festlegen (Typ-Annotation)
 - Leerzeichen vor und nach Rechenzeichen, nach Kommata
 - inhaltsbasierte Absätze
 - eindeutige Commit-Titel
