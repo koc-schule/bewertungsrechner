@@ -1,9 +1,0 @@
-Variablennamen: Englisch/Unterstriche/alles kleingeschrieben
-maximale Zeilenlänge: 120 Zeichen
-Einrückungen: maximal 3 (mit Ausnahmen)
-Kommentare: """..."""/Funktion erklären/spezifisches Erklären
-Rückgabewert für Funktionen
-Leerzeichen vor und nach Rechenzeichen, nach Kommata
-inhaltsbasierte Absätze
-Commit-Titel genau/eindeutig
-
