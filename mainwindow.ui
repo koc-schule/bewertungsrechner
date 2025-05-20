@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="klausur_auswaehlen_label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>30</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Klausur</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="klausur_auswaehlen_comboBox">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>50</y>
+      <width>251</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="kurs_auswaehlen_comboBox">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>100</y>
+      <width>251</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="kurs_auswaehlen_label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>80</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Kurs</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="datum_textEdit">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>150</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="datum_label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>130</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Datum</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="bewertung_eingabe_tableView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
+      <width>781</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOptionen">
+    <property name="title">
+     <string>Optionen</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuKlausur">
+    <property name="title">
+     <string>Klausur</string>
+    </property>
+    <addaction name="actionBearbeiten_2"/>
+    <addaction name="actionHinzuf_gen"/>
+   </widget>
+   <widget class="QMenu" name="menuKurse">
+    <property name="title">
+     <string>Kurse</string>
+    </property>
+    <addaction name="actionAnsehen"/>
+   </widget>
+   <widget class="QMenu" name="menuErgebnisse">
+    <property name="title">
+     <string>Ergebnisse</string>
+    </property>
+    <addaction name="actionAnzeigen"/>
+   </widget>
+   <addaction name="menuOptionen"/>
+   <addaction name="menuKlausur"/>
+   <addaction name="menuKurse"/>
+   <addaction name="menuErgebnisse"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAusw_hlen">
+   <property name="text">
+    <string>Auswählen</string>
+   </property>
+  </action>
+  <action name="actionErstellen">
+   <property name="text">
+    <string>Erstellen</string>
+   </property>
+  </action>
+  <action name="actionL_schen">
+   <property name="text">
+    <string>Löschen</string>
+   </property>
+  </action>
+  <action name="actionAusw_hlen_2">
+   <property name="text">
+    <string>Auswählen</string>
+   </property>
+  </action>
+  <action name="actionErstellen_2">
+   <property name="text">
+    <string>Erstellen</string>
+   </property>
+  </action>
+  <action name="actionBearbeiten">
+   <property name="text">
+    <string>Bearbeiten</string>
+   </property>
+  </action>
+  <action name="actionBearbeiten_2">
+   <property name="text">
+    <string>Ansehen</string>
+   </property>
+  </action>
+  <action name="actionAnzeigen">
+   <property name="text">
+    <string>Ansehen</string>
+   </property>
+  </action>
+  <action name="actionAnsehen">
+   <property name="text">
+    <string>Ansehen</string>
+   </property>
+  </action>
+  <action name="actionHinzuf_gen">
+   <property name="text">
+    <string>Hinzufügen</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
