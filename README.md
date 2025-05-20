@@ -1,6 +1,6 @@
 ## Bewertungsrechner
 ### Code-Anforderungen
-#### Variablen- und Funktionsnamen
+#### Variablen- und Funktions- und Dateinamen
 - Bezeichner in Englisch
 - Trennungen mit Unterstrichen 
 - alles kleingeschrieben
