@@ -41,3 +41,22 @@
 - Speichern der Daten in `json`-Dateien
 - Konfigurierbarkeit (Prozent-Noten-Relation, ...)
 
+---
+### User-Storys
+#### 1. Kurs erstellen
+* Kursnamen eintragen
+* Schülernamen eintragen
+* Bewertungssystem wählen
+#### 2. Klausur erstellen
+* Klausurnamen eintragen
+* Notizen *oder Tags (für Fach/Thema/...)*
+* Aufgaben mit BEs anlegen
+* später evtentuell Namen für die Aufgaben
+#### 3. Ergebnisse eintragen
+* Klausur auswählen
+* Kurs auswählen
+* Datum eintragen
+* Ergebnisse für jeden Schüler eintragen
+  * Speichern in einer mehrdimensionalen Liste speichern
+* Ausdrucke anfertigen
+* Auswertung ansehen
