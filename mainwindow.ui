@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>411</width>
+    <height>598</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,26 +31,6 @@
     </property>
     <property name="text">
      <string>Klausur</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="klausur_auswaehlen_comboBox">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>50</y>
-      <width>251</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="kurs_auswaehlen_comboBox">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>100</y>
-      <width>251</width>
-      <height>22</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLabel" name="kurs_auswaehlen_label">
@@ -77,7 +57,7 @@
      <rect>
       <x>40</x>
       <y>150</y>
-      <width>151</width>
+      <width>241</width>
       <height>21</height>
      </rect>
     </property>
@@ -106,8 +86,67 @@
      <rect>
       <x>10</x>
       <y>190</y>
-      <width>781</width>
+      <width>391</width>
       <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="datum_bestaetigen_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>150</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bestätigen</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="kurs_bestaetigen_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>100</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bestätigen</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="klausur_bestaetigen_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>50</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bestätigen</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="klausur_auswaehlen_textEdit">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>50</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="kurs_auswaehlen_textEdit">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>100</y>
+      <width>241</width>
+      <height>21</height>
      </rect>
     </property>
    </widget>
@@ -117,7 +156,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>411</width>
      <height>22</height>
     </rect>
    </property>
@@ -125,6 +164,7 @@
     <property name="title">
      <string>Optionen</string>
     </property>
+    <addaction name="actionBeenden"/>
    </widget>
    <widget class="QMenu" name="menuKlausur">
     <property name="title">
@@ -201,7 +241,29 @@
     <string>Hinzufügen</string>
    </property>
   </action>
+  <action name="actionBeenden">
+   <property name="text">
+    <string>Beenden</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionBeenden</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
