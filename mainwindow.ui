@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="klausur_auswaehlen_label">
+   <widget class="QLabel" name="exam_label">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -33,7 +33,7 @@
      <string>Klausur</string>
     </property>
    </widget>
-   <widget class="QLabel" name="kurs_auswaehlen_label">
+   <widget class="QLabel" name="class_label">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -52,7 +52,7 @@
      <string>Kurs</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="datum_textEdit">
+   <widget class="QTextEdit" name="date_textEdit">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -62,7 +62,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="datum_label">
+   <widget class="QLabel" name="date_label">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -81,7 +81,7 @@
      <string>Datum</string>
     </property>
    </widget>
-   <widget class="QTableView" name="bewertung_eingabe_tableView">
+   <widget class="QTableView" name="evaluation_input_tableView">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -91,7 +91,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="datum_bestaetigen_pushButton">
+   <widget class="QPushButton" name="confirm_date_pushButton">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -104,7 +104,7 @@
      <string>Bestätigen</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="kurs_bestaetigen_pushButton">
+   <widget class="QPushButton" name="confirm_class_pushButton">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -117,7 +117,7 @@
      <string>Bestätigen</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="klausur_bestaetigen_pushButton">
+   <widget class="QPushButton" name="confirm_exam_pushButton">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -130,7 +130,7 @@
      <string>Bestätigen</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="klausur_auswaehlen_textEdit">
+   <widget class="QTextEdit" name="choose_exam_textEdit">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -140,7 +140,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTextEdit" name="kurs_auswaehlen_textEdit">
+   <widget class="QTextEdit" name="choose_class_textEdit">
     <property name="geometry">
      <rect>
       <x>40</x>
