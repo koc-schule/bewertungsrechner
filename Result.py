@@ -6,4 +6,11 @@ class Result:
         self.date = date
         self.exam = exam
 
-
+    def add_result(self, name: str, points_earned: int, percentage_earned: float, tasks: dict):
+        output = {
+            "name": name,
+            "points_earned": points_earned,
+            "percentage_earned": percentage_earned,
+        }
+        output = output | tasks
+        self.results.append(output)
