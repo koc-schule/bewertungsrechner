@@ -1,7 +1,7 @@
 """Exam Klasse"""
 
 class Exam:
-    def __init__(self, name: str, notes) -> None:
+    def __init__(self, name: str, notes: str) -> None:
         """
         Erstellen der eines Exam Objekts
 
@@ -9,10 +9,10 @@ class Exam:
             name (str): Name des Tests
             notes (str): Benutzerdefinierte Notizen 
         """
-        self.name = name
+        self.exam_name = name
         self.notes = notes
         self.max_points = 0
-        self.tasks = []
+        self.tasks = {}
 
     def set_name(self, name: str) -> None:
         """
@@ -21,7 +21,7 @@ class Exam:
         Args:
             name (str): Neuer Wert von self.name
         """
-        new_name = name
+        self.exam_name = name
     
     def add_note(self, notes_to_add: str) -> None:
         """
@@ -30,7 +30,10 @@ class Exam:
         Args: 
             notes_to_add (str): Hinzuzufügender Wert zu self.notes
         """
-        self.notes.append(notes_to_add)
+        if self.notes == '':
+            self.notes += notes_to_add
+        else:
+            self.notes += '\n' + notes_to_add
 
     def clear_notes(self) -> None:
         """
@@ -43,41 +46,108 @@ class Exam:
         Berechnet den Wert von self.max_points
         """
         self.max_points = 0
-        for item in self.tasks:
-            self.max_points += item["points"]
+        for task_name in self.tasks:
+            self.max_points += self.tasks[task_name]
 
-    def add_task(self, task_point_pairs: str) -> None:
+    def add_task(self, task_name: str, task_points: int) -> None:
         """
-        Fügt eine Aufgabe zu self.tasks hinzu 
-        Dabei werden diese als Dictionary in einer Liste gespeichert
-        Format: {"task_number": [Nummer der Aufgabe], "points": [maximale Punktzahl]}
+        Fügt eine Aufgabe zum Exam hinzu
 
         Args:
-            task_point_pairs (str): In Format [Nummer der Aufgabe]:[maximale Punktzahl]
-                                    bsp: 1:10, 2.1:5, 2.2:5
+            task_name: Name der Aufgabe
+            tast_points: Punktzahl der Aufgabe
         """
-        for task_point_pair in task_point_pairs.split(","):
-            task, points = task_point_pair.strip().split(":")
-            self.tasks.append({"task_number": task, "points": int(points)})
+        self.tasks[task_name] = task_points
         self.update_max_points()
 
-    def remove_task(self, task_number: str) -> None:
+    def remove_task(self, task_name: str) -> None:
         """
-        Entfernen einer Aufgabe, spezifiziert durch die Aufgaben-Nummer
-        Anschießend wird self.max_points aktualisiert  
+        Entfernt Aufgabe
 
         Args:
-            task_number (str): Nummer der Aufgabe, welche gelöscht werden soll
+            task_name: Name der Aufgabe
         """
-        for task in self.tasks:
-            if task["task_number"] == task_number:
-                index = self.tasks.index(task)
-                self.tasks.pop(index)
+        self.max_points -= self.tasks.pop(task_name)
+
+    def quick_add_tasks(self, input_string: str,
+                        names_given: bool = False,
+                        numbering_scheme: str = 'task:numbersubtask:letter)'):
+        """
+        Erstellt Aufgaben aus quick-input-string
+
+        Args:
+            input_string: aufgaben mit '\n' getrennt, unteraufgaben mit ' ',
+                          nur punktzahlen, falls names_given=True stattdessen Name: Punkzahl für jede (Unter-)Aufgabe
+            names_given: bool, True wenn namen angegeben werden sollen
+            numbering_scheme: falls names_given=False Schema der automatischen Aufgabennummerierung
+                              'task:' nummerierung der aufgaben nach angegebenen muster
+                              'subtask:' nummerierung der unteraufgaben nach angegebenen muster
+                              'number' wird mit nummer ersetzt, 'letter' mit buchstabe
+        """
+        tasks = input_string.strip().split('\n')
+
+
+        # Aufgabennummerierung konfigurieren
+        alphabet = 'abcdefghijklmnopqrstuvwxyz'
+        # gibt für buchstaben den nächsten (nach z wieder a) und für zahl ebenfalls die nächste
+        next_numbering_char = lambda x: alphabet[(alphabet.index(x) + 1) % len(alphabet)] if type(x) == str else x + 1
+
+        if 'subtask:number' in numbering_scheme:
+            start_subtaskchar = 1
+            next_subtaskchar = 1
+            numbering_scheme = numbering_scheme.replace('subtask:number', 'subtask')
+        elif 'subtask:letter' in numbering_scheme:
+            start_subtaskchar = 'a'
+            next_subtaskchar = 'a'
+            numbering_scheme = numbering_scheme.replace('subtask:letter', 'subtask')
+
+        if 'task:number' in numbering_scheme:
+            next_taskchar = 1
+            numbering_scheme = numbering_scheme.replace('task:number', 'task')
+        elif 'task:letter' in numbering_scheme:
+            next_taskchar = 'a' 
+            numbering_scheme = numbering_scheme.replace('task:letter', 'task')
+
+
+        # Aufgaben anlegen
+        for task in tasks:
+            task = task.strip()
+
+            # Fall 1: hat unteraufgaben
+            if ' ' in task and names_given:
+                for subtask in task.split(' '):
+                    self.add_task(subtask.split(':')[0], int(subtask.split(':')[1]))
+            elif ' ' in task and not names_given:
+                for subtask in task.split(' '):
+                    self.add_task(
+                        numbering_scheme.replace('subtask', str(next_subtaskchar)).replace('task', str(next_taskchar)),
+                        int(subtask)
+                    )
+                    # nächstes unteraufabenzeichen
+                    next_subtaskchar = next_numbering_char(next_subtaskchar)
+
+            # Fall 2: Keine Unteraufgaben
+            elif not ' ' in task and names_given:
+                self.add_task(task.split(':')[0], int(task.split(':')[1]))
+            elif not ' ' in task and not names_given:
+                self.add_task(
+                    numbering_scheme.replace('subtask', '').replace('task', str(next_taskchar)),
+                    int(task)
+                )
+
+            # nächstes Aufgabenzeichen; erste Unteraufgabenzeichen setzen
+            next_taskchar = next_numbering_char(next_taskchar)
+            next_subtaskchar = start_subtaskchar
+
         self.update_max_points()
+
+
 
 
 """Test"""
-exam1 = Exam("Test_Exam", "")
-exam1.add_task("1:10, 2.1:5, 2.2:5")
-exam1.remove_task("1")
-print(exam1.max_points)
+if __name__ == '__main__':
+    exam1 = Exam("Test_Exam", "")
+
+    exam1.quick_add_tasks('eins:1\nzweiA:2 zweiB:3 zweiC:4\ndreiA:3 dreiB:24', names_given=True)
+
+    print(exam1.tasks)
