@@ -20,7 +20,7 @@ class Course:
         self.student_names = student_names
 
     def set_name(self, name: str) -> None:
-        self.name = name
+        self.course_name = name
 
     def set_grading_scheme(self, grading_scheme: str) -> None:
         if grading_scheme in ('sek1', 'sek2'):
