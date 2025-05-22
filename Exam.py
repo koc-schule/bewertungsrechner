@@ -71,18 +71,22 @@ class Exam:
 
     def quick_add_tasks(self, input_string: str,
                         names_given: bool = False,
-                        numbering_scheme: str = 'task:numbersubtask:letter)'):
+                        numbering_scheme: str = 'task:numbersubtask:letter)') -> None:
         """
         Erstellt Aufgaben aus quick-input-string
 
         Args:
             input_string: aufgaben mit '\n' getrennt, unteraufgaben mit ' ',
-                          nur punktzahlen, falls names_given=True stattdessen Name: Punkzahl für jede (Unter-)Aufgabe
+                          nur punktzahlen, falls names_given=True stattdessen Name:Punkzahl
+                          für jede (Unter-)Aufgabe
+                          Bsp: 'a1:5\n a2.2:4 a2.2:5\n a3:8'
+                               '5\n 3 4 2\n 2 2'
+                          
             names_given: bool, True wenn namen angegeben werden sollen
             numbering_scheme: falls names_given=False Schema der automatischen Aufgabennummerierung
                               'task:' nummerierung der aufgaben nach angegebenen muster
                               'subtask:' nummerierung der unteraufgaben nach angegebenen muster
-                              'number' wird mit nummer ersetzt, 'letter' mit buchstabe
+                              muster: 'number' wird mit nummer ersetzt, 'letter' mit buchstabe
         """
         tasks = input_string.strip().split('\n')
 
