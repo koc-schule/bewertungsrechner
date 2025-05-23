@@ -1,6 +1,6 @@
 import csv
 import utils.csv
-from Course import Course
+from course import Course
 import os
 
 

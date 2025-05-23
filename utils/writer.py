@@ -4,7 +4,7 @@ import os
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
-import Result
+from result import Result
 
 def write_to_csv(result:Result)->None:
 
@@ -24,7 +24,7 @@ def write_to_csv(result:Result)->None:
    for key in task_names_list:
        task_names = task_names + str(key) + ", "
    column_name = "Name, Date, Percent, Points Earned, Points Possible, "  + task_names + "\n"
-   file.write(column_names)
+   file.write(column_name)
 
    """Eintragen der Ergebnisse für jeden Schüler"""
    for student in result.results:
