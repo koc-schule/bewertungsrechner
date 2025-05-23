@@ -9,7 +9,9 @@ import Result
 def write_to_csv(result:Result)->None:
 
    """ Schreibt ein Result- Objekt in eine .csv-Datei um 
-       Argumente: result: Result
+       
+       Argumente: 
+            result: Result
    """
 
    """Auswählen der Datei"""
