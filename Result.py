@@ -1,3 +1,6 @@
+from Course import Course
+from Exam import Exam
+
 """Result Klasse"""
 class Result:
     def __init__(self, courses: list[Course], results: list[dict], date: str, exam: Exam) -> None:
