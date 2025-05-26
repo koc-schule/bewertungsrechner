@@ -1,5 +1,9 @@
-import Course, Exam
+from course import Course
+from exam import Exam
+
 """Result Klasse"""
+
+
 class Result:
     def __init__(self, courses: list[Course], results: list[dict], date: str, exam: Exam) -> None:
         """
@@ -18,22 +22,22 @@ class Result:
 
     def get_courses(self) -> list[Course]:
         return self.courses
-    
+
     def set_courses(self, courses: list[Course]) -> None:
         self.courses = courses
-    
+
     def get_results(self) -> list[dict]:
         return self.results
-    
+
     def set_results(self, results: list[dict]) -> None:
         self.results = results
-    
+
     def get_date(self) -> str:
         return self.date
-    
+
     def set_date(self, date: str) -> None:
         self.date = date
-    
+
     def get_exam(self) -> Exam:
         return self.exam
 
