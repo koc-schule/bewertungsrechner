@@ -2,7 +2,10 @@ import csv
 import utils.csv
 from course import Course
 import os
-
+import sys
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
 
 def course_csv_file_to_object(name: str) -> Course:
     """
@@ -52,15 +55,19 @@ Aus einer .csv-Datei werden Ergebnisse herausgelesen und in einer list[dict] zur
 """
 
 
-def results_csv_file_to_object(csv_name: str) -> list[dict]:
+def results_csv_file_to_object(csv_name: str, new_csv: bool) -> list[dict]:
     """erstellt eine Liste, in der dictionaries gespeichert werden, die die ergebnisse enthalten"""
     results = []
-    file = open(csv_name, "r")
+    filename = "./csv_files/" + csv_name
+    file = open(filename, "r")
     i = 1
     while True:
         try:
             row = file.readline()
-            row = remove_unimportant_data(row)
+            if new_csv:
+                row = remove_unimportant_data(row)
+            else:
+                row = row[:-1]
             results.append({
                 row[:row.index(",")].replace("ï»¿", ""): row[row.index(",") + 1:].replace("\n", "")
             })
@@ -69,6 +76,7 @@ def results_csv_file_to_object(csv_name: str) -> list[dict]:
             break
 
     return results
+
 
 
 def remove_unimportant_data(row: str) -> str:
@@ -84,4 +92,4 @@ def remove_unimportant_data(row: str) -> str:
             row = row[:start_index] + row[i:]
             return row
 
-print(results_csv_file_to_object("quiz_13965756.csv"))
+print(results_csv_file_to_object("quiz_13965756.csv", True))
