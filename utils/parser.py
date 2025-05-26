@@ -61,6 +61,7 @@ def results_csv_file_to_object(csv_name: str, new_csv: bool) -> list[dict]:
     filename = "./csv_files/" + csv_name
     file = open(filename, "r")
     i = 1
+
     while True:
         try:
             row = file.readline()
