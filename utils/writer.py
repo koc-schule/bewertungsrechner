@@ -1,12 +1,54 @@
 """importieren der Result-Klasse aus dem parent-directory"""
 import sys
 import os
+import utils.csv
+from course import Course
+from result import Result
+from exam import Exam
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
-from result import Result
 
-def write_to_csv(result:Result)->None:
+
+def course_object_to_csv_file(course: Course) -> None:
+    """
+    Schreibt eine .csv-Datei (Namensformat: course_kursname.csv) für einen Course
+
+    Args:
+        course (Course): Einzulesendes Course-Objekt
+    """
+
+    content = str(course.course_name + "\n" + course.grading_scheme + "\n")
+    for student in course.student_names:
+        content = content + (student + ";")
+
+    content = content[:-1]
+
+    path = os.getcwd() + "/csv_files/course_" + course.course_name + ".csv"
+
+    """Format: course_name \n grading_scheme \n student_names (Schüler mit ';' getrennt)"""
+    utils.csv.write_csv(path, content)
+
+
+def exam_object_to_csv_file(exam: Exam) -> None:
+    """
+    Schreibt eine .csv-Datei für eine Exam
+
+    Args:
+        exam (Exam): Einzulesendes Exam-Objekt
+    """
+
+    """Format von exam.notes wird angepasst"""
+    notes_polished = exam.notes.replace("\n", ";")
+    content = str(exam.exam_name + "\n" + notes_polished + "\n" + str(exam.tasks))
+
+    path = os.getcwd() + "/csv_files/exam_" + exam.exam_name + ".csv"
+
+    """Format: name \n notes (mit ';' getrennt \n max_points \n taks (Format: task:Punktzahl"""
+    utils.csv.write_csv(path, content)
+
+
+def result_object_to_csv_file(result:Result)->None:
 
    """ Schreibt ein Result- Objekt in eine .csv-Datei um 
        
