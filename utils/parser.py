@@ -1,6 +1,7 @@
 import csv
 import utils.csv
 from Course import Course
+from Exam import Exam
 import os
 
 
@@ -9,20 +10,20 @@ def course_csv_file_to_object(name: str) -> Course:
     Einlesen der .csv-Dateien für Klassen
 
     Args:
-        name (str): Name des Kurses (ohne .csv)
+        name (str): Name des Kurses (aus Course.course_name)
 
     Returns:
-        Course | bool: Course-Objekt oder False, wenn Objekt nicht angelegt werden kann
+        Course: Course-Objekt aus der csv-Datei
     """
 
-    path = os.getcwd() + "/csv_files/" + name + ".csv"
+    path = os.getcwd() + "/csv_files/" + "course_" + name + ".csv"
     all_lines = utils.csv.read_csv_lines(path)
     return Course(all_lines[0][:-1], all_lines[1][:-1], all_lines[2].split(";"))
 
 
 def course_object_to_csv_file(course: Course) -> None:
     """
-    Schreibt eine .csv-Datei für einen Course
+    Schreibt eine .csv-Datei (Namensformat: course_kursname.csv) für einen Course
 
     Args:
         course (Course): Einzulesendes Course-Objekt
@@ -44,7 +45,57 @@ def course_object_to_csv_file(course: Course) -> None:
 if __name__ == '__main__':
     test_course = Course('LK11', 'sek2', ['Nachname1, Vorname1', 'Nachname2, Vorname2'])
     course_object_to_csv_file(test_course)
-    test_course_2 = course_csv_file_to_object("course_LK11")
+    test_course_2 = course_csv_file_to_object(test_course.course_name)
+
+
+def exam_csv_file_to_object(name: str) -> Exam:
+    """
+    Einlesen der .csv-Dateien für Exams
+
+    Args:
+        name (str): Name der Exam (wie in Exam.exam_name)
+
+    Returns:
+        Exam: Exam-Objekt aus der csv-Datei
+    """
+
+    path = os.getcwd() + "/csv_files/" + "exam_" + name + ".csv"
+    all_lines = utils.csv.read_csv_lines(path)
+
+    exam_return = Exam(all_lines[0][:-1], all_lines[1][:-1].replace(";", "\n"))
+
+    """String des Dictionaries wird angepasst"""
+    tasks_polished = all_lines[2].replace('"', '').replace(", ", "\n").replace(": ", ":").replace("'", "")
+    tasks_polished = tasks_polished.replace("{", "").replace("}", "")
+    exam_return.quick_add_tasks(tasks_polished, names_given=True)
+    return exam_return
+
+
+def exam_object_to_csv_file(exam: Exam) -> None:
+    """
+    Schreibt eine .csv-Datei für einen Course
+
+    Args:
+        course (Course): Einzulesendes Course-Objekt
+    """
+
+    """Format von exam.notes wird angepasst"""
+    notes_polished = exam.notes.replace("\n", ";")
+    content = str(exam.exam_name + "\n" + notes_polished + "\n" + str(exam.tasks))
+
+    path = os.getcwd() + "/csv_files/exam_" + exam.exam_name + ".csv"
+
+    """Format: name \n notes (mit ';' getrennt \n max_points \n taks (Format: task:Punktzahl"""
+    utils.csv.write_csv(path, content)
+
+
+"""Test für Exam-Dateien Lesen und Schreiben"""
+if __name__ == '__main__':
+    exam1 = Exam("Test_Exam", "Raum für Notizen")
+    exam1.quick_add_tasks('eins:1\nzweiA:2 zweiB:3 zweiC:4\ndreiA:3 dreiB:24', names_given=True)
+    exam_object_to_csv_file(exam1)
+    exam2 = exam_csv_file_to_object(exam1.exam_name)
+    print(exam2.tasks)
 
 
 """
