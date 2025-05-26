@@ -3,9 +3,9 @@ import utils.csv
 from course import Course
 import os
 import sys
-current = os.path.dirname(os.path.realpath(__file__))
+"""current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
-sys.path.append(parent)
+sys.path.append(parent)"""
 
 def course_csv_file_to_object(name: str) -> Course:
     """
@@ -56,7 +56,13 @@ Aus einer .csv-Datei werden Ergebnisse herausgelesen und in einer list[dict] zur
 
 
 def results_csv_file_to_object(csv_name: str, new_csv: bool) -> list[dict]:
-    """erstellt eine Liste, in der dictionaries gespeichert werden, die die ergebnisse enthalten"""
+    """erstellt eine Liste, in der dictionaries gespeichert werden, die die ergebnisse enthalten
+        Args:
+            csv_name: Name der .csv-Datei
+            new_csv: gibt an, ob es sich um eine neue oder alte Datei handelt
+        Returns:
+            list[dict], in der alle Schüler und deren Ergebnisse stehen
+        """
     results = []
     filename = "./csv_files/" + csv_name
     file = open(filename, "r")
@@ -81,7 +87,10 @@ def results_csv_file_to_object(csv_name: str, new_csv: bool) -> list[dict]:
 
 
 def remove_unimportant_data(row: str) -> str:
-    """löscht aus einer Zeile der Ergebnisse unnötige Daten heraus: starttime, endtime, time"""
+    """löscht aus einer Zeile der Ergebnisse unnötige Daten heraus: starttime, endtime, time
+    Args:
+        row: Zeile, aus der Start-, End- und Gesamtzeit entfernt werden
+    """
     counter = 0
     for i in range(len(row)):
         if row[i] == ",":
