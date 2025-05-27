@@ -12,50 +12,66 @@ lk = Exam("lk", "")
 lk.add_task("A1", 5)
 lk.add_task("A2", 4)
 
-courselist = [klasse]
-examlist = [lk]
+course_list = [klasse]
+exam_list = [lk]
+
+selected_course = None
+selected_exam = None
+selected_date = ""
 
 
-def search_exam(name: str, list: list):
+def search_exam(searched_exam: str, exam_list: list):
     """
-        Durchsucht eine liste von Klausuren anhand eines Namen
+        Durchsucht die Liste von Klausuren nach einer spezifischen Klausur nach Name
 
         Args:
-            name (str): Name der gesuchten Klausur
-            list (list): Zu durchsuchende Liste
+            searched_exam (str): Name der gesuchten Klausur
+            exam_list (list): Zu durchsuchende Liste
         Returns:
-            Exam: gesuchte Klausur
+            exam (Exam): gesuchte Klausur
     """
 
-    for i in list:
-        if i.exam_name == name:
-            return (i)
+    for exam in exam_list:
+        if exam.exam_name == searched_exam:
+            return (exam)
 
 
-def search_course(name: str, list: list):
+def search_course(searched_course: str, course_list: list):
     """
         Durchsucht eine liste von Kursen anhand eines Namen
 
         Args:
-            name (str): Name des gesuchten Kurses
-            list (list): Zu durchsuchende Liste
+            searched_course (str): Name des gesuchten Kurses
+            course_list (list): Zu durchsuchende Liste
         Returns:
-            Course: gesuchter Kurs
+            course (Course): gesuchter Kurs
     """
 
-    for i in list:
-        if i.course_name == name:
-            return (i)
+    for course in course_list:
+        if course.course_name == searched_course:
+            return (course)
 
 
 def confirm_input():
+    global selected_course
+    global selected_exam
+    global selected_date
     """
         Startet show_evaluation_table
     """
-    course = search_course(ui.choose_course_textEdit.toPlainText(), courselist)
-    exam = search_exam(ui.choose_exam_textEdit.toPlainText(), examlist)
+    selected_course = search_course(ui.choose_course_textEdit.toPlainText(), course_list)
+    selected_exam = search_exam(ui.choose_exam_textEdit.toPlainText(), exam_list)
+    selected_date = ui.date_textEdit.toPlainText()
 
-    show_evaluation_table(course, exam)
+    # Checks if Exam and Course were properly selected
+    if (selected_course is not None) and (selected_exam is not None):
+        show_evaluation_table(selected_course, selected_exam)
+    elif selected_course is None:
+        print("Course not in Courselist")
+        ui.choose_course_textEdit.clear()
+    elif selected_exam is None:
+        print("Exam not in Examlist")
+        ui.choose_exam_textEdit.clear()
 
 
 def show_evaluation_table(course: Course, exam: Exam):
@@ -92,30 +108,25 @@ def show_evaluation_table(course: Course, exam: Exam):
 def confirm_evaluation():
     """
         Erstellt ein Objekt der Klasse Result aus den Eingaben
-        """
+        """   
 
-    # Eingegebene Daten lesen
-    course = search_course(ui.choose_course_textEdit.toPlainText(), courselist)
-    exam = search_exam(ui.choose_exam_textEdit.toPlainText(), examlist)
-    date = ui.date_textEdit.toPlainText()
+    result = Result([selected_course], [], selected_date, selected_exam)
 
-    result = Result([course], [], date, exam)
-
-    for i in range(len(course.student_names)):
+    for i in range(len(selected_course.student_names)):
         # Daten des Schülers definieren
-        student_name = course.student_names[i]
+        student_name = selected_course.student_names[i]
         points_earned = 0
         tasks = {}
 
-        for j in range(len(exam.tasks)):
+        for j in range(len(selected_exam.tasks)):
             # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
-            task_name = list(exam.tasks.keys())[j]
+            task_name = list(selected_exam.tasks.keys())[j]
             scored_points_task = int(ui.evaluation_input_tableWidget.item(i + 2, j + 1).text())
             tasks[task_name] = scored_points_task
 
             points_earned = points_earned + scored_points_task
 
-        percentage_earned = (points_earned / exam.max_points) * 100
+        percentage_earned = (points_earned / selected_exam.max_points) * 100
 
         # Eintrag im Ergebnis für den Schüler
         result.add_result(student_name, points_earned, percentage_earned, tasks)
