@@ -26,6 +26,7 @@
     <property name="font">
      <font>
       <pointsize>12</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -45,6 +46,7 @@
     <property name="font">
      <font>
       <pointsize>12</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -74,6 +76,7 @@
     <property name="font">
      <font>
       <pointsize>12</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -144,7 +147,7 @@
      <x>0</x>
      <y>0</y>
      <width>361</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOptionen">
@@ -157,73 +160,43 @@
     <property name="title">
      <string>Klausur</string>
     </property>
-    <addaction name="actionBearbeiten_2"/>
-    <addaction name="actionHinzuf_gen"/>
+    <addaction name="actionExamView"/>
+    <addaction name="actionExamAdd"/>
    </widget>
    <widget class="QMenu" name="menuKurse">
     <property name="title">
      <string>Kurse</string>
     </property>
-    <addaction name="actionAnsehen"/>
+    <addaction name="actionCourseView"/>
+    <addaction name="actionCourseAdd"/>
    </widget>
    <widget class="QMenu" name="menuErgebnisse">
     <property name="title">
      <string>Ergebnisse</string>
     </property>
-    <addaction name="actionAnzeigen"/>
+    <addaction name="actionResultView"/>
    </widget>
    <addaction name="menuOptionen"/>
    <addaction name="menuKlausur"/>
    <addaction name="menuKurse"/>
    <addaction name="menuErgebnisse"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionAusw_hlen">
-   <property name="text">
-    <string>Auswählen</string>
-   </property>
-  </action>
-  <action name="actionErstellen">
-   <property name="text">
-    <string>Erstellen</string>
-   </property>
-  </action>
-  <action name="actionL_schen">
-   <property name="text">
-    <string>Löschen</string>
-   </property>
-  </action>
-  <action name="actionAusw_hlen_2">
-   <property name="text">
-    <string>Auswählen</string>
-   </property>
-  </action>
-  <action name="actionErstellen_2">
-   <property name="text">
-    <string>Erstellen</string>
-   </property>
-  </action>
-  <action name="actionBearbeiten">
-   <property name="text">
-    <string>Bearbeiten</string>
-   </property>
-  </action>
-  <action name="actionBearbeiten_2">
+  <action name="actionExamView">
    <property name="text">
     <string>Ansehen</string>
    </property>
   </action>
-  <action name="actionAnzeigen">
+  <action name="actionResultView">
    <property name="text">
     <string>Ansehen</string>
    </property>
   </action>
-  <action name="actionAnsehen">
+  <action name="actionCourseView">
    <property name="text">
     <string>Ansehen</string>
    </property>
   </action>
-  <action name="actionHinzuf_gen">
+  <action name="actionExamAdd">
    <property name="text">
     <string>Hinzufügen</string>
    </property>
@@ -231,6 +204,11 @@
   <action name="actionBeenden">
    <property name="text">
     <string>Beenden</string>
+   </property>
+  </action>
+  <action name="actionCourseAdd">
+   <property name="text">
+    <string>Hinzufügen</string>
    </property>
   </action>
  </widget>
