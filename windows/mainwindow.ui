@@ -54,16 +54,6 @@
      <string>Kurs</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="date_textEdit">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>150</y>
-      <width>241</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="date_label">
     <property name="geometry">
      <rect>
@@ -97,26 +87,6 @@
      <string>Daten Bestätigen</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="choose_exam_textEdit">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>50</y>
-      <width>241</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="choose_course_textEdit">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>100</y>
-      <width>241</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QTableWidget" name="evaluation_input_tableWidget">
     <property name="geometry">
      <rect>
@@ -138,6 +108,36 @@
     </property>
     <property name="text">
      <string>Bewertung Bestätigen</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="select_exam_box">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>241</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="select_course_box">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>100</y>
+      <width>241</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="date_edit">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>150</y>
+      <width>241</width>
+      <height>20</height>
+     </rect>
     </property>
    </widget>
   </widget>

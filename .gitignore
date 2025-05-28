@@ -1,2 +1,6 @@
 /.venv
 /__pycache__
+/windows/__pycache__
+/utils/__pycache__
+/courses
+/exams

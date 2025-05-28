@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file '.\mainwindow.ui'
+# Form implementation generated from reading ui file '.\windows\mainwindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.9.0
 #
@@ -31,9 +31,6 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.course_label.setFont(font)
         self.course_label.setObjectName("course_label")
-        self.date_textEdit = QtWidgets.QTextEdit(parent=self.centralwidget)
-        self.date_textEdit.setGeometry(QtCore.QRect(100, 150, 241, 21))
-        self.date_textEdit.setObjectName("date_textEdit")
         self.date_label = QtWidgets.QLabel(parent=self.centralwidget)
         self.date_label.setGeometry(QtCore.QRect(20, 150, 71, 16))
         font = QtGui.QFont()
@@ -45,12 +42,6 @@ class Ui_MainWindow(object):
         self.confirm_input_pushButton = QtWidgets.QPushButton(parent=self.centralwidget)
         self.confirm_input_pushButton.setGeometry(QtCore.QRect(20, 190, 321, 24))
         self.confirm_input_pushButton.setObjectName("confirm_input_pushButton")
-        self.choose_exam_textEdit = QtWidgets.QTextEdit(parent=self.centralwidget)
-        self.choose_exam_textEdit.setGeometry(QtCore.QRect(100, 50, 241, 21))
-        self.choose_exam_textEdit.setObjectName("choose_exam_textEdit")
-        self.choose_course_textEdit = QtWidgets.QTextEdit(parent=self.centralwidget)
-        self.choose_course_textEdit.setGeometry(QtCore.QRect(100, 100, 241, 21))
-        self.choose_course_textEdit.setObjectName("choose_course_textEdit")
         self.evaluation_input_tableWidget = QtWidgets.QTableWidget(parent=self.centralwidget)
         self.evaluation_input_tableWidget.setGeometry(QtCore.QRect(10, 230, 341, 192))
         self.evaluation_input_tableWidget.setObjectName("evaluation_input_tableWidget")
@@ -59,6 +50,15 @@ class Ui_MainWindow(object):
         self.confirm_evaluation_pushButton = QtWidgets.QPushButton(parent=self.centralwidget)
         self.confirm_evaluation_pushButton.setGeometry(QtCore.QRect(20, 440, 321, 24))
         self.confirm_evaluation_pushButton.setObjectName("confirm_evaluation_pushButton")
+        self.select_exam_box = QtWidgets.QComboBox(parent=self.centralwidget)
+        self.select_exam_box.setGeometry(QtCore.QRect(100, 50, 241, 22))
+        self.select_exam_box.setObjectName("select_exam_box")
+        self.select_course_box = QtWidgets.QComboBox(parent=self.centralwidget)
+        self.select_course_box.setGeometry(QtCore.QRect(100, 100, 241, 22))
+        self.select_course_box.setObjectName("select_course_box")
+        self.date_edit = QtWidgets.QLineEdit(parent=self.centralwidget)
+        self.date_edit.setGeometry(QtCore.QRect(100, 150, 241, 20))
+        self.date_edit.setObjectName("date_edit")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(parent=MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 361, 21))

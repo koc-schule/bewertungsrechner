@@ -170,8 +170,8 @@ viewcourse_ui = Ui_View_Course()
 exam_list = get_exams()
 course_list = get_courses()
 
-print(exam_list)
-print(course_list)
+mainwindow_ui.select_course_box.addItems(course_list)
+mainwindow_ui.select_exam_box.addItems(exam_list)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(confirm_input)
