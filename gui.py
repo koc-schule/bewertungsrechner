@@ -1,9 +1,11 @@
 from PyQt6.QtWidgets import *
-from mainwindow import Ui_MainWindow
-from newcoursedialog import Ui_New_Course
+from windows.mainwindow import Ui_MainWindow
+from windows.newcoursedialog import Ui_New_Course
+from windows.viewcoursedialog import Ui_View_Course
 from exam import Exam
 from course import Course
 from result import Result
+import os
 
 # test Course
 klasse = Course("klasse", "sek1", ["Schüler1", "Schüler2", "Schüler3"])
@@ -13,12 +15,28 @@ lk = Exam("lk", "")
 lk.add_task("A1", 5)
 lk.add_task("A2", 4)
 
-course_list = [klasse]
-exam_list = [lk]
+course_list = []
+exam_list = []
 
 selected_course = None
 selected_exam = None
 selected_date = ""
+
+def get_exams():
+    names = [
+    f.removeprefix("exam_").removesuffix(".json")
+    for f in os.listdir("exams/")
+    if f.startswith("exam_") and f.endswith(".json")
+    ]
+    return names
+
+def get_courses():
+    names = [
+    f.removeprefix("course_").removesuffix(".json")
+    for f in os.listdir("courses/")
+    if f.startswith("course_") and f.endswith(".json")
+    ]
+    return names
 
 
 def search_exam(searched_exam: str, exam_list: list):
@@ -133,7 +151,12 @@ def confirm_evaluation():
         result.add_result(student_name, points_earned, percentage_earned, tasks)
 
 def show_add_course_window():
+    newcourse_ui.setupUi(add_course_window)
     add_course_window.show()
+
+def show_view_course_window():
+    viewcourse_ui.setupUi(view_course_window)
+    view_course_window.show()
 
 app = QApplication([])
 mainwindow = QMainWindow()
@@ -141,12 +164,20 @@ mainwindow_ui = Ui_MainWindow()
 mainwindow_ui.setupUi(mainwindow)
 add_course_window = QDialog()
 newcourse_ui = Ui_New_Course()
-newcourse_ui.setupUi(add_course_window)
+view_course_window = QDialog()
+viewcourse_ui = Ui_View_Course()
+
+exam_list = get_exams()
+course_list = get_courses()
+
+print(exam_list)
+print(course_list)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(confirm_input)
 mainwindow_ui.confirm_evaluation_pushButton.clicked.connect(confirm_evaluation)
 mainwindow_ui.actionCourseAdd.triggered.connect(show_add_course_window)
+mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
 
 mainwindow.show()
 

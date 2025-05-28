@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>361</width>
+    <height>598</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="exam_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Klausur</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="course_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>100</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Kurs</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="date_textEdit">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>150</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="date_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>150</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Datum</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="confirm_input_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>190</y>
+      <width>321</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Daten Bestätigen</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="choose_exam_textEdit">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>50</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="choose_course_textEdit">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>100</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="evaluation_input_tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>230</y>
+      <width>341</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="confirm_evaluation_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>440</y>
+      <width>321</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bewertung Bestätigen</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>361</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOptionen">
+    <property name="title">
+     <string>Optionen</string>
+    </property>
+    <addaction name="actionBeenden"/>
+   </widget>
+   <widget class="QMenu" name="menuKlausur">
+    <property name="title">
+     <string>Klausur</string>
+    </property>
+    <addaction name="actionExamView"/>
+    <addaction name="actionExamAdd"/>
+   </widget>
+   <widget class="QMenu" name="menuKurse">
+    <property name="title">
+     <string>Kurse</string>
+    </property>
+    <addaction name="actionCourseView"/>
+    <addaction name="actionCourseAdd"/>
+   </widget>
+   <widget class="QMenu" name="menuErgebnisse">
+    <property name="title">
+     <string>Ergebnisse</string>
+    </property>
+    <addaction name="actionResultView"/>
+   </widget>
+   <addaction name="menuOptionen"/>
+   <addaction name="menuKlausur"/>
+   <addaction name="menuKurse"/>
+   <addaction name="menuErgebnisse"/>
+  </widget>
+  <action name="actionExamView">
+   <property name="text">
+    <string>Ansehen</string>
+   </property>
+  </action>
+  <action name="actionResultView">
+   <property name="text">
+    <string>Ansehen</string>
+   </property>
+  </action>
+  <action name="actionCourseView">
+   <property name="text">
+    <string>Ansehen</string>
+   </property>
+  </action>
+  <action name="actionExamAdd">
+   <property name="text">
+    <string>Hinzufügen</string>
+   </property>
+  </action>
+  <action name="actionBeenden">
+   <property name="text">
+    <string>Beenden</string>
+   </property>
+  </action>
+  <action name="actionCourseAdd">
+   <property name="text">
+    <string>Hinzufügen</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionBeenden</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
