@@ -1,10 +1,11 @@
 from PyQt6.QtWidgets import *
 from windows.mainwindow import Ui_MainWindow
-from windows.newcoursedialog import Ui_New_Course
+from windows.newcoursedialog import Ui_new_course_dialog
 from windows.viewcoursedialog import Ui_View_Course
 from exam import Exam
 from course import Course
 from result import Result
+from utils.json_parser import *
 import os
 
 # test Course
@@ -151,33 +152,58 @@ def confirm_evaluation():
         result.add_result(student_name, points_earned, percentage_earned, tasks)
 
 def show_add_course_window():
-    newcourse_ui.setupUi(add_course_window)
     add_course_window.show()
 
+def add_student_to_list():
+    name = add_course_ui.add_student_input.text()
+    add_course_ui.students_textbox.appendPlainText(name)
+
+def add_course():
+    name = add_course_ui.name_input.text()
+    grading_scheme = ""
+    if add_course_ui.sek_input.currentIndex() == 0:
+        grading_scheme = "sek1"
+    if add_course_ui.sek_input.currentIndex() == 1:
+        grading_scheme = "sek2"
+    students_raw = add_course_ui.students_textbox.toPlainText()
+    names = students_raw.strip().split('\n')
+    new_course = Course(name, grading_scheme, names)
+    course_to_json(new_course)
+    update_content()
+    add_course_window.close()
+
 def show_view_course_window():
-    viewcourse_ui.setupUi(view_course_window)
     view_course_window.show()
+
+def update_content():
+    exam_list = get_exams()
+    course_list = get_courses()
+    mainwindow_ui.select_course_box.clear()
+    mainwindow_ui.select_course_box.addItems(course_list)
+    mainwindow_ui.select_exam_box.clear()
+    mainwindow_ui.select_exam_box.addItems(exam_list)
 
 app = QApplication([])
 mainwindow = QMainWindow()
 mainwindow_ui = Ui_MainWindow()
 mainwindow_ui.setupUi(mainwindow)
 add_course_window = QDialog()
-newcourse_ui = Ui_New_Course()
+add_course_ui = Ui_new_course_dialog()
+add_course_ui.setupUi(add_course_window)
 view_course_window = QDialog()
 viewcourse_ui = Ui_View_Course()
-
-exam_list = get_exams()
-course_list = get_courses()
-
-mainwindow_ui.select_course_box.addItems(course_list)
-mainwindow_ui.select_exam_box.addItems(exam_list)
+viewcourse_ui.setupUi(view_course_window)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(confirm_input)
 mainwindow_ui.confirm_evaluation_pushButton.clicked.connect(confirm_evaluation)
 mainwindow_ui.actionCourseAdd.triggered.connect(show_add_course_window)
 mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
+
+add_course_ui.save_button.clicked.connect(add_course)
+add_course_ui.add_student_button.clicked.connect(add_student_to_list)
+
+update_content()
 
 mainwindow.show()
 
