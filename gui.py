@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import *
 from windows.mainwindow import Ui_MainWindow
 from windows.editcoursedialog import Ui_edit_course_dialog
 from windows.viewcoursedialog import Ui_view_course_dialog
+from windows.viewexamdialog import Ui_view_exam_dialog
 from exam import Exam
 from course import Course
 from result import Result
@@ -194,7 +195,8 @@ def show_view_course_window() -> None:
     """
     Zeigt das Fenster zur Auswahl von Kursen an
     """
-    update_content()
+    view_course_ui.select_course_box.clear()
+    view_course_ui.select_course_box.addItems(course_list)
     view_course_window.show()
 
 def view_course() -> None:
@@ -219,6 +221,20 @@ def view_course() -> None:
     add_course_window.show()
     view_course_window.close()
 
+def show_view_exam_window() -> None:
+    """
+    Ziegt das Fenster zur Auswahl von Klausuren an
+    """
+    view_exam_ui.select_exam_box.clear()
+    view_exam_ui.select_exam_box.addItems(exam_list)
+    view_exam_window.show()
+
+def view_exam() -> None:
+    """
+    Öffnen einer Klausur im Klausur-Bearbeitungs-Fenster aus einer JSON Datei
+    """
+    print("Test")
+
 def update_content() -> None:
     """
     Update Funktion für z.B. die globale Kurs- und Klausurliste
@@ -231,8 +247,6 @@ def update_content() -> None:
     mainwindow_ui.select_course_box.addItems(course_list)
     mainwindow_ui.select_exam_box.clear()
     mainwindow_ui.select_exam_box.addItems(exam_list)
-    view_course_ui.select_course_box.clear()
-    view_course_ui.select_course_box.addItems(course_list)
 
 app = QApplication([])
 mainwindow = QMainWindow()
@@ -244,6 +258,9 @@ edit_course_ui.setupUi(add_course_window)
 view_course_window = QDialog()
 view_course_ui = Ui_view_course_dialog()
 view_course_ui.setupUi(view_course_window)
+view_exam_window = QDialog()
+view_exam_ui = Ui_view_exam_dialog()
+view_exam_ui.setupUi(view_exam_window)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(confirm_input)
@@ -251,10 +268,12 @@ mainwindow_ui.confirm_evaluation_pushButton.clicked.connect(confirm_evaluation)
 mainwindow_ui.actionCourseAdd.triggered.connect(show_edit_course_window)
 mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
 
+mainwindow_ui.actionExamView.triggered.connect(show_view_exam_window)
 edit_course_ui.save_button.clicked.connect(save_course)
 edit_course_ui.add_student_button.clicked.connect(add_student_to_list)
 
 view_course_ui.view_button.clicked.connect(view_course)
+view_exam_ui.view_button.clicked.connect(view_exam)
 
 update_content()
 
