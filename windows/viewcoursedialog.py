@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file '.\viewcoursedialog.ui'
+# Form implementation generated from reading ui file '.\windows\viewcoursedialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.9.0
 #
@@ -9,29 +9,18 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_View_Course(object):
+class Ui_view_course_dialog(object):
     def setupUi(self, view_course_dialog):
         view_course_dialog.setObjectName("view_course_dialog")
-        view_course_dialog.resize(322, 330)
+        view_course_dialog.resize(322, 71)
         self.select_course_box = QtWidgets.QComboBox(parent=view_course_dialog)
         self.select_course_box.setGeometry(QtCore.QRect(10, 10, 301, 22))
         self.select_course_box.setObjectName("select_course_box")
-        self.name_edit = QtWidgets.QLineEdit(parent=view_course_dialog)
-        self.name_edit.setGeometry(QtCore.QRect(10, 50, 301, 20))
-        self.name_edit.setObjectName("name_edit")
-        self.student_name_text = QtWidgets.QPlainTextEdit(parent=view_course_dialog)
-        self.student_name_text.setGeometry(QtCore.QRect(10, 110, 301, 181))
-        self.student_name_text.setObjectName("student_name_text")
-        self.select_sek_box = QtWidgets.QComboBox(parent=view_course_dialog)
-        self.select_sek_box.setGeometry(QtCore.QRect(10, 80, 301, 22))
-        self.select_sek_box.setObjectName("select_sek_box")
-        self.select_sek_box.addItem("")
-        self.select_sek_box.addItem("")
-        self.save_button = QtWidgets.QPushButton(parent=view_course_dialog)
-        self.save_button.setGeometry(QtCore.QRect(10, 300, 141, 23))
-        self.save_button.setObjectName("save_button")
+        self.view_button = QtWidgets.QPushButton(parent=view_course_dialog)
+        self.view_button.setGeometry(QtCore.QRect(10, 40, 141, 23))
+        self.view_button.setObjectName("view_button")
         self.exit_button = QtWidgets.QPushButton(parent=view_course_dialog)
-        self.exit_button.setGeometry(QtCore.QRect(170, 300, 141, 23))
+        self.exit_button.setGeometry(QtCore.QRect(170, 40, 141, 23))
         self.exit_button.setObjectName("exit_button")
 
         self.retranslateUi(view_course_dialog)
@@ -41,7 +30,5 @@ class Ui_View_Course(object):
     def retranslateUi(self, view_course_dialog):
         _translate = QtCore.QCoreApplication.translate
         view_course_dialog.setWindowTitle(_translate("view_course_dialog", "Kurs ansehen"))
-        self.select_sek_box.setItemText(0, _translate("view_course_dialog", "Sekundarstuffe I"))
-        self.select_sek_box.setItemText(1, _translate("view_course_dialog", "Sekundarstuffe II"))
-        self.save_button.setText(_translate("view_course_dialog", "Speichern"))
+        self.view_button.setText(_translate("view_course_dialog", "Anzeigen"))
         self.exit_button.setText(_translate("view_course_dialog", "Abbrechen"))

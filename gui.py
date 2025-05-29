@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import *
 from windows.mainwindow import Ui_MainWindow
 from windows.newcoursedialog import Ui_new_course_dialog
-from windows.viewcoursedialog import Ui_View_Course
+from windows.viewcoursedialog import Ui_view_course_dialog
 from exam import Exam
 from course import Course
 from result import Result
@@ -173,9 +173,28 @@ def add_course():
     add_course_window.close()
 
 def show_view_course_window():
+    view_course_ui.select_course_box.addItems(course_list)
     view_course_window.show()
 
+def view_course():
+    course_name = view_course_ui.select_course_box.currentText()
+    course = json_to_course(course_name)
+    add_course_ui.label.setText("Kurs bearbeiten")
+    add_course_window.setWindowTitle("Kurs bearbeiten")
+    add_course_ui.name_input.setText(course.course_name)
+    if course.grading_scheme == 'sek1':
+        add_course_ui.sek_input.setCurrentIndex(0)
+    if course.grading_scheme == 'sek2':
+        add_course_ui.sek_input.setCurrentIndex(1)
+    for student in course.student_names:
+        add_course_ui.students_textbox.appendPlainText(student)
+    add_course_ui.students_textbox.setReadOnly(False)
+    add_course_window.show()
+    view_course_window.close()
+
 def update_content():
+    global exam_list
+    global course_list
     exam_list = get_exams()
     course_list = get_courses()
     mainwindow_ui.select_course_box.clear()
@@ -191,8 +210,8 @@ add_course_window = QDialog()
 add_course_ui = Ui_new_course_dialog()
 add_course_ui.setupUi(add_course_window)
 view_course_window = QDialog()
-viewcourse_ui = Ui_View_Course()
-viewcourse_ui.setupUi(view_course_window)
+view_course_ui = Ui_view_course_dialog()
+view_course_ui.setupUi(view_course_window)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(confirm_input)
@@ -202,6 +221,8 @@ mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
 
 add_course_ui.save_button.clicked.connect(add_course)
 add_course_ui.add_student_button.clicked.connect(add_student_to_list)
+
+view_course_ui.view_button.clicked.connect(view_course)
 
 update_content()
 

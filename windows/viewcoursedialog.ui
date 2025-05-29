@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>322</width>
-    <height>330</height>
+    <height>71</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,64 +23,24 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="name_edit">
+  <widget class="QPushButton" name="view_button">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>50</y>
-     <width>301</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="student_name_text">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>110</y>
-     <width>301</width>
-     <height>181</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="select_sek_box">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>80</y>
-     <width>301</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>Sekundarstuffe I</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Sekundarstuffe II</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QPushButton" name="save_button">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>300</y>
+     <y>40</y>
      <width>141</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>Speichern</string>
+    <string>Anzeigen</string>
    </property>
   </widget>
   <widget class="QPushButton" name="exit_button">
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>300</y>
+     <y>40</y>
      <width>141</width>
      <height>23</height>
     </rect>
