@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import *
 from windows.mainwindow import Ui_MainWindow
-from windows.newcoursedialog import Ui_new_course_dialog
+from windows.editcoursedialog import Ui_edit_course_dialog
 from windows.viewcoursedialog import Ui_view_course_dialog
 from exam import Exam
 from course import Course
@@ -127,8 +127,8 @@ def show_evaluation_table(course: Course, exam: Exam):
 
 def confirm_evaluation():
     """
-        Erstellt ein Objekt der Klasse Result aus den Eingaben
-        """   
+    Erstellt ein Objekt der Klasse Result aus den Eingaben
+    """   
 
     result = Result([selected_course], [], selected_date, selected_exam)
 
@@ -151,48 +151,78 @@ def confirm_evaluation():
         # Eintrag im Ergebnis für den Schüler
         result.add_result(student_name, points_earned, percentage_earned, tasks)
 
-def show_add_course_window():
+def show_edit_course_window() -> None:
+    """
+    Ziegt das Fenster zum Hinzufügen eines Kurses an
+    """
+    # Leeren aller Felder für cleaneren Look
+    edit_course_ui.name_input.clear()
+    edit_course_ui.sek_input.setCurrentIndex(0)
+    edit_course_ui.add_student_input.clear()
+    edit_course_ui.students_textbox.clear()
+
     add_course_window.show()
 
-def add_student_to_list():
-    name = add_course_ui.add_student_input.text()
-    add_course_ui.students_textbox.appendPlainText(name)
+def add_student_to_list() -> None:
+    """
+    Fügt den Namen in add_student_input zur students_textbox hinzu
+    """
+    name = edit_course_ui.add_student_input.text()
+    edit_course_ui.students_textbox.appendPlainText(name)
+    edit_course_ui.add_student_input.clear() # Leeren des Inputs für cleanere zweite Eingabe
 
-def add_course():
-    name = add_course_ui.name_input.text()
+def save_course() -> None:
+    """
+    Liest die Daten aus der UI, erstellt und speichert einen neuen Kurs
+    """
+    # Auslesen der Daten
+    name = edit_course_ui.name_input.text()
     grading_scheme = ""
-    if add_course_ui.sek_input.currentIndex() == 0:
+    if edit_course_ui.sek_input.currentIndex() == 0:
         grading_scheme = "sek1"
-    if add_course_ui.sek_input.currentIndex() == 1:
+    if edit_course_ui.sek_input.currentIndex() == 1:
         grading_scheme = "sek2"
-    students_raw = add_course_ui.students_textbox.toPlainText()
-    names = students_raw.strip().split('\n')
-    new_course = Course(name, grading_scheme, names)
+    students_raw = edit_course_ui.students_textbox.toPlainText()
+    students = students_raw.strip().split('\n')
+    # Erstellen und Speichern des neuen Kurses
+    new_course = Course(name, grading_scheme, students)
     course_to_json(new_course)
     update_content()
     add_course_window.close()
 
-def show_view_course_window():
-    view_course_ui.select_course_box.addItems(course_list)
+def show_view_course_window() -> None:
+    """
+    Zeigt das Fenster zur Auswahl von Kursen an
+    """
+    update_content()
     view_course_window.show()
 
-def view_course():
+def view_course() -> None:
+    """
+    Öffnen eines Kurses im Kurs-Bearbeitungs-Fenster aus einer JSON Datei
+    """
+    # Erstellen des neuen Kurs objects aus JSON
     course_name = view_course_ui.select_course_box.currentText()
     course = json_to_course(course_name)
-    add_course_ui.label.setText("Kurs bearbeiten")
-    add_course_window.setWindowTitle("Kurs bearbeiten")
-    add_course_ui.name_input.setText(course.course_name)
+    # Einfügen der Kurs-Daten in die UI
+    edit_course_ui.name_input.setText(course.course_name)
+    edit_course_ui.add_student_input.clear()
+    edit_course_ui.students_textbox.clear()
     if course.grading_scheme == 'sek1':
-        add_course_ui.sek_input.setCurrentIndex(0)
+        edit_course_ui.sek_input.setCurrentIndex(0)
     if course.grading_scheme == 'sek2':
-        add_course_ui.sek_input.setCurrentIndex(1)
+        edit_course_ui.sek_input.setCurrentIndex(1)
     for student in course.student_names:
-        add_course_ui.students_textbox.appendPlainText(student)
-    add_course_ui.students_textbox.setReadOnly(False)
+        edit_course_ui.students_textbox.appendPlainText(student)
+    
+    edit_course_ui.students_textbox.setReadOnly(False)
     add_course_window.show()
     view_course_window.close()
 
-def update_content():
+def update_content() -> None:
+    """
+    Update Funktion für z.B. die globale Kurs- und Klausurliste
+    """
     global exam_list
     global course_list
     exam_list = get_exams()
@@ -201,14 +231,16 @@ def update_content():
     mainwindow_ui.select_course_box.addItems(course_list)
     mainwindow_ui.select_exam_box.clear()
     mainwindow_ui.select_exam_box.addItems(exam_list)
+    view_course_ui.select_course_box.clear()
+    view_course_ui.select_course_box.addItems(course_list)
 
 app = QApplication([])
 mainwindow = QMainWindow()
 mainwindow_ui = Ui_MainWindow()
 mainwindow_ui.setupUi(mainwindow)
 add_course_window = QDialog()
-add_course_ui = Ui_new_course_dialog()
-add_course_ui.setupUi(add_course_window)
+edit_course_ui = Ui_edit_course_dialog()
+edit_course_ui.setupUi(add_course_window)
 view_course_window = QDialog()
 view_course_ui = Ui_view_course_dialog()
 view_course_ui.setupUi(view_course_window)
@@ -216,11 +248,11 @@ view_course_ui.setupUi(view_course_window)
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(confirm_input)
 mainwindow_ui.confirm_evaluation_pushButton.clicked.connect(confirm_evaluation)
-mainwindow_ui.actionCourseAdd.triggered.connect(show_add_course_window)
+mainwindow_ui.actionCourseAdd.triggered.connect(show_edit_course_window)
 mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
 
-add_course_ui.save_button.clicked.connect(add_course)
-add_course_ui.add_student_button.clicked.connect(add_student_to_list)
+edit_course_ui.save_button.clicked.connect(save_course)
+edit_course_ui.add_student_button.clicked.connect(add_student_to_list)
 
 view_course_ui.view_button.clicked.connect(view_course)
 

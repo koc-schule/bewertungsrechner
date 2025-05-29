@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>new_course_dialog</class>
- <widget class="QDialog" name="new_course_dialog">
+ <class>edit_course_dialog</class>
+ <widget class="QDialog" name="edit_course_dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,14 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Neuer Kurs</string>
+   <string>Kurs bearbeiten/erstellen</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>10</y>
-     <width>121</width>
+     <width>251</width>
      <height>21</height>
     </rect>
    </property>
@@ -30,7 +30,10 @@
     </font>
    </property>
    <property name="text">
-    <string>New Course</string>
+    <string>Kurs bearbeiten/erstellen</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLineEdit" name="name_input">
@@ -146,7 +149,7 @@
   <connection>
    <sender>exit_button</sender>
    <signal>clicked()</signal>
-   <receiver>new_course_dialog</receiver>
+   <receiver>edit_course_dialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
