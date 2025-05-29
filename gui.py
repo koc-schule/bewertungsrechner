@@ -3,6 +3,7 @@ from windows.mainwindow import Ui_MainWindow
 from windows.editcoursedialog import Ui_edit_course_dialog
 from windows.viewcoursedialog import Ui_view_course_dialog
 from windows.viewexamdialog import Ui_view_exam_dialog
+from windows.editexamdialog import Ui_edit_exam_dialog
 from exam import Exam
 from course import Course
 from result import Result
@@ -217,7 +218,6 @@ def view_course() -> None:
     for student in course.student_names:
         edit_course_ui.students_textbox.appendPlainText(student)
     
-    edit_course_ui.students_textbox.setReadOnly(False)
     add_course_window.show()
     view_course_window.close()
 
@@ -234,6 +234,40 @@ def view_exam() -> None:
     Öffnen einer Klausur im Klausur-Bearbeitungs-Fenster aus einer JSON Datei
     """
     print("Test")
+
+def show_edit_exam_window() -> None:
+    """
+    Zeigt das Fenster zum Hinzufügen einer Klausur an
+    """
+    # Leeren der Felder für einen cleaneren Look
+    edit_exam_ui.name_input.clear()
+    edit_exam_ui.notes_textbox.clear()
+    edit_exam_ui.add_task_input.clear()
+    edit_exam_ui.tasks_textbox.clear()
+
+    edit_exam_window.show()
+
+def add_task_to_list() -> None:
+    task = edit_exam_ui.add_task_input.text()
+    edit_exam_ui.tasks_textbox.appendPlainText(task)
+    edit_exam_ui.add_task_input.clear()
+
+def save_exam() -> None:
+    """
+    Liest die Daten aus der UI, erstellt und speichert eine neue Klausur
+    """
+    name = edit_exam_ui.name_input.text()
+    notes = edit_exam_ui.notes_textbox.toPlainText()
+    tasks = edit_exam_ui.tasks_textbox.toPlainText()
+    new_exam = Exam(name, notes)
+    for line in tasks.strip().splitlines():
+        if ":" in line:
+            task_name, points = line.split(":", 1)
+            new_exam.add_task(task_name, int(points))
+    exam_to_json(new_exam)
+    update_content()
+    edit_exam_window.close()
+
 
 def update_content() -> None:
     """
@@ -261,19 +295,27 @@ view_course_ui.setupUi(view_course_window)
 view_exam_window = QDialog()
 view_exam_ui = Ui_view_exam_dialog()
 view_exam_ui.setupUi(view_exam_window)
+edit_exam_window = QDialog()
+edit_exam_ui = Ui_edit_exam_dialog()
+edit_exam_ui.setupUi(edit_exam_window)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(confirm_input)
 mainwindow_ui.confirm_evaluation_pushButton.clicked.connect(confirm_evaluation)
 mainwindow_ui.actionCourseAdd.triggered.connect(show_edit_course_window)
 mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
-
+mainwindow_ui.actionExamAdd.triggered.connect(show_edit_exam_window)
 mainwindow_ui.actionExamView.triggered.connect(show_view_exam_window)
+
 edit_course_ui.save_button.clicked.connect(save_course)
 edit_course_ui.add_student_button.clicked.connect(add_student_to_list)
 
+edit_exam_ui.add_task_button.clicked.connect(add_task_to_list)
+edit_exam_ui.save_button.clicked.connect(save_exam)
+
 view_course_ui.view_button.clicked.connect(view_course)
 view_exam_ui.view_button.clicked.connect(view_exam)
+
 
 update_content()
 

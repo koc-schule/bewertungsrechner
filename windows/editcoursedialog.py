@@ -39,7 +39,7 @@ class Ui_edit_course_dialog(object):
         self.add_student_button.setObjectName("add_student_button")
         self.students_textbox = QtWidgets.QPlainTextEdit(parent=edit_course_dialog)
         self.students_textbox.setGeometry(QtCore.QRect(20, 130, 231, 151))
-        self.students_textbox.setReadOnly(True)
+        self.students_textbox.setReadOnly(False)
         self.students_textbox.setObjectName("students_textbox")
         self.save_button = QtWidgets.QPushButton(parent=edit_course_dialog)
         self.save_button.setGeometry(QtCore.QRect(20, 290, 111, 23))

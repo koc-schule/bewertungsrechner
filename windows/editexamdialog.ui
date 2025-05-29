@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>edit_course_dialog</class>
- <widget class="QDialog" name="edit_course_dialog">
+ <class>edit_exam_dialog</class>
+ <widget class="QDialog" name="edit_exam_dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>273</width>
-    <height>324</height>
+    <width>271</width>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Kurs bearbeiten/erstellen</string>
+   <string>Klausur bearbeiten/erstellen</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -24,13 +24,13 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>14</pointsize>
+     <pointsize>12</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
    <property name="text">
-    <string>Kurs bearbeiten/erstellen</string>
+    <string>Klausur bearbeiten/erstellen</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -49,53 +49,24 @@
     <string>Name</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="sek_input">
+  <widget class="QLineEdit" name="add_task_input">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>70</y>
-     <width>231</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="editable">
-    <bool>false</bool>
-   </property>
-   <property name="currentText">
-    <string>Sekundarstuffe I</string>
-   </property>
-   <property name="currentIndex">
-    <number>0</number>
-   </property>
-   <item>
-    <property name="text">
-     <string>Sekundarstuffe I</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Sekundarstuffe II</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QLineEdit" name="add_student_input">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>100</y>
+     <y>150</y>
      <width>141</width>
      <height>20</height>
     </rect>
    </property>
    <property name="placeholderText">
-    <string>Add Student Name</string>
+    <string>Add Task (Aufgabe:Punkte)</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="add_student_button">
+  <widget class="QPushButton" name="add_task_button">
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>100</y>
+     <y>150</y>
      <width>81</width>
      <height>23</height>
     </rect>
@@ -104,13 +75,13 @@
     <string>Add</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="students_textbox">
+  <widget class="QPlainTextEdit" name="tasks_textbox">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>130</y>
+     <y>180</y>
      <width>231</width>
-     <height>151</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="readOnly">
@@ -121,7 +92,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>290</y>
+     <y>300</y>
      <width>111</width>
      <height>23</height>
     </rect>
@@ -134,7 +105,7 @@
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>290</y>
+     <y>300</y>
      <width>111</width>
      <height>23</height>
     </rect>
@@ -143,13 +114,26 @@
     <string>Abbrechen</string>
    </property>
   </widget>
+  <widget class="QPlainTextEdit" name="notes_textbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>70</y>
+     <width>231</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Notes</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
   <connection>
    <sender>exit_button</sender>
    <signal>clicked()</signal>
-   <receiver>edit_course_dialog</receiver>
+   <receiver>edit_exam_dialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
