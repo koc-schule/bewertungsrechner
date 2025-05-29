@@ -175,6 +175,7 @@
      <string>Ergebnisse</string>
     </property>
     <addaction name="actionResultView"/>
+    <addaction name="actionResultAdd"/>
    </widget>
    <addaction name="menuOptionen"/>
    <addaction name="menuKlausur"/>
@@ -207,6 +208,11 @@
    </property>
   </action>
   <action name="actionCourseAdd">
+   <property name="text">
+    <string>Hinzufügen</string>
+   </property>
+  </action>
+  <action name="actionResultAdd">
    <property name="text">
     <string>Hinzufügen</string>
    </property>

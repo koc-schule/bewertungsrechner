@@ -4,6 +4,8 @@ from windows.editcoursedialog import Ui_edit_course_dialog
 from windows.viewcoursedialog import Ui_view_course_dialog
 from windows.viewexamdialog import Ui_view_exam_dialog
 from windows.editexamdialog import Ui_edit_exam_dialog
+from windows.viewresultdialog import Ui_view_result_dialog
+from windows.editresultsdialog import Ui_edit_result_dialog
 from exam import Exam
 from course import Course
 from result import Result
@@ -20,6 +22,7 @@ lk.add_task("A2", 4)
 
 course_list = []
 exam_list = []
+result_list = []
 
 selected_course = None
 selected_exam = None
@@ -40,6 +43,14 @@ def get_courses():
     if f.startswith("course_") and f.endswith(".json")
     ]
     return names
+
+def get_results():
+    results = [
+    f.removesuffix(".csv")
+    for f in os.listdir("results/")
+    if f.endswith(".csv")
+    ]
+    return results
 
 
 def search_exam(searched_exam: str, exam_list: list):
@@ -265,6 +276,87 @@ def save_exam() -> None:
     update_content()
     edit_exam_window.close()
 
+def show_view_result_window() -> None:
+    view_result_ui.select_result_box.clear
+    view_result_ui.select_result_box.addItems(result_list)
+    view_result_window.show()
+
+def show_edit_result_window() -> None:
+    edit_result_ui.select_course_box.clear()
+    edit_result_ui.select_course_box.addItems(course_list)
+    edit_result_ui.select_exam_box.clear()
+    edit_result_ui.select_exam_box.addItems(exam_list)
+    edit_result_ui.date_edit.clear()
+    edit_result_ui.results_table.clear()
+
+    edit_result_window.show()
+
+def load_results_table() -> None:
+    """
+        Erstellt die Tabelle zur Eingabe der Bewertung
+
+        Args:
+            course (Course): ausgewählter Kurs
+            exam (Exam): ausgewählte Klausur/Test/LK
+    """
+    global selected_course
+    global selected_exam
+    global selected_date
+
+    selected_course = json_to_course(edit_result_ui.select_course_box.currentText())
+    selected_exam = json_to_exam(edit_result_ui.select_exam_box.currentText())
+    selected_date = edit_result_ui.date_edit.text()
+
+    # Spalten und Zeilen festlegen
+    edit_result_ui.results_table.setRowCount(len(selected_course.student_names) + 2)
+    edit_result_ui.results_table.setColumnCount(len(selected_exam.tasks) + 2)
+
+    # Beschriftungen Einfügen
+    edit_result_ui.results_table.setItem(0, 0, QTableWidgetItem("Aufgabe:"))
+    edit_result_ui.results_table.setItem(1, 0, QTableWidgetItem("Max BE"))
+    edit_result_ui.results_table.setItem(0, len(selected_exam.tasks) + 1, QTableWidgetItem("Gesamt"))
+    edit_result_ui.results_table.setItem(1, len(selected_exam.tasks) + 1, QTableWidgetItem(str(selected_exam.max_points)))
+
+    #  Schülernamen Einfügen
+    for i in range(len(selected_course.student_names)):
+        edit_result_ui.results_table.setItem(2 + i, 0, QTableWidgetItem(selected_course.student_names[i]))
+
+    # Aufgabennamen mit BE Einfügen
+    for i in range(len(selected_exam.tasks)):
+        task_name = list(selected_exam.tasks.keys())[i]
+        task_points = selected_exam.tasks[task_name]
+        edit_result_ui.results_table.setItem(0, i + 1, QTableWidgetItem(task_name))
+        edit_result_ui.results_table.setItem(1, i + 1, QTableWidgetItem(str(task_points)))
+
+def save_results() -> None:
+    """
+    Erstellt ein Objekt der Klasse Result aus den Eingaben
+    """   
+
+    result = Result([selected_course], [], selected_date, selected_exam)
+
+    for i in range(len(selected_course.student_names)):
+        # Daten des Schülers definieren
+        student_name = selected_course.student_names[i]
+        points_earned = 0
+        tasks = {}
+
+        for j in range(len(selected_exam.tasks)):
+            # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
+            task_name = list(selected_exam.tasks.keys())[j]
+            scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
+            tasks[task_name] = scored_points_task
+
+            points_earned = points_earned + scored_points_task
+
+        percentage_earned = (points_earned / selected_exam.max_points) * 100
+
+        # Eintrag im Ergebnis für den Schüler
+        result.add_result(student_name, points_earned, percentage_earned, tasks)
+    
+    result.write_to_csv()
+    update_content()
+    edit_result_window.close()
 
 def update_content() -> None:
     """
@@ -272,8 +364,10 @@ def update_content() -> None:
     """
     global exam_list
     global course_list
+    global result_list
     exam_list = get_exams()
     course_list = get_courses()
+    result_list = get_results()
     mainwindow_ui.select_course_box.clear()
     mainwindow_ui.select_course_box.addItems(course_list)
     mainwindow_ui.select_exam_box.clear()
@@ -295,6 +389,12 @@ view_exam_ui.setupUi(view_exam_window)
 edit_exam_window = QDialog()
 edit_exam_ui = Ui_edit_exam_dialog()
 edit_exam_ui.setupUi(edit_exam_window)
+view_result_window = QDialog()
+view_result_ui = Ui_view_result_dialog()
+view_result_ui.setupUi(view_result_window)
+edit_result_window = QDialog()
+edit_result_ui = Ui_edit_result_dialog()
+edit_result_ui.setupUi(edit_result_window)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(show_evaluation_table)
@@ -303,6 +403,8 @@ mainwindow_ui.actionCourseAdd.triggered.connect(show_edit_course_window)
 mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
 mainwindow_ui.actionExamAdd.triggered.connect(show_edit_exam_window)
 mainwindow_ui.actionExamView.triggered.connect(show_view_exam_window)
+mainwindow_ui.actionResultView.triggered.connect(show_view_result_window)
+mainwindow_ui.actionResultAdd.triggered.connect(show_edit_result_window)
 
 edit_course_ui.save_button.clicked.connect(save_course)
 edit_course_ui.add_student_button.clicked.connect(add_student_to_list)
@@ -313,6 +415,8 @@ edit_exam_ui.save_button.clicked.connect(save_exam)
 view_course_ui.view_button.clicked.connect(view_course)
 view_exam_ui.view_button.clicked.connect(view_exam)
 
+edit_result_ui.generate_table_button.clicked.connect(load_results_table)
+edit_result_ui.save_button.clicked.connect(save_results)
 
 update_content()
 
