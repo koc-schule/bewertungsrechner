@@ -2,7 +2,7 @@
 Modul für jegliche Operationen mit .csv-Dateien
 """
 
-import utils.output
+from utils.output import *
 
 def read_csv_base(path: str, reader: str) -> str | bool:
     """
@@ -21,7 +21,7 @@ def read_csv_base(path: str, reader: str) -> str | bool:
             content = reader(file)
         return content
     except FileNotFoundError as exception:
-        output.log_exception(exception)
+        log_exception(exception)
         return False
 
 def read_csv_lines(path: str) -> list[str] | bool:
