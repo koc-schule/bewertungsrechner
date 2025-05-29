@@ -163,7 +163,7 @@ def show_edit_course_window() -> None:
     edit_course_ui.add_student_input.clear()
     edit_course_ui.students_textbox.clear()
 
-    add_course_window.show()
+    edit_course_window.show()
 
 def add_student_to_list() -> None:
     """
@@ -190,7 +190,7 @@ def save_course() -> None:
     new_course = Course(name, grading_scheme, students)
     course_to_json(new_course)
     update_content()
-    add_course_window.close()
+    edit_course_window.close()
 
 def show_view_course_window() -> None:
     """
@@ -218,7 +218,7 @@ def view_course() -> None:
     for student in course.student_names:
         edit_course_ui.students_textbox.appendPlainText(student)
     
-    add_course_window.show()
+    edit_course_window.show()
     view_course_window.close()
 
 def show_view_exam_window() -> None:
@@ -233,7 +233,18 @@ def view_exam() -> None:
     """
     Öffnen einer Klausur im Klausur-Bearbeitungs-Fenster aus einer JSON Datei
     """
-    print("Test")
+    exam_name = view_exam_ui.select_exam_box.currentText()
+    exam = json_to_exam(exam_name)
+    edit_exam_ui.name_input.setText(exam.exam_name)
+    edit_exam_ui.notes_textbox.setPlainText(exam.notes)
+    edit_exam_ui.add_task_input.clear()
+    edit_exam_ui.tasks_textbox.clear()
+    for task_name, points in exam.tasks.items():
+        output = f"{task_name}:{points}"
+        edit_exam_ui.tasks_textbox.appendPlainText(output)
+    
+    edit_exam_window.show()
+    view_exam_window.close()
 
 def show_edit_exam_window() -> None:
     """
@@ -286,9 +297,9 @@ app = QApplication([])
 mainwindow = QMainWindow()
 mainwindow_ui = Ui_MainWindow()
 mainwindow_ui.setupUi(mainwindow)
-add_course_window = QDialog()
+edit_course_window = QDialog()
 edit_course_ui = Ui_edit_course_dialog()
-edit_course_ui.setupUi(add_course_window)
+edit_course_ui.setupUi(edit_course_window)
 view_course_window = QDialog()
 view_course_ui = Ui_view_course_dialog()
 view_course_ui.setupUi(view_course_window)
