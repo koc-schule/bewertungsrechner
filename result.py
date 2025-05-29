@@ -69,7 +69,7 @@ class Result:
         """
 
         """Auswählen der Datei"""
-        filename  = "./utils/csv_files/" + str((self.get_exam()).exam_name) + ".csv"
+        filename  = "results/" + str((self.get_exam()).exam_name) + ".csv"
         file = open(filename,"w")
 
         """Erstellen der ersten Zeile der csv_datei (Spaltennamen)"""
@@ -86,7 +86,7 @@ class Result:
             """gleichbleibende Einträge in Variablen speichern """
             student_name = student["name"] + ","
             exam_date = str(self.get_date()) + ","
-            percentage_earned = str(student["percentage_earned"]) + ","
+            percentage_earned = str(round(student["percentage_earned"])) + ","
             points_earned = str(student["points_earned"]) + "," 
             max_points = str((self.get_exam()).max_points) + ","
             studentdata = student_name + exam_date + percentage_earned + points_earned + max_points 

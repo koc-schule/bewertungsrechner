@@ -73,30 +73,7 @@ def search_course(searched_course: str, course_list: list):
         if course.course_name == searched_course:
             return (course)
 
-
-def confirm_input():
-    global selected_course
-    global selected_exam
-    global selected_date
-    """
-        Startet show_evaluation_table
-    """
-    selected_course = search_course(mainwindow_ui.choose_course_textEdit.toPlainText(), course_list)
-    selected_exam = search_exam(mainwindow_ui.choose_exam_textEdit.toPlainText(), exam_list)
-    selected_date = mainwindow_ui.date_textEdit.toPlainText()
-
-    # Checks if Exam and Course were properly selected
-    if (selected_course is not None) and (selected_exam is not None):
-        show_evaluation_table(selected_course, selected_exam)
-    elif selected_course is None:
-        print("Course not in Courselist")
-        mainwindow_ui.choose_course_textEdit.clear()
-    elif selected_exam is None:
-        print("Exam not in Examlist")
-        mainwindow_ui.choose_exam_textEdit.clear()
-
-
-def show_evaluation_table(course: Course, exam: Exam):
+def show_evaluation_table():
     """
         Erstellt die Tabelle zur Eingabe der Bewertung
 
@@ -104,25 +81,32 @@ def show_evaluation_table(course: Course, exam: Exam):
             course (Course): ausgewählter Kurs
             exam (Exam): ausgewählte Klausur/Test/LK
     """
+    global selected_course
+    global selected_exam
+    global selected_date
+
+    selected_course = json_to_course(mainwindow_ui.select_course_box.currentText())
+    selected_exam = json_to_exam(mainwindow_ui.select_exam_box.currentText())
+    selected_date = mainwindow_ui.date_edit.text()
 
     # Spalten und Zeilen festlegen
-    mainwindow_ui.evaluation_input_tableWidget.setRowCount(len(course.student_names) + 2)
-    mainwindow_ui.evaluation_input_tableWidget.setColumnCount(len(exam.tasks) + 2)
+    mainwindow_ui.evaluation_input_tableWidget.setRowCount(len(selected_course.student_names) + 2)
+    mainwindow_ui.evaluation_input_tableWidget.setColumnCount(len(selected_exam.tasks) + 2)
 
     # Beschriftungen Einfügen
     mainwindow_ui.evaluation_input_tableWidget.setItem(0, 0, QTableWidgetItem("Aufgabe:"))
     mainwindow_ui.evaluation_input_tableWidget.setItem(1, 0, QTableWidgetItem("Max BE"))
-    mainwindow_ui.evaluation_input_tableWidget.setItem(0, len(exam.tasks) + 1, QTableWidgetItem("Gesamt"))
-    mainwindow_ui.evaluation_input_tableWidget.setItem(1, len(exam.tasks) + 1, QTableWidgetItem(str(exam.max_points)))
+    mainwindow_ui.evaluation_input_tableWidget.setItem(0, len(selected_exam.tasks) + 1, QTableWidgetItem("Gesamt"))
+    mainwindow_ui.evaluation_input_tableWidget.setItem(1, len(selected_exam.tasks) + 1, QTableWidgetItem(str(selected_exam.max_points)))
 
     #  Schülernamen Einfügen
-    for i in range(len(course.student_names)):
-        mainwindow_ui.evaluation_input_tableWidget.setItem(2 + i, 0, QTableWidgetItem(course.student_names[i]))
+    for i in range(len(selected_course.student_names)):
+        mainwindow_ui.evaluation_input_tableWidget.setItem(2 + i, 0, QTableWidgetItem(selected_course.student_names[i]))
 
     # Aufgabennamen mit BE Einfügen
-    for i in range(len(exam.tasks)):
-        task_name = list(exam.tasks.keys())[i]
-        task_points = exam.tasks[task_name]
+    for i in range(len(selected_exam.tasks)):
+        task_name = list(selected_exam.tasks.keys())[i]
+        task_points = selected_exam.tasks[task_name]
         mainwindow_ui.evaluation_input_tableWidget.setItem(0, i + 1, QTableWidgetItem(task_name))
         mainwindow_ui.evaluation_input_tableWidget.setItem(1, i + 1, QTableWidgetItem(str(task_points)))
 
@@ -152,6 +136,8 @@ def confirm_evaluation():
 
         # Eintrag im Ergebnis für den Schüler
         result.add_result(student_name, points_earned, percentage_earned, tasks)
+    
+    result.write_to_csv()
 
 def show_edit_course_window() -> None:
     """
@@ -311,7 +297,7 @@ edit_exam_ui = Ui_edit_exam_dialog()
 edit_exam_ui.setupUi(edit_exam_window)
 
 # Verknüpfung der Buttons mit Funktionen
-mainwindow_ui.confirm_input_pushButton.clicked.connect(confirm_input)
+mainwindow_ui.confirm_input_pushButton.clicked.connect(show_evaluation_table)
 mainwindow_ui.confirm_evaluation_pushButton.clicked.connect(confirm_evaluation)
 mainwindow_ui.actionCourseAdd.triggered.connect(show_edit_course_window)
 mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
