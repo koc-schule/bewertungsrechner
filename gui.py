@@ -10,6 +10,7 @@ from exam import Exam
 from course import Course
 from result import Result
 from utils.json_parser import *
+from utils.parser import csv_to_result
 import os
 
 # test Course
@@ -358,6 +359,61 @@ def save_results() -> None:
     update_content()
     edit_result_window.close()
 
+def fill_results_table(result) -> None:
+    """
+    Füllt die Ergebnisse aus einem Result-Objekt in das TableWidget im Result-Editor.
+    """
+    # Setze Kurs und Klausur für die aktuelle Ansicht
+    course = result.courses[0]
+    exam = result.exam
+
+    # Optional: Tabelle vorbereiten (Größe und Header)
+    edit_result_ui.results_table.setRowCount(len(course.student_names) + 2)
+    edit_result_ui.results_table.setColumnCount(len(exam.tasks) + 2)
+
+    # Header wie in load_results_table setzen
+    edit_result_ui.results_table.setItem(0, 0, QTableWidgetItem("Aufgabe:"))
+    edit_result_ui.results_table.setItem(1, 0, QTableWidgetItem("Max BE"))
+    edit_result_ui.results_table.setItem(0, len(exam.tasks) + 1, QTableWidgetItem("Gesamt"))
+    edit_result_ui.results_table.setItem(1, len(exam.tasks) + 1, QTableWidgetItem(str(exam.max_points)))
+
+    # Schülernamen eintragen
+    for i, student_name in enumerate(course.student_names):
+        edit_result_ui.results_table.setItem(2 + i, 0, QTableWidgetItem(student_name))
+
+    # Aufgaben eintragen
+    for j, (task_name, task_points) in enumerate(exam.tasks.items()):
+        edit_result_ui.results_table.setItem(0, j + 1, QTableWidgetItem(task_name))
+        edit_result_ui.results_table.setItem(1, j + 1, QTableWidgetItem(str(task_points)))
+
+    # Ergebnisse eintragen
+    for i, student_name in enumerate(course.student_names):
+        # Finde das Ergebnis für den Schüler
+        student_result = next((r for r in result.results if r["name"] == student_name), None)
+        if student_result:
+            total_points = student_result.get("points_earned", 0)
+            edit_result_ui.results_table.setItem(2 + i, len(exam.tasks) + 1, QTableWidgetItem(str(total_points)))
+            for j, task_name in enumerate(exam.tasks.keys()):
+                points = student_result.get(task_name, 0)
+                edit_result_ui.results_table.setItem(2 + i, j + 1, QTableWidgetItem(str(points)))
+
+def view_result() -> None:
+    result_name = view_result_ui.select_result_box.currentText()
+    result = csv_to_result(result_name)
+
+    edit_result_ui.select_exam_box.clear()
+    edit_result_ui.select_exam_box.addItems(exam_list)
+    edit_result_ui.select_course_box.clear()
+    edit_result_ui.select_course_box.addItems(course_list)
+    edit_result_ui.select_exam_box.setCurrentText(result.exam.exam_name)
+    edit_result_ui.select_course_box.setCurrentText(result.courses[0].course_name)
+    edit_result_ui.date_edit.setText(result.date)
+    load_results_table()
+    fill_results_table(result)
+
+    edit_result_window.show()
+    view_result_window.close()
+
 def update_content() -> None:
     """
     Update Funktion für z.B. die globale Kurs- und Klausurliste
@@ -414,6 +470,7 @@ edit_exam_ui.save_button.clicked.connect(save_exam)
 
 view_course_ui.view_button.clicked.connect(view_course)
 view_exam_ui.view_button.clicked.connect(view_exam)
+view_result_ui.view_button.clicked.connect(view_result)
 
 edit_result_ui.generate_table_button.clicked.connect(load_results_table)
 edit_result_ui.save_button.clicked.connect(save_results)

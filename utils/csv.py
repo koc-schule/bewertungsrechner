@@ -2,7 +2,7 @@
 Modul für jegliche Operationen mit .csv-Dateien
 """
 
-import output
+import utils.output
 
 def read_csv_base(path: str, reader: str) -> str | bool:
     """
