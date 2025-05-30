@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>view_course_dialog</class>
- <widget class="QDialog" name="view_course_dialog">
+ <class>view_dialog</class>
+ <widget class="QDialog" name="view_dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,9 +11,9 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Kurs ansehen</string>
+   <string>Klausur ansehen</string>
   </property>
-  <widget class="QComboBox" name="select_course_box">
+  <widget class="QComboBox" name="select_box">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -55,7 +55,7 @@
   <connection>
    <sender>exit_button</sender>
    <signal>clicked()</signal>
-   <receiver>view_course_dialog</receiver>
+   <receiver>view_dialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

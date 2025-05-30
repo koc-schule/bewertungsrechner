@@ -1,12 +1,10 @@
 from PyQt6.QtWidgets import *
 from windows.mainwindow import Ui_MainWindow
 from windows.editcoursedialog import Ui_edit_course_dialog
-from windows.viewcoursedialog import Ui_view_course_dialog
-from windows.viewexamdialog import Ui_view_exam_dialog
 from windows.editexamdialog import Ui_edit_exam_dialog
-from windows.viewresultdialog import Ui_view_result_dialog
 from windows.editresultsdialog import Ui_edit_result_dialog
 from windows.deletedialog import Ui_delete_dialog
+from windows.viewdialog import Ui_view_dialog
 from exam import Exam
 from course import Course
 from result import Result
@@ -191,60 +189,6 @@ def save_course() -> None:
     update_content()
     edit_course_window.close()
 
-def show_view_course_window() -> None:
-    """
-    Zeigt das Fenster zur Auswahl von Kursen an
-    """
-    view_course_ui.select_course_box.clear()
-    view_course_ui.select_course_box.addItems(course_list)
-    view_course_window.show()
-
-def view_course() -> None:
-    """
-    Öffnen eines Kurses im Kurs-Bearbeitungs-Fenster aus einer JSON Datei
-    """
-    # Erstellen des neuen Kurs objects aus JSON
-    course_name = view_course_ui.select_course_box.currentText()
-    course = json_to_course(course_name)
-    # Einfügen der Kurs-Daten in die UI
-    edit_course_ui.name_input.setText(course.course_name)
-    edit_course_ui.add_student_input.clear()
-    edit_course_ui.students_textbox.clear()
-    if course.grading_scheme == 'sek1':
-        edit_course_ui.sek_input.setCurrentIndex(0)
-    if course.grading_scheme == 'sek2':
-        edit_course_ui.sek_input.setCurrentIndex(1)
-    for student in course.student_names:
-        edit_course_ui.students_textbox.appendPlainText(student)
-    
-    edit_course_window.show()
-    view_course_window.close()
-
-def show_view_exam_window() -> None:
-    """
-    Ziegt das Fenster zur Auswahl von Klausuren an
-    """
-    view_exam_ui.select_exam_box.clear()
-    view_exam_ui.select_exam_box.addItems(exam_list)
-    view_exam_window.show()
-
-def view_exam() -> None:
-    """
-    Öffnen einer Klausur im Klausur-Bearbeitungs-Fenster aus einer JSON Datei
-    """
-    exam_name = view_exam_ui.select_exam_box.currentText()
-    exam = json_to_exam(exam_name)
-    edit_exam_ui.name_input.setText(exam.exam_name)
-    edit_exam_ui.notes_textbox.setPlainText(exam.notes)
-    edit_exam_ui.add_task_input.clear()
-    edit_exam_ui.tasks_textbox.clear()
-    for task_name, points in exam.tasks.items():
-        output = f"{task_name}:{points}"
-        edit_exam_ui.tasks_textbox.appendPlainText(output)
-    
-    edit_exam_window.show()
-    view_exam_window.close()
-
 def show_edit_exam_window() -> None:
     """
     Zeigt das Fenster zum Hinzufügen einer Klausur an
@@ -277,11 +221,6 @@ def save_exam() -> None:
     exam_to_json(new_exam)
     update_content()
     edit_exam_window.close()
-
-def show_view_result_window() -> None:
-    view_result_ui.select_result_box.clear
-    view_result_ui.select_result_box.addItems(result_list)
-    view_result_window.show()
 
 def show_edit_result_window() -> None:
     edit_result_ui.select_course_box.clear()
@@ -398,23 +337,6 @@ def fill_results_table(result) -> None:
                 points = student_result.get(task_name, 0)
                 edit_result_ui.results_table.setItem(2 + i, j + 1, QTableWidgetItem(str(points)))
 
-def view_result() -> None:
-    result_name = view_result_ui.select_result_box.currentText()
-    result = csv_to_result(result_name)
-
-    edit_result_ui.select_exam_box.clear()
-    edit_result_ui.select_exam_box.addItems(exam_list)
-    edit_result_ui.select_course_box.clear()
-    edit_result_ui.select_course_box.addItems(course_list)
-    edit_result_ui.select_exam_box.setCurrentText(result.exam.exam_name)
-    edit_result_ui.select_course_box.setCurrentText(result.courses[0].course_name)
-    edit_result_ui.date_edit.setText(result.date)
-    load_results_table()
-    fill_results_table(result)
-
-    edit_result_window.show()
-    view_result_window.close()
-
 def show_delete_course_window():
     delete_window.setWindowTitle("Kurs löschen")
     delete_ui.select_box.clear()
@@ -457,6 +379,94 @@ def delete_result():
     update_content()
     delete_window.close()
 
+def show_view_course_window() -> None:
+    """
+    Zeigt das Fenster zur Auswahl von Kursen an
+    """
+    view_window.setWindowTitle("Kurs bearbeiten")
+    view_ui.select_box.clear()
+    view_ui.select_box.addItems(course_list)
+    view_ui.view_button.disconnect()
+    view_ui.view_button.clicked.connect(view_course)
+    view_window.show()
+
+def view_course() -> None:
+    """
+    Öffnen eines Kurses im Kurs-Bearbeitungs-Fenster aus einer JSON Datei
+    """
+    # Erstellen des neuen Kurs objects aus JSON
+    course_name = view_ui.select_box.currentText()
+    course = json_to_course(course_name)
+    # Einfügen der Kurs-Daten in die UI
+    edit_course_ui.name_input.setText(course.course_name)
+    edit_course_ui.add_student_input.clear()
+    edit_course_ui.students_textbox.clear()
+    if course.grading_scheme == 'sek1':
+        edit_course_ui.sek_input.setCurrentIndex(0)
+    if course.grading_scheme == 'sek2':
+        edit_course_ui.sek_input.setCurrentIndex(1)
+    for student in course.student_names:
+        edit_course_ui.students_textbox.appendPlainText(student)
+    
+    edit_course_window.show()
+    view_window.close()
+
+def show_view_exam_window() -> None:
+    """
+    Zeigt das Fenster zur Auswahl von Kursen an
+    """
+    view_window.setWindowTitle("Klausur bearbeiten")
+    view_ui.select_box.clear()
+    view_ui.select_box.addItems(exam_list)
+    view_ui.view_button.disconnect()
+    view_ui.view_button.clicked.connect(view_exam)
+    view_window.show()
+
+def view_exam() -> None:
+    """
+    Öffnen einer Klausur im Klausur-Bearbeitungs-Fenster aus einer JSON Datei
+    """
+    exam_name = view_ui.select_box.currentText()
+    exam = json_to_exam(exam_name)
+    edit_exam_ui.name_input.setText(exam.exam_name)
+    edit_exam_ui.notes_textbox.setPlainText(exam.notes)
+    edit_exam_ui.add_task_input.clear()
+    edit_exam_ui.tasks_textbox.clear()
+    for task_name, points in exam.tasks.items():
+        output = f"{task_name}:{points}"
+        edit_exam_ui.tasks_textbox.appendPlainText(output)
+    
+    edit_exam_window.show()
+    view_window.close()
+
+def show_view_result_window() -> None:
+    """
+    Zeigt das Fenster zur Auswahl von Ergebnissen an
+    """
+    view_window.setWindowTitle("Ergebnisse bearbeiten")
+    view_ui.select_box.clear()
+    view_ui.select_box.addItems(result_list)
+    view_ui.view_button.disconnect()
+    view_ui.view_button.clicked.connect(view_result)
+    view_window.show()
+
+def view_result() -> None:
+    result_name = view_ui.select_box.currentText()
+    result = csv_to_result(result_name)
+
+    edit_result_ui.select_exam_box.clear()
+    edit_result_ui.select_exam_box.addItems(exam_list)
+    edit_result_ui.select_course_box.clear()
+    edit_result_ui.select_course_box.addItems(course_list)
+    edit_result_ui.select_exam_box.setCurrentText(result.exam.exam_name)
+    edit_result_ui.select_course_box.setCurrentText(result.courses[0].course_name)
+    edit_result_ui.date_edit.setText(result.date)
+    load_results_table()
+    fill_results_table(result)
+
+    edit_result_window.show()
+    view_window.close()
+
 def update_content() -> None:
     """
     Update Funktion für z.B. die globale Kurs- und Klausurliste
@@ -479,24 +489,18 @@ mainwindow_ui.setupUi(mainwindow)
 edit_course_window = QDialog()
 edit_course_ui = Ui_edit_course_dialog()
 edit_course_ui.setupUi(edit_course_window)
-view_course_window = QDialog()
-view_course_ui = Ui_view_course_dialog()
-view_course_ui.setupUi(view_course_window)
-view_exam_window = QDialog()
-view_exam_ui = Ui_view_exam_dialog()
-view_exam_ui.setupUi(view_exam_window)
 edit_exam_window = QDialog()
 edit_exam_ui = Ui_edit_exam_dialog()
 edit_exam_ui.setupUi(edit_exam_window)
-view_result_window = QDialog()
-view_result_ui = Ui_view_result_dialog()
-view_result_ui.setupUi(view_result_window)
 edit_result_window = QDialog()
 edit_result_ui = Ui_edit_result_dialog()
 edit_result_ui.setupUi(edit_result_window)
 delete_window = QDialog()
 delete_ui = Ui_delete_dialog()
 delete_ui.setupUi(delete_window)
+view_window = QDialog()
+view_ui = Ui_view_dialog()
+view_ui.setupUi(view_window)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(show_evaluation_table)
@@ -516,10 +520,6 @@ edit_course_ui.add_student_button.clicked.connect(add_student_to_list)
 
 edit_exam_ui.add_task_button.clicked.connect(add_task_to_list)
 edit_exam_ui.save_button.clicked.connect(save_exam)
-
-view_course_ui.view_button.clicked.connect(view_course)
-view_exam_ui.view_button.clicked.connect(view_exam)
-view_result_ui.view_button.clicked.connect(view_result)
 
 edit_result_ui.generate_table_button.clicked.connect(load_results_table)
 edit_result_ui.save_button.clicked.connect(save_results)
