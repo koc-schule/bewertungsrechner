@@ -162,6 +162,7 @@
     </property>
     <addaction name="actionExamView"/>
     <addaction name="actionExamAdd"/>
+    <addaction name="actionExamRemove"/>
    </widget>
    <widget class="QMenu" name="menuKurse">
     <property name="title">
@@ -169,6 +170,7 @@
     </property>
     <addaction name="actionCourseView"/>
     <addaction name="actionCourseAdd"/>
+    <addaction name="actionCourseRemove"/>
    </widget>
    <widget class="QMenu" name="menuErgebnisse">
     <property name="title">
@@ -176,6 +178,7 @@
     </property>
     <addaction name="actionResultView"/>
     <addaction name="actionResultAdd"/>
+    <addaction name="actionResultRemove"/>
    </widget>
    <addaction name="menuOptionen"/>
    <addaction name="menuKlausur"/>
@@ -215,6 +218,21 @@
   <action name="actionResultAdd">
    <property name="text">
     <string>Hinzufügen</string>
+   </property>
+  </action>
+  <action name="actionExamRemove">
+   <property name="text">
+    <string>Entfernen</string>
+   </property>
+  </action>
+  <action name="actionCourseRemove">
+   <property name="text">
+    <string>Entfernen</string>
+   </property>
+  </action>
+  <action name="actionResultRemove">
+   <property name="text">
+    <string>Entfernen</string>
    </property>
   </action>
  </widget>

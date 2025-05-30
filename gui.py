@@ -6,6 +6,7 @@ from windows.viewexamdialog import Ui_view_exam_dialog
 from windows.editexamdialog import Ui_edit_exam_dialog
 from windows.viewresultdialog import Ui_view_result_dialog
 from windows.editresultsdialog import Ui_edit_result_dialog
+from windows.deletedialog import Ui_delete_dialog
 from exam import Exam
 from course import Course
 from result import Result
@@ -414,6 +415,48 @@ def view_result() -> None:
     edit_result_window.show()
     view_result_window.close()
 
+def show_delete_course_window():
+    delete_window.setWindowTitle("Kurs löschen")
+    delete_ui.select_box.clear()
+    delete_ui.select_box.addItems(course_list)
+    delete_ui.delete_button.disconnect()
+    delete_ui.delete_button.clicked.connect(delete_course)
+    delete_window.show()
+
+def delete_course():
+    name = delete_ui.select_box.currentText()
+    os.remove(f"courses/course_{name}.json")
+    update_content()
+    delete_window.close()
+
+def show_delete_exam_window():
+    delete_window.setWindowTitle("Klausur löschen")
+    delete_ui.select_box.clear()
+    delete_ui.select_box.addItems(exam_list)
+    delete_ui.delete_button.disconnect()
+    delete_ui.delete_button.clicked.connect(delete_exam)
+    delete_window.show()
+
+def delete_exam():
+    name = delete_ui.select_box.currentText()
+    os.remove(f"exams/exam_{name}.json")
+    update_content()
+    delete_window.close()
+
+def show_delete_result_window():
+    delete_window.setWindowTitle("Ergebnisse löschen")
+    delete_ui.select_box.clear()
+    delete_ui.select_box.addItems(result_list)
+    delete_ui.delete_button.disconnect()
+    delete_ui.delete_button.clicked.connect(delete_result)
+    delete_window.show()
+
+def delete_result():
+    name = delete_ui.select_box.currentText()
+    os.remove(f"results/{name}.csv")
+    update_content()
+    delete_window.close()
+
 def update_content() -> None:
     """
     Update Funktion für z.B. die globale Kurs- und Klausurliste
@@ -451,6 +494,9 @@ view_result_ui.setupUi(view_result_window)
 edit_result_window = QDialog()
 edit_result_ui = Ui_edit_result_dialog()
 edit_result_ui.setupUi(edit_result_window)
+delete_window = QDialog()
+delete_ui = Ui_delete_dialog()
+delete_ui.setupUi(delete_window)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.confirm_input_pushButton.clicked.connect(show_evaluation_table)
@@ -461,6 +507,9 @@ mainwindow_ui.actionExamAdd.triggered.connect(show_edit_exam_window)
 mainwindow_ui.actionExamView.triggered.connect(show_view_exam_window)
 mainwindow_ui.actionResultView.triggered.connect(show_view_result_window)
 mainwindow_ui.actionResultAdd.triggered.connect(show_edit_result_window)
+mainwindow_ui.actionCourseRemove.triggered.connect(show_delete_course_window)
+mainwindow_ui.actionExamRemove.triggered.connect(show_delete_exam_window)
+mainwindow_ui.actionResultRemove.triggered.connect(show_delete_result_window)
 
 edit_course_ui.save_button.clicked.connect(save_course)
 edit_course_ui.add_student_button.clicked.connect(add_student_to_list)
