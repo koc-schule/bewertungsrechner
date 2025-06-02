@@ -11,8 +11,9 @@ def log(content: str) -> None:
         log.write(f"{content}\n")
 
 def reset() -> None:
-    if not IS_DEV or CLEAR_OLD_LOGS:
+    if CLEAR_OLD_LOGS:
         clear_logs()
+    if not IS_DEV:
         return
     
     if not exists_directory_and_log():
@@ -32,7 +33,9 @@ def exists_directory_and_log() -> bool:
     Returns:
         bool: False wenn events.log nicht existiert, True wenn existiert
     """
+    print("fdfuvudv")
     if not Path("logs").is_dir():
+        print("checked")
         os.mkdir("logs")
         return False
     elif not Path("logs/events.log").is_file():
@@ -46,3 +49,6 @@ def clear_logs() -> None:
     """
     if Path("logs").is_dir():
         [f.unlink() for f in Path('logs').iterdir() if f.is_file()]
+        [f.unlink() for f in Path('logs').iterdir() if f.is_file()]
+        
+reset()
