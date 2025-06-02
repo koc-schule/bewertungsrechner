@@ -4,4 +4,10 @@
 /utils/__pycache__
 /courses
 /exams
-/results
+/printer/__pycache__
+/printer/draw.py
+/printer/test.py
+/printer
+/logs
+
+local_testing.py
