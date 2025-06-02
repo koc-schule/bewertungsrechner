@@ -1,10 +1,13 @@
 from PyQt6.QtWidgets import *
+from PyQt6.QtCore import Qt
+from printer import printer_templates
 from windows.mainwindow import Ui_MainWindow
 from windows.editcoursedialog import Ui_edit_course_dialog
 from windows.editexamdialog import Ui_edit_exam_dialog
 from windows.editresultsdialog import Ui_edit_result_dialog
 from windows.deletedialog import Ui_delete_dialog
 from windows.viewdialog import Ui_view_dialog
+from windows.printdialog import Ui_print_dialog
 from exam import Exam
 from course import Course
 from result import Result
@@ -407,6 +410,44 @@ def view_result() -> None:
     edit_result_window.show()
     view_window.close()
 
+def show_print_window() -> None:
+    print_ui.student_list.clear()
+    course_name = edit_result_ui.select_course_box.currentText()
+    exam_name = edit_result_ui.select_exam_box.currentText()
+    result_name = f"{course_name}_{exam_name}"
+    result = csv_to_result(result_name)
+    print_ui.resultname_label.setText(result_name)
+
+    for student in result.courses[0].student_names:
+        item = QListWidgetItem(student)
+        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+        item.setCheckState(Qt.CheckState.Unchecked)
+        print_ui.student_list.addItem(item)
+    
+    print_window.show()
+
+def select_all_students() -> None:
+    for i in range(print_ui.student_list.count()):
+        item = print_ui.student_list.item(i)
+        item.setCheckState(Qt.CheckState.Checked)
+
+def print_students():
+    student_names = []
+    for i in range(print_ui.student_list.count()):
+        item = print_ui.student_list.item(i)
+        if item.checkState() == Qt.CheckState.Checked:
+            student_names.append(item.text())
+
+    result = csv_to_result(print_ui.resultname_label.text())
+    list_infos = result.gather_print_information(student_names)
+    for i in list_infos:
+        printer_templates.PrinterTemplates.student_result_receipt(**i)
+
+def print_analysis():
+    result = csv_to_result(print_ui.resultname_label.text())
+    infos = result.result_analysis()
+    printer_templates.PrinterTemplates.course_result_receipt(**infos)
+
 def update_content() -> None:
     """
     Update Funktion für z.B. die globale Kurs- und Klausurliste
@@ -437,6 +478,9 @@ delete_ui.setupUi(delete_window)
 view_window = QDialog()
 view_ui = Ui_view_dialog()
 view_ui.setupUi(view_window)
+print_window = QDialog()
+print_ui = Ui_print_dialog()
+print_ui.setupUi(print_window)
 
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.actionCourseAdd.triggered.connect(show_edit_course_window)
@@ -457,6 +501,11 @@ edit_exam_ui.save_button.clicked.connect(save_exam)
 
 edit_result_ui.generate_table_button.clicked.connect(load_results_table)
 edit_result_ui.save_button.clicked.connect(save_results)
+edit_result_ui.print_button.clicked.connect(show_print_window)
+
+print_ui.selectall_button.clicked.connect(select_all_students)
+print_ui.printstudent_button.clicked.connect(print_students)
+print_ui.printoverview_button.clicked.connect(print_analysis)
 
 update_content()
 
