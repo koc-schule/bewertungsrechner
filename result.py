@@ -98,31 +98,42 @@ class Result:
             
             file.write(studentdata)  
 
-    def gather_print_information(self) -> list[dict]:
-        """ Sammelt Informationen über die Kurse, welche eine Klausur geschrieben haben, damit diese (Informationen) anschließend gedruckt werden können
+    def gather_print_information(self, student_names: list[str])-> list[dict]:
+        """ Sammelt Informationen über einen Schüler, welche eine Klausur geschrieben hat, damit diese (Informationen) anschließend gedruckt werden können
         Args:
-        none
+        student_names: list[str]
         returns:
         list[dict]
         """
-        students_information=[]
-        """for-loop, welcher alle schüler der kurse durchgeht""" 
-        for student in self.results:
-            student_information={}
+        students_information = []
+        for student_name in student_names:
+            """ bestimmen des Indizes des Schülers in self.results für einfacheren Zugriff"""
+            studentindex = math.inf
+            for i in range(len(self.results)):
+                if (self.results[i])["name"] == student_name:
+                    studentindex = int(i)
+            student_information = {}
+
+            """Überprüfen ob der Schülername existiert"""
+            if studentindex == math.inf:
+                student_information["name"]="Schüler existiert nicht"
+                students_information.append(student_information)
+                continue
+
             """ Einfügen der nicht zu errechnenden Werte"""
             title = "Ergebnis " + (self.get_exam()).exam_name
             student_information["title"] = title
             student_information["date"] = self.get_date()
             student_information["teacher"] = "Herr Koch"
-            student_information["subject"] = "Informatik"
-            student_information["student_name"] = student["name"]
-            student_information["points_earned"] = student["points_earned"]
+            student_information["subject"] = "Informatik "
+            student_information["student_name"] = self.results[studentindex]["name"]
+            student_information["points_earned"] = self.results[studentindex]["points_earned"]
             student_information["max_points"] =  (self.get_exam()).max_points
 
             """Berechnen der Note"""
-            percentage_earned = student["percentage_earned"]
+            percentage_earned = self.results[studentindex]["percentage_earned"]
             grading_scheme = (self.courses[0]).grading_scheme
-            points_earned = student["points_earned"]
+            points_earned = self.results[studentindex]["points_earned"]
 
             """ Berechnung der Note in der sek1 wird mithilfe der ereichten Punkte durchgeführt, um plus/minus bei einem Punkt darüber/darunter mit einzubeziehen."""
             if grading_scheme == "sek1":
@@ -218,151 +229,16 @@ class Result:
             tasks = []
             for task in list(((self.get_exam()).tasks).keys()):
                 task_name = task
-                points_earned = student[task]
+                points_earned = self.results[studentindex][task]
                 max_points = (self.get_exam()).tasks[task]
                 tasks.append((task_name, points_earned, max_points))
             student_information["tasks"] = tasks
 
-            """Hinzufügen der Einträge für einen Schüler zur Liste aller Schüler """
+            """Hinzufügen der Daten des Schülers zur Liste der Schülerdaten"""
             students_information.append(student_information)
+
         """ Rückgabe der gesammelten Informationen """
         return students_information
-
-    def gather_print_information(self, student_name: str)-> dict:
-        """ Sammelt Informationen über einen Schüler, welche eine Klausur geschrieben hat, damit diese (Informationen) anschließend gedruckt werden können
-        Args:
-        student_name:str
-        returns:
-        dict
-        """
-
-        """ bestimmen des Indizes des Schülers in self.results für einfacheren Zugriff"""
-        studentindex = math.inf
-        for i in range(len(self.results)):
-            if (self.results[1])["name"] == student_name:
-                studentindex = int(i)
-        student_information = {}
-
-        """Überprüfen ob der Schülername existiert"""
-        if studentindex == math.inf:
-            return -1
-
-        """ Einfügen der nicht zu errechnenden Werte"""
-        title = "Ergebnis " + (self.get_exam()).exam_name
-        student_information["title"] = title
-        student_information["date"] = self.get_date()
-        student_information["teacher"] = "Herr Koch"
-        student_information["subject"] = "Informatik "
-        student_information["student_name"] = self.results[studentindex]["name"]
-        student_information["points_earned"] = self.results[studentindex]["points_earned"]
-        student_information["max_points"] =  (self.get_exam()).max_points
-
-        """Berechnen der Note"""
-        percentage_earned = self.results[studentindex]["percentage_earned"]
-        grading_scheme = (self.courses[0]).grading_scheme
-        points_earned = self.results[studentindex]["points_earned"]
-
-        """ Berechnung der Note in der sek1 wird mithilfe der ereichten Punkte durchgeführt, um plus/minus bei einem Punkt darüber/darunter mit einzubeziehen."""
-        if grading_scheme == "sek1":
-            mark_1_points = math.ceil(0.95*(self.get_exam()).max_points)
-            mark_2_points = math.ceil(0.8*(self.get_exam()).max_points)
-            mark_3_points = math.ceil(0.6*(self.get_exam()).max_points)
-            mark_4_points = math.ceil(0.4*(self.get_exam()).max_points)
-            mark_5_points = math.ceil(0.8*(self.get_exam()).max_points)
-
-            if points_earned > mark_1_points:
-                mark = "1"
-            elif points_earned == mark_1_points:
-                mark = "1-"
-            elif points_earned == (mark_1_points - 1):
-                mark = "2+"
-            elif points_earned > mark_2_points:
-                mark = "2"
-            elif points_earned == mark_2_points:
-                mark = "2-"
-            elif points_earned == (mark_2_points - 1):
-                mark = "3+"
-            elif points_earned > mark_3_points:
-                mark = "3"
-            elif points_earned == mark_3_points:
-                mark = "3-"
-            elif points_earned == (mark_3_points - 1):
-                mark = "4+"
-            elif points_earned > mark_4_points:
-                mark = "4"
-            elif points_earned == mark_4_points:
-                mark = "4-"
-            elif points_earned == (mark_4_points - 1):
-                mark = "5+"
-            elif points_earned > mark_5_points:
-                mark = "5"
-            elif points_earned == mark_5_points:
-                mark = "5-"
-            elif points_earned == (mark_5_points - 1):
-                mark = "6+"
-            else:
-                mark = "6"
-        elif grading_scheme == "sek2":
-            mark_15_percentage = 95
-            mark_14_percentage = 90
-            mark_13_percentage = 85
-            mark_12_percentage = 80
-            mark_11_percentage = 75
-            mark_10_percentage = 70
-            mark_9_percentage = 65
-            mark_8_percentage = 60
-            mark_7_percentage = 55
-            mark_6_percentage = 50
-            mark_5_percentage = 45
-            mark_4_percentage = 40
-            mark_3_percentage = 33.33
-            mark_2_percentage = 26.66
-            mark_1_percentage = 20
-            if percentage_earned >= mark_15_percentage:
-                mark = "15"
-            elif percentage_earned >= mark_14_percentage:
-                mark = "14"
-            elif percentage_earned >= mark_13_percentage:
-                mark = "13"
-            elif percentage_earned >= mark_12_percentage:
-                mark = "12"
-            elif percentage_earned >= mark_11_percentage:
-                mark = "11"
-            elif percentage_earned >= mark_10_percentage:
-                mark = "10"
-            elif percentage_earned >= mark_9_percentage:
-                mark = "9"
-            elif percentage_earned >= mark_8_percentage:
-                mark = "8"
-            elif percentage_earned >= mark_7_percentage:
-                mark = "7"
-            elif percentage_earned >= mark_6_percentage:
-                mark = "6"
-            elif percentage_earned >= mark_5_percentage:
-                mark = "5"
-            elif percentage_earned >= mark_4_percentage:
-                mark = "4"
-            elif percentage_earned >= mark_3_percentage:
-                mark = "3"
-            elif percentage_earned >= mark_2_percentage:
-                mark = "2"
-            elif percentage_earned >= mark_1_percentage:
-                mark = "1"
-            else:
-                mark = "0"
-        student_information["mark"] = mark
-
-        """Sammeln von Aufgabenname, erreichte Punkte und maximale Punkte pro Aufgabe"""
-        tasks = []
-        for task in list(((self.get_exam()).tasks).keys()):
-            task_name = task
-            points_earned = self.results[studentindex][task]
-            max_points = (self.get_exam()).tasks[task]
-            tasks.append((task_name, points_earned, max_points))
-        student_information["tasks"] = tasks
-
-        """ Rückgabe der gesammelten Informationen """
-        return student_information
 
     def result_analysis(self) -> dict:
         """Sammelt die Daten für eine Auswertung
