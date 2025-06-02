@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>271</width>
-    <height>330</height>
+    <width>277</width>
+    <height>337</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Klausur bearbeiten/erstellen</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(206, 211, 196);</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -45,6 +48,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
    <property name="placeholderText">
     <string>Name</string>
    </property>
@@ -57,6 +63,9 @@
      <width>141</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="placeholderText">
     <string>Add Task (Aufgabe:Punkte)</string>
@@ -71,6 +80,9 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(216, 204, 231);</string>
+   </property>
    <property name="text">
     <string>Add</string>
    </property>
@@ -83,6 +95,9 @@
      <width>231</width>
      <height>111</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="readOnly">
     <bool>false</bool>
@@ -97,6 +112,9 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
+   </property>
    <property name="text">
     <string>Speichern</string>
    </property>
@@ -110,6 +128,9 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
+   </property>
    <property name="text">
     <string>Abbrechen</string>
    </property>
@@ -122,6 +143,9 @@
      <width>231</width>
      <height>71</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="placeholderText">
     <string>Notes</string>

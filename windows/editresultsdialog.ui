@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Ergebnisse bearbeiten/hinzufügen</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(206, 211, 196);</string>
+  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
@@ -45,6 +48,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
   </widget>
   <widget class="QComboBox" name="select_course_box">
    <property name="geometry">
@@ -55,6 +61,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="date_edit">
    <property name="geometry">
@@ -64,6 +73,9 @@
      <width>471</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="placeholderText">
     <string>Datum</string>
@@ -78,6 +90,9 @@
      <height>24</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(216, 204, 231);</string>
+   </property>
    <property name="text">
     <string>Tabelle generieren</string>
    </property>
@@ -91,6 +106,9 @@
      <height>231</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="save_button">
    <property name="geometry">
@@ -100,6 +118,9 @@
      <width>231</width>
      <height>24</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
    </property>
    <property name="text">
     <string>Speichern</string>
@@ -113,6 +134,9 @@
      <width>231</width>
      <height>24</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
    </property>
    <property name="text">
     <string>Abbrechen</string>

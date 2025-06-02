@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>322</width>
-    <height>71</height>
+    <width>319</width>
+    <height>69</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Delete</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(206, 211, 196);</string>
   </property>
   <widget class="QComboBox" name="select_box">
    <property name="geometry">
@@ -22,6 +25,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="delete_button">
    <property name="geometry">
@@ -31,6 +37,9 @@
      <width>141</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
    </property>
    <property name="text">
     <string>Löschen</string>
@@ -44,6 +53,9 @@
      <width>141</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
    </property>
    <property name="text">
     <string>Abbrechen</string>

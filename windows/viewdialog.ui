@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Klausur ansehen</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(206, 211, 196);</string>
+  </property>
   <widget class="QComboBox" name="select_box">
    <property name="geometry">
     <rect>
@@ -21,6 +24,9 @@
      <width>301</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
   </widget>
   <widget class="QPushButton" name="view_button">
@@ -31,6 +37,9 @@
      <width>141</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
    </property>
    <property name="text">
     <string>Anzeigen</string>
@@ -44,6 +53,9 @@
      <width>141</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
    </property>
    <property name="text">
     <string>Abbrechen</string>

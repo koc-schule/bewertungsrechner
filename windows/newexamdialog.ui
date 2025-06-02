@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>332</width>
+    <width>330</width>
     <height>492</height>
    </rect>
   </property>
@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(127, 169, 112);</string>
+    <string notr="true">background-color: rgb(216, 204, 231);</string>
    </property>
    <property name="text">
     <string>Bestätigen</string>
@@ -42,7 +42,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255,255,255);</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="name_textEdit">

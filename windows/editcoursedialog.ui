@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>273</width>
-    <height>324</height>
+    <width>268</width>
+    <height>322</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Kurs bearbeiten/erstellen</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(206, 211, 196);</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -30,7 +33,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Kurs bearbeiten/erstellen</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Kurs bearbeiten/erstellen&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -45,6 +48,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
    <property name="placeholderText">
     <string>Name</string>
    </property>
@@ -57,6 +63,9 @@
      <width>231</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="editable">
     <bool>false</bool>
@@ -87,6 +96,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
    <property name="placeholderText">
     <string>Add Student Name</string>
    </property>
@@ -99,6 +111,9 @@
      <width>81</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(216, 204, 231);</string>
    </property>
    <property name="text">
     <string>Add</string>
@@ -113,6 +128,9 @@
      <height>151</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
    <property name="readOnly">
     <bool>false</bool>
    </property>
@@ -126,6 +144,9 @@
      <height>23</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
+   </property>
    <property name="text">
     <string>Speichern</string>
    </property>
@@ -138,6 +159,9 @@
      <width>111</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
    </property>
    <property name="text">
     <string>Abbrechen</string>
