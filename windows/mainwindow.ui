@@ -6,20 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>300</height>
+    <width>261</width>
+    <height>252</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(206, 211, 196);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>30</y>
-      <width>341</width>
+      <x>30</x>
+      <y>-10</y>
+      <width>201</width>
       <height>61</height>
      </rect>
     </property>
@@ -31,7 +34,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Røund Up</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; color:#9791ae;&quot;&gt;Røund Up&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -40,14 +43,20 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>160</y>
-      <width>241</width>
-      <height>20</height>
+      <x>40</x>
+      <y>40</y>
+      <width>181</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="text">
-     <string>irgendwas hier, logo oder so ???</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../resources/icon_detailed.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
@@ -56,9 +65,12 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>261</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <widget class="QMenu" name="menuOptionen">
     <property name="title">
