@@ -71,13 +71,16 @@ class Exam:
 
     def quick_add_tasks(self, input_string: str,
                         names_given: bool = False,
-                        numbering_scheme: str = 'task:numbersubtask:letter)') -> None:
+                        numbering_scheme: str = 'task:numbersubtask:letter)',
+                        task_seperator_char: str = ',',
+                        subtask_seperator_char: str = ' ',
+                        name_seperator_char: str = ':') -> None:
         """
         Erstellt Aufgaben aus quick-input-string
 
         Args:
-            input_string: aufgaben mit '\n' getrennt, unteraufgaben mit ' ',
-                          nur punktzahlen, falls names_given=True stattdessen Name:Punkzahl
+            input_string: aufgaben mit ',' getrennt, unteraufgaben mit ' ', (bzw. angegeben Zeichen)
+                          nur punktzahlen, falls names_given=True stattdessen Name:Punkzahl (bzw. entsprechendes Zeichen)
                           für jede (Unter-)Aufgabe
                           Bsp: 'a1:5\n a2.2:4 a2.2:5\n a3:8'
                                '5\n 3 4 2\n 2 2'
@@ -87,8 +90,13 @@ class Exam:
                               'task:' nummerierung der aufgaben nach angegebenen muster
                               'subtask:' nummerierung der unteraufgaben nach angegebenen muster
                               muster: 'number' wird mit nummer ersetzt, 'letter' mit buchstabe
+
+            task_seperator_char: hier kann von obiger erklärung abweichendes Zeichen zum trennen der Aufgaben angegeben
+                                 werden
+            subtask_seperator_char: analog zu task_seperator_char
+            name_seperator_char: analog zu task_seperator_char
         """
-        tasks = input_string.strip().split('\n')
+        tasks = input_string.strip().split(task_seperator_char)
 
 
         # Aufgabennummerierung konfigurieren
@@ -119,10 +127,10 @@ class Exam:
 
             # Fall 1: hat unteraufgaben
             if ' ' in task and names_given:
-                for subtask in task.split(' '):
-                    self.add_task(subtask.split(':')[0], int(subtask.split(':')[1]))
+                for subtask in task.split(subtask_seperator_char):
+                    self.add_task(subtask.split(name_seperator_char)[0], int(subtask.split(name_seperator_char)[1]))
             elif ' ' in task and not names_given:
-                for subtask in task.split(' '):
+                for subtask in task.split(subtask_seperator_char):
                     self.add_task(
                         numbering_scheme.replace('subtask', str(next_subtaskchar)).replace('task', str(next_taskchar)),
                         int(subtask)
@@ -131,8 +139,8 @@ class Exam:
                     next_subtaskchar = next_numbering_char(next_subtaskchar)
 
             # Fall 2: Keine Unteraufgaben
-            elif not ' ' in task and names_given:
-                self.add_task(task.split(':')[0], int(task.split(':')[1]))
+            elif not subtask_seperator_char in task and names_given:
+                self.add_task(task.split(name_seperator_char)[0], int(task.split(name_seperator_char)[1]))
             elif not ' ' in task and not names_given:
                 self.add_task(
                     numbering_scheme.replace('subtask', '').replace('task', str(next_taskchar)),
