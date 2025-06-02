@@ -84,72 +84,6 @@ def search_course(searched_course: str, course_list: list):
         if course.course_name == searched_course:
             return (course)
 
-def show_evaluation_table():
-    """
-        Erstellt die Tabelle zur Eingabe der Bewertung
-
-        Args:
-            course (Course): ausgewählter Kurs
-            exam (Exam): ausgewählte Klausur/Test/LK
-    """
-    global selected_course
-    global selected_exam
-    global selected_date
-
-    selected_course = json_to_course(mainwindow_ui.select_course_box.currentText())
-    selected_exam = json_to_exam(mainwindow_ui.select_exam_box.currentText())
-    selected_date = mainwindow_ui.date_edit.text()
-
-    # Spalten und Zeilen festlegen
-    mainwindow_ui.evaluation_input_tableWidget.setRowCount(len(selected_course.student_names) + 2)
-    mainwindow_ui.evaluation_input_tableWidget.setColumnCount(len(selected_exam.tasks) + 2)
-
-    # Beschriftungen Einfügen
-    mainwindow_ui.evaluation_input_tableWidget.setItem(0, 0, QTableWidgetItem("Aufgabe:"))
-    mainwindow_ui.evaluation_input_tableWidget.setItem(1, 0, QTableWidgetItem("Max BE"))
-    mainwindow_ui.evaluation_input_tableWidget.setItem(0, len(selected_exam.tasks) + 1, QTableWidgetItem("Gesamt"))
-    mainwindow_ui.evaluation_input_tableWidget.setItem(1, len(selected_exam.tasks) + 1, QTableWidgetItem(str(selected_exam.max_points)))
-
-    #  Schülernamen Einfügen
-    for i in range(len(selected_course.student_names)):
-        mainwindow_ui.evaluation_input_tableWidget.setItem(2 + i, 0, QTableWidgetItem(selected_course.student_names[i]))
-
-    # Aufgabennamen mit BE Einfügen
-    for i in range(len(selected_exam.tasks)):
-        task_name = list(selected_exam.tasks.keys())[i]
-        task_points = selected_exam.tasks[task_name]
-        mainwindow_ui.evaluation_input_tableWidget.setItem(0, i + 1, QTableWidgetItem(task_name))
-        mainwindow_ui.evaluation_input_tableWidget.setItem(1, i + 1, QTableWidgetItem(str(task_points)))
-
-
-def confirm_evaluation():
-    """
-    Erstellt ein Objekt der Klasse Result aus den Eingaben
-    """   
-
-    result = Result([selected_course], [], selected_date, selected_exam)
-
-    for i in range(len(selected_course.student_names)):
-        # Daten des Schülers definieren
-        student_name = selected_course.student_names[i]
-        points_earned = 0
-        tasks = {}
-
-        for j in range(len(selected_exam.tasks)):
-            # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
-            task_name = list(selected_exam.tasks.keys())[j]
-            scored_points_task = int(mainwindow_ui.evaluation_input_tableWidget.item(i + 2, j + 1).text())
-            tasks[task_name] = scored_points_task
-
-            points_earned = points_earned + scored_points_task
-
-        percentage_earned = (points_earned / selected_exam.max_points) * 100
-
-        # Eintrag im Ergebnis für den Schüler
-        result.add_result(student_name, points_earned, percentage_earned, tasks)
-    
-    result.write_to_csv()
-
 def show_edit_course_window() -> None:
     """
     Ziegt das Fenster zum Hinzufügen eines Kurses an
@@ -477,10 +411,6 @@ def update_content() -> None:
     exam_list = get_exams()
     course_list = get_courses()
     result_list = get_results()
-    mainwindow_ui.select_course_box.clear()
-    mainwindow_ui.select_course_box.addItems(course_list)
-    mainwindow_ui.select_exam_box.clear()
-    mainwindow_ui.select_exam_box.addItems(exam_list)
 
 app = QApplication([])
 mainwindow = QMainWindow()
@@ -503,8 +433,6 @@ view_ui = Ui_view_dialog()
 view_ui.setupUi(view_window)
 
 # Verknüpfung der Buttons mit Funktionen
-mainwindow_ui.confirm_input_pushButton.clicked.connect(show_evaluation_table)
-mainwindow_ui.confirm_evaluation_pushButton.clicked.connect(confirm_evaluation)
 mainwindow_ui.actionCourseAdd.triggered.connect(show_edit_course_window)
 mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
 mainwindow_ui.actionExamAdd.triggered.connect(show_edit_exam_window)
