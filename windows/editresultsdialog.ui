@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>492</width>
-    <height>432</height>
+    <height>459</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,6 +140,22 @@
    </property>
    <property name="text">
     <string>Abbrechen</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="print_button">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>430</y>
+     <width>231</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);</string>
+   </property>
+   <property name="text">
+    <string>Drucken</string>
    </property>
   </widget>
  </widget>
