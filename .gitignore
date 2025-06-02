@@ -2,12 +2,12 @@
 /__pycache__
 /windows/__pycache__
 /utils/__pycache__
+/printer/__pycache__
 /courses
 /exams
-/printer/__pycache__
+/results
 /printer/draw.py
 /printer/test.py
 /printer
 /logs
-
 local_testing.py

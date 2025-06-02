@@ -29,6 +29,8 @@ selected_exam = None
 selected_date = ""
 
 def get_exams():
+    if not os.path.isdir("exams/"):
+        os.mkdir("exams/")
     names = [
     f.removeprefix("exam_").removesuffix(".json")
     for f in os.listdir("exams/")
@@ -37,6 +39,8 @@ def get_exams():
     return names
 
 def get_courses():
+    if not os.path.isdir("courses/"):
+        os.mkdir("courses/")
     names = [
     f.removeprefix("course_").removesuffix(".json")
     for f in os.listdir("courses/")
@@ -45,6 +49,8 @@ def get_courses():
     return names
 
 def get_results():
+    if not os.path.isdir("results/"):
+        os.mkdir("results/")
     results = [
     f.removesuffix(".csv")
     for f in os.listdir("results/")
