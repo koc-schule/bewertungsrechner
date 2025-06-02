@@ -113,9 +113,18 @@ class PrinterTemplates(PrinterLibrary):
         PrinterTemplates.printer.activate("line")
         PrinterTemplates.printer.activate("break")
         
+        # Tabelle mit Aufgaben und den durchschnittlich erreichten Punkten und Kopfzeile        
+        kwargs["tasks"].insert(0, ("Aufgabe", "Durchschnitt", "Maximal"))
+        PrinterTemplates.printer.activate("table_3", content=kwargs["tasks"], ratio=(9, 12, 8))
+        
+        # Trennstrich
+        PrinterTemplates.printer.activate("break")
+        PrinterTemplates.printer.activate("line")
+        PrinterTemplates.printer.activate("break")
+        
         # Tabelle mit Aufgaben und den jeweils erreichten Punkten und Kopfzeile        
-        kwargs["results"].insert(0, ("Schueler", "Note"))
-        PrinterTemplates.printer.activate("table_2", content=kwargs["results"])
+        kwargs["marks"].insert(0, ("Schueler", "Note"))
+        PrinterTemplates.printer.activate("table_2", content=kwargs["marks"])
         
         # Trennstrich
         PrinterTemplates.printer.activate("break")
