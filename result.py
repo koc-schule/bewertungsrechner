@@ -125,7 +125,7 @@ class Result:
             student_information["title"] = title
             student_information["date"] = self.get_date()
             student_information["teacher"] = "Herr Koch"
-            student_information["subject"] = "Informatik "
+            student_information["subject"] = "Informatik"
             student_information["student_name"] = self.results[studentindex]["name"]
             student_information["points_earned"] = self.results[studentindex]["points_earned"]
             student_information["max_points"] =  (self.get_exam()).max_points
@@ -249,7 +249,7 @@ class Result:
         """
         analysis = {} 
         """ Sammeln aller zur Auswertung nötigen Informationen """
-        result = self.gather_print_information()
+        result = self.gather_print_information(list(student["name"] for student in self.results))
         """Hinzufügen der bekannten/sich nicht ändernden Werte """
         analysis["title"] = result[0]["title"]
         analysis["date"] = result[0]["date"]
