@@ -35,7 +35,7 @@ class Result:
 
         Args:
             courses (list[Course]): Liste an Kursen, welche mit den Results zusammenhängen
-            results (list[dict]): Liste an Ergebnisen der einzelnen Schüler
+            results (list[dict]): Liste an Ergebnissen der einzelnen Schüler
             date (str): Datum der Leistungskontrolle
             exam (Exam): Exam Vorlage mit maximalen Punkten und erreichbaren Punkten pro Aufgabe
         """
@@ -74,8 +74,8 @@ class Result:
 
         Args:
             name (str): Name des Schülers
-            points_earned (int): Gesammt erreichte Punkte
-            percentage_earned (float): Prozentsatz der gesammten Punktzahl der erreicht wurde
+            points_earned (int): Gesamt erreichte Punkte
+            percentage_earned (float): Prozentsatz der gesamten Punktzahl der erreicht wurde
             tasks (dict): Dictionary an einzelnen Aufgaben mit den erreichten Punktzahlen
         """
         output = {
@@ -117,10 +117,10 @@ class Result:
 
     
     def write_to_csv(self) -> None:
-        """ Schreibt ein Result- Objekt in eine .csv-Datei um 
-       
-        Argumente: 
-            result: Result
+        """ Schreibt ein Result Objekt in eine .csv-Datei um
+
+        Args:
+        none
         """
 
         """Auswählen der Datei"""
@@ -154,7 +154,9 @@ class Result:
             file.write(studentdata)  
 
     def gather_print_information(self, student_names: list[str], print_average: bool = False)-> list[dict]:
-        """ Sammelt Informationen über einen Schüler, welche eine Klausur geschrieben hat, damit diese (Informationen) anschließend gedruckt werden können
+        """
+        Sammelt Informationen über einen Schüler, welche eine Klausur geschrieben hat,
+        damit diese (Informationen) anschließend gedruckt werden können
         Args:
         student_names: list[str]
         returns:
@@ -187,7 +189,7 @@ class Result:
             grading_scheme = (self.courses[0]).grading_scheme
             points_earned = self.results[studentindex]["points_earned"]
 
-            """ Berechnung der Note in der sek1 wird mithilfe der ereichten Punkte durchgeführt, um plus/minus bei einem Punkt darüber/darunter mit einzubeziehen."""
+            """ Berechnung der Note für sek1 mittels der ereichten Punkte, um plus/minus-Noten zu erlauben."""
             if grading_scheme == "sek1":
                 mark_1_points = math.ceil(mark_percentage_borders_sek1[1] * (self.get_exam()).max_points)
                 mark_2_points = math.ceil(mark_percentage_borders_sek1[2] * (self.get_exam()).max_points)

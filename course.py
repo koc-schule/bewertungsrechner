@@ -2,15 +2,16 @@
 Course Klasse
 """
 
+
 class Course:
     def __init__(self, name: str, grading_scheme: str, student_names: list[str]) -> None:
         """
         Erstellen der Klasse
 
         Args:
-            name: Name des Kurses
-            grading_scheme: "sek1" oder "sek2" zum Festlegen des Bewertungssystems
-            student_names: Liste mit den Schülernamen
+            name (str): Name des Kurses
+            grading_scheme (str): "sek1" oder "sek2" zum Festlegen des Bewertungssystems
+            student_names (list[str]): Liste mit den Schülernamen
         """
         self.course_name = name
         if grading_scheme in ('sek1', 'sek2'):
