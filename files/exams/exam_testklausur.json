@@ -1,0 +1,13 @@
+{
+    "name": "testklausur",
+    "notes": "testnotiz",
+    "max_points": 21,
+    "tasks": {
+        "1)": 1,
+        "2a)": 2,
+        "2b)": 3,
+        "3a)": 5,
+        "3b)": 4,
+        "4)": 6
+    }
+}

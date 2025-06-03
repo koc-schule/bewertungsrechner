@@ -20,6 +20,9 @@ class Result:
         self.date = date
         self.exam = exam
 
+
+        self.mark_distribution = [] #list[dict]
+        self.mark_average = -1
     def get_courses(self) -> list[Course]:
         return self.courses
 
@@ -61,6 +64,9 @@ class Result:
         }
         output = output | tasks
         self.results.append(output)
+    def calculate_mark_average(self):
+        for student in self.results:
+            ...
     def write_to_csv(self) -> None:
         """ Schreibt ein Result- Objekt in eine .csv-Datei um 
        
@@ -105,6 +111,7 @@ class Result:
         returns:
         list[dict]
         """
+        marks = []
         students_information = []
         for student_name in student_names:
             """ bestimmen des Indizes des Schülers in self.results für einfacheren Zugriff"""
@@ -125,7 +132,7 @@ class Result:
             student_information["title"] = title
             student_information["date"] = self.get_date()
             student_information["teacher"] = "Herr Koch"
-            student_information["subject"] = "Informatik "
+            student_information["subject"] = "Informatik"
             student_information["student_name"] = self.results[studentindex]["name"]
             student_information["points_earned"] = self.results[studentindex]["points_earned"]
             student_information["max_points"] =  (self.get_exam()).max_points
@@ -175,6 +182,7 @@ class Result:
                     mark = "6+"
                 else:
                     mark = "6"
+                marks.append(mark[0])
             elif grading_scheme == "sek2":
                 mark_15_percentage = 95
                 mark_14_percentage = 90
@@ -223,8 +231,9 @@ class Result:
                     mark = "1"
                 else:
                     mark = "0"
+                marks.append(mark)
             student_information["mark"] = mark
-
+            
             """Sammeln von Aufgabenname, erreichte Punkte und maximale Punkte pro Aufgabe"""
             tasks = []
             for task in list(((self.get_exam()).tasks).keys()):
@@ -233,9 +242,17 @@ class Result:
                 max_points = (self.get_exam()).tasks[task]
                 tasks.append((task_name, points_earned, max_points))
             student_information["tasks"] = tasks
-
+            
             """Hinzufügen der Daten des Schülers zur Liste der Schülerdaten"""
             students_information.append(student_information)
+            
+        """Berechnen der durchschnittlichen Note"""
+        marks_sum = 0
+        for mark in marks:
+            marks_sum += mark
+        average_mark = marks_sum / len(student_names)
+        for student in students_information:
+            student["average"] = avrage_mark
 
         """ Rückgabe der gesammelten Informationen """
         return students_information
@@ -249,7 +266,7 @@ class Result:
         """
         analysis = {} 
         """ Sammeln aller zur Auswertung nötigen Informationen """
-        result = self.gather_print_information()
+        result = self.gather_print_information(list(student["name"] for student in self.results))
         """Hinzufügen der bekannten/sich nicht ändernden Werte """
         analysis["title"] = result[0]["title"]
         analysis["date"] = result[0]["date"]

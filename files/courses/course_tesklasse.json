@@ -1,0 +1,8 @@
+{
+    "name": "tesklasse",
+    "grading_scheme": "sek1",
+    "student_names": [
+        "Schüler1",
+        "Schüler2"
+    ]
+}
