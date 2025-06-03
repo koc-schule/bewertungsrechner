@@ -337,6 +337,9 @@
       </disabled>
      </palette>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -366,6 +369,8 @@ selection-background-color: rgb(151, 145, 174);</string>
      <string>Optionen</string>
     </property>
     <addaction name="actionBeenden"/>
+    <addaction name="separator"/>
+    <addaction name="actionHilfe"/>
    </widget>
    <widget class="QMenu" name="menuKlausur">
     <property name="title">
@@ -444,6 +449,11 @@ selection-background-color: rgb(151, 145, 174);</string>
   <action name="actionResultRemove">
    <property name="text">
     <string>Entfernen</string>
+   </property>
+  </action>
+  <action name="actionHilfe">
+   <property name="text">
+    <string>Hilfe</string>
    </property>
   </action>
  </widget>

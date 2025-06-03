@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'printdialog.ui'
+# Form implementation generated from reading ui file 'c:\Users\AdminHome\Documents\GitHub\bewertungsrechner\windows\printdialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
