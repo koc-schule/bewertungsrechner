@@ -25,7 +25,7 @@ class Ui_delete_dialog(object):
         self.delete_button.setGeometry(QtCore.QRect(10, 40, 141, 23))
         self.delete_button.setStyleSheet("background-color: rgb(127, 169, 112);\n"
 "border-style: outset;\n"
-"porder-width: 2px;\n"
+"border-width: 2px;\n"
 "border-radius:  10px;\n"
 "border-color: white;\n"
 "font: bold 14px;")
@@ -34,7 +34,7 @@ class Ui_delete_dialog(object):
         self.exit_button.setGeometry(QtCore.QRect(170, 40, 141, 23))
         self.exit_button.setStyleSheet("background-color: rgb(127, 169, 112);\n"
 "border-style: outset;\n"
-"porder-width: 2px;\n"
+"border-width: 2px;\n"
 "border-radius:  10px;\n"
 "border-color: white;\n"
 "font: bold 14px;")
