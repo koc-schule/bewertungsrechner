@@ -229,7 +229,10 @@ def save_results() -> None:
         for j in range(len(selected_exam.tasks)):
             # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
             task_name = list(selected_exam.tasks.keys())[j]
-            scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
+            if edit_result_ui.results_table.item(i + 2, j + 1).text() == "":
+                scored_points_task = 0
+            else:
+                scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
             tasks[task_name] = scored_points_task
 
             points_earned = points_earned + scored_points_task

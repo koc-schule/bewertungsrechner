@@ -20,6 +20,9 @@ class Result:
         self.date = date
         self.exam = exam
 
+
+        self.mark_distribution = [] #list[dict]
+        self.mark_average = -1
     def get_courses(self) -> list[Course]:
         return self.courses
 
@@ -61,6 +64,9 @@ class Result:
         }
         output = output | tasks
         self.results.append(output)
+    def calculate_mark_average(self):
+        for student in self.results:
+            ...
     def write_to_csv(self) -> None:
         """ Schreibt ein Result- Objekt in eine .csv-Datei um 
        

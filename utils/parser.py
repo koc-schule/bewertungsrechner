@@ -5,10 +5,7 @@ from course import Course
 from result import Result
 from utils.json_parser import *
 import os
-import sys
-"""current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)"""
+
 
 
 def course_csv_file_to_object(name: str) -> Course:
