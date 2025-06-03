@@ -206,6 +206,7 @@ def save_results() -> None:
                 if item is None:
                     scored_points_task = 0
                 elif 0 > int(edit_result_ui.results_table.item(i + 2, j + 1).text()) or int(edit_result_ui.results_table.item(i + 2, j + 1).text()) > int(edit_result_ui.results_table.item(1, j + 1).text()):
+                    # falls eine fehlerhafte Eingabe besteht, wird die Scheife abgebrochen
                     raise None
                 else:
                     scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
