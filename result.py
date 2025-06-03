@@ -114,12 +114,6 @@ class Result:
                     studentindex = int(i)
             student_information = {}
 
-            """Überprüfen ob der Schülername existiert"""
-            if studentindex == math.inf:
-                student_information["name"]="Schüler existiert nicht"
-                students_information.append(student_information)
-                continue
-
             """ Einfügen der nicht zu errechnenden Werte"""
             title = "Ergebnis " + (self.get_exam()).exam_name
             student_information["title"] = title
