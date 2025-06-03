@@ -2,6 +2,11 @@
 Bitte nicht eigenständig bearbeiten, hier soll die generelle Klassenstruktur etc. pp hin.
 """
 from typing import Callable
+
+from utils.json_parser import *
+import os
+import re
+
 from course import Course
 from exam import Exam
 
@@ -57,7 +62,25 @@ def terminal_user_interface() -> None:
         """Kursverwaltungsmenu"""
 
         def show_course() -> None:
-            print('Noch nicht implementiert')
+            print_numbered_list('Kurse', [i.course_name for i in courses])
+
+            course_index = ''
+            while type(course_index) != int:
+                try:    course_index = int(input('Wählen Sie die Nummer eines Kurses: ')) - 1
+                except: pass
+
+            choosen_course = courses[course_index]
+            print(f'\nKursdaten\n'
+                  f'     Kursname:\n'
+                  f'          {choosen_course.course_name}\n'
+                  f'     Bewertungssystem:\n'
+                  f'          {choosen_course.grading_scheme}\n'
+                  f'     Schüler:\n',
+                  '\n'.join([f'           {i}' for i in choosen_course.student_names]))
+            print()
+
+            input()
+            course_window()
 
         def add_course() -> None:
             """Neune Kurs anlegen und zum Kursmenu zurückkehren"""
@@ -69,7 +92,10 @@ def terminal_user_interface() -> None:
                 grading_scheme = 'sek2'
             student_names = input('Schülernamen (getrennt mit ","): ').split(',')
 
-            courses.append(Course(course_name, grading_scheme, student_names))
+            # speichern
+            new_course = Course(course_name, grading_scheme, student_names)
+            courses.append(new_course)
+            course_to_json(new_course)
 
             course_window()
 
@@ -85,10 +111,13 @@ def terminal_user_interface() -> None:
             while type(course_index) != int:
                 course_index = input('Geben Sie die Nummer des zu löschenden Kurses ein: ')
                 try:
+                    print(courses, course_index)
                     courses.pop(int(course_index) - 1)
                     break
                 except: pass
 
+
+            os.remove(f'files/courses/course_{courses[int(course_index) - 1].course_name}.json')
             course_window()
 
         # Kursfenster
@@ -98,15 +127,39 @@ def terminal_user_interface() -> None:
 
 
 
-        course_window_menu_items = [('Kursdaten anzeigen', show_course)
+        course_window_menu_items = [('Kursdaten anzeigen', show_course),
                                     ('Kurs anlegen', add_course),
-                                    ('Kurs bearbeiten', edit_course),
+                                    #('Kurs bearbeiten', edit_course),
                                     ('Kurs löschen', delete_course),
                                     ('Zurück zum Hauptmenu', main_window)]
         print_menu(course_window_menu_items)
 
     def exam_window() -> None:
         """Prüfungsfenster"""
+
+        def show_exam() -> None:
+            print_numbered_list('Prüfungen', [i.exam_name for i in exams])
+
+            exam_index = ''
+            while type(exam_index) != int:
+                try:    exam_index = int(input('Wählen Sie die Nummer einer Prüfung: ')) - 1
+                except: pass
+
+            choosen_exam = exams[exam_index]
+            print(f'\nPrüfungsdatendaten\n'
+                  f'     Prüfungsname:\n'
+                  f'          {choosen_exam.exam_name}\n'
+                  f'     Notizen:\n'
+                  f'          {choosen_exam.notes}\n'
+                  f'     Maximalpunktzahl:\n'
+                  f'          {choosen_exam.max_points}\n'
+                  f'     Aufgaben:\n',
+                  '\n'.join([f'           {i}: {choosen_exam.tasks[i]}' for i in choosen_exam.tasks]))
+            print()
+
+            input()
+            course_window()
+
         def add_exam() -> None:
             """Neue Prüfung anlegen und zum Prüfungsmenu zurückkehren"""
             print('\nNeue Prüfung anlegen\n')
@@ -137,21 +190,38 @@ def terminal_user_interface() -> None:
             tasks = input('Punktzahlen: ')
             new_exam.quick_add_tasks(tasks, names_given, numbering_scheme)
 
+            # Speichern
             exams.append(new_exam)
+            exam_to_json(new_exam)
 
             exam_window()
         def edit_exam() -> None:
             ...
 
         def delete_exam() -> None:
-            ...
+            """Kurs löschen und zum Kursmenu zurückkehren"""
+            print('\n Prüfung löschen\n')
+            print_numbered_list('Bestehende Prüfungen', [i.exam_name for i in exams])
+
+            exam_index = ''
+            while type(exam_index) != int:
+                exam_index = input('Geben Sie die Nummer der zu löschenden Prüfung ein: ')
+                try:
+                    exams.pop(int(exam_index) - 1)
+                    break
+                except:
+                    pass
+
+            os.remove(f'files/exams/exam_{exams[int(exam_index) - 1].exam_name}.json')
+            exam_window()
 
         # Prüfungsfenster
         print_heading('Prüfungsverwaltung')
         print_numbered_list('Bestehende Prüfungen', [i.exam_name for i in exams])
 
-        exam_window_menu_items = [('Prüfung hinzufügen', add_exam),
-                                  ('Prüfung bearbeiten', edit_exam),
+        exam_window_menu_items = [('Prügungsdaten anzeigen', show_exam),
+                                  ('Prüfung hinzufügen', add_exam),
+                                  #('Prüfung bearbeiten', edit_exam),
                                   ('Prüfung löschen', delete_exam),
                                   ('Zurück zum Hauptmenu', main_window)]
         print_menu(exam_window_menu_items)
@@ -179,4 +249,21 @@ def terminal_user_interface() -> None:
 
     main_window()
 
+# Daten aus .csv Dateien lesen
+# Kurse
+for file in os.listdir('files/courses'):
+    #                    liste mit namen des courses in aktuellem file
+    name_from_filename = re.findall(r'course_(.+).json', file)
+    if len(name_from_filename) == 1:
+        courses.append(json_to_course(name_from_filename[0]))
+# Prüfungen
+for file in os.listdir('files/exams'):
+    #                    liste mit namen der prüfung in aktuellem file
+    name_from_filename = re.findall(r'exam_(.+).json', file)
+    if len(name_from_filename) == 1:
+        exams.append(json_to_exam(name_from_filename[0]))
+
+
+
+# Termainal Controller starten
 terminal_user_interface()
