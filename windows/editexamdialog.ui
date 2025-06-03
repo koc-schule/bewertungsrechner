@@ -35,7 +35,7 @@
     <string>Klausur bearbeiten/erstellen</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLineEdit" name="name_input">
@@ -51,7 +51,9 @@
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);
+</string>
    </property>
    <property name="placeholderText">
     <string>Name</string>
@@ -70,7 +72,9 @@ font: 14px;</string>
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);
+</string>
    </property>
    <property name="placeholderText">
     <string>Add Task (Aufgabe:Punkte)</string>
@@ -111,7 +115,9 @@ font: 14px;</string>
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);
+</string>
    </property>
    <property name="readOnly">
     <bool>false</bool>
@@ -170,7 +176,9 @@ font: bold 14px;</string>
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);
+</string>
    </property>
    <property name="placeholderText">
     <string>Notes</string>

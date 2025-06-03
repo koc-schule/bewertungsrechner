@@ -60,39 +60,7 @@ def get_results():
     for f in os.listdir("results/")
     if f.endswith(".csv")
     ]
-    return results
-
-
-def search_exam(searched_exam: str, exam_list: list):
-    """
-        Durchsucht die Liste von Klausuren nach einer spezifischen Klausur nach Name
-
-        Args:
-            searched_exam (str): Name der gesuchten Klausur
-            exam_list (list): Zu durchsuchende Liste
-        Returns:
-            exam (Exam): gesuchte Klausur
-    """
-
-    for exam in exam_list:
-        if exam.exam_name == searched_exam:
-            return (exam)
-
-
-def search_course(searched_course: str, course_list: list):
-    """
-        Durchsucht eine liste von Kursen anhand eines Namen
-
-        Args:
-            searched_course (str): Name des gesuchten Kurses
-            course_list (list): Zu durchsuchende Liste
-        Returns:
-            course (Course): gesuchter Kurs
-    """
-
-    for course in course_list:
-        if course.course_name == searched_course:
-            return (course)
+    return results 
 
 def show_edit_course_window() -> None:
     """
@@ -128,10 +96,13 @@ def save_course() -> None:
     students_raw = edit_course_ui.students_textbox.toPlainText()
     students = students_raw.strip().split('\n')
     # Erstellen und Speichern des neuen Kurses
-    new_course = Course(name, grading_scheme, students)
-    course_to_json(new_course)
-    update_content()
-    edit_course_window.close()
+    if name is not "":
+        new_course = Course(name, grading_scheme, students)
+        course_to_json(new_course)
+        update_content()
+        edit_course_window.close()
+    else:
+        edit_course_ui.name_input.setText("Bitte einen Namen eingeben!")
 
 def show_edit_exam_window() -> None:
     """

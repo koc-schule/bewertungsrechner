@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>259</width>
-    <height>260</height>
+    <height>322</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,6 @@
    <property name="font">
     <font>
      <pointsize>14</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -36,7 +35,7 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#000000;&quot;&gt;Kurs bearbeiten/erstellen&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLineEdit" name="name_input">
@@ -52,7 +51,8 @@
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);</string>
    </property>
    <property name="placeholderText">
     <string>Name</string>
@@ -71,25 +71,28 @@ font: 14px;</string>
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);
+selection-color: rgb(255, 255, 255);
+selection-background-color: rgb(151, 145, 174);</string>
    </property>
    <property name="editable">
     <bool>false</bool>
    </property>
    <property name="currentText">
-    <string>Sekundarstuffe I</string>
+    <string>Sekundarstufe I</string>
    </property>
    <property name="currentIndex">
     <number>0</number>
    </property>
    <item>
     <property name="text">
-     <string>Sekundarstuffe I</string>
+     <string>Sekundarstufe I</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Sekundarstuffe II</string>
+     <string>Sekundarstufe II</string>
     </property>
    </item>
   </widget>
@@ -106,7 +109,8 @@ font: 14px;</string>
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);</string>
    </property>
    <property name="placeholderText">
     <string>Add Student Name</string>
@@ -147,7 +151,8 @@ font: 14px;</string>
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);</string>
    </property>
    <property name="readOnly">
     <bool>false</bool>
