@@ -122,7 +122,7 @@ class Ui_MainWindow(object):
         palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.LinkVisited, brush)
         self.label_2.setPalette(palette)
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("../resources/icon_detailed.png"))
+        self.label_2.setPixmap(QtGui.QPixmap("resources/icon_detailed.png"))
         self.label_2.setScaledContents(True)
         self.label_2.setObjectName("label_2")
         MainWindow.setCentralWidget(self.centralwidget)
