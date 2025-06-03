@@ -97,7 +97,7 @@ def save_course() -> None:
     students_raw = edit_course_ui.students_textbox.toPlainText()
     students = students_raw.strip().split('\n')
     # Erstellen und Speichern des neuen Kurses
-    if name is not "":
+    if name != "":
         new_course = Course(name, grading_scheme, students)
         course_to_json(new_course)
         update_content()

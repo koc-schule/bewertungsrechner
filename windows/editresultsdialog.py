@@ -74,7 +74,7 @@ class Ui_edit_result_dialog(object):
         self.save_button.setGeometry(QtCore.QRect(10, 400, 231, 24))
         self.save_button.setStyleSheet("background-color: rgb(127, 169, 112);\n"
 "border-style: outset;\n"
-"porder-width: 2px;\n"
+"border-width: 2px;\n"
 "border-radius:  10px;\n"
 "border-color: white;\n"
 "font: bold 14px;")
@@ -83,7 +83,7 @@ class Ui_edit_result_dialog(object):
         self.exit_button.setGeometry(QtCore.QRect(250, 400, 231, 24))
         self.exit_button.setStyleSheet("background-color: rgb(127, 169, 112);\n"
 "border-style: outset;\n"
-"porder-width: 2px;\n"
+"border-width: 2px;\n"
 "border-radius:  10px;\n"
 "border-color: white;\n"
 "font: bold 14px;")
@@ -92,7 +92,7 @@ class Ui_edit_result_dialog(object):
         self.print_button.setGeometry(QtCore.QRect(10, 430, 231, 24))
         self.print_button.setStyleSheet("background-color: rgb(127, 169, 112);\n"
 "border-style: outset;\n"
-"porder-width: 2px;\n"
+"border-width: 2px;\n"
 "border-radius:  10px;\n"
 "border-color: white;\n"
 "font: bold 14px;")
