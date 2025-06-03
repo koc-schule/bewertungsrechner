@@ -3,6 +3,30 @@ from exam import Exam
 import math
 """Result Klasse"""
 
+# PROZENTSÄTZE FÜR NOTENGRENZE
+mark_percentage_borders_sek1 = {1: 0.95,
+                                2: 0.80,
+                                3: 0.60,
+                                4: 0.40,
+                                5: 0.20,
+                                6: 0.00}
+mark_percentage_borders_sek2 = {15: 0.95,
+                                14: 0.90,
+                                13: 0.85,
+                                12: 0.80,
+                                11: 0.75,
+                                10: 0.70,
+                                9: 0.65,
+                                8: 0.60,
+                                7: 0.55,
+                                6: 0.50,
+                                5: 0.45,
+                                4: 0.40,
+                                3: 0.3333,
+                                2: 0.2666,
+                                1: 0.20}
+
+
 
 class Result:
     def __init__(self, courses: list[Course], results: list[dict], date: str, exam: Exam) -> None:
@@ -61,6 +85,37 @@ class Result:
         }
         output = output | tasks
         self.results.append(output)
+
+    def quick_add_result(self, input_strs: list[str], exam: Exam, name_seperator_char: str = ",", task_seperator_char: str = " ") -> None:
+        """
+        Wandelt str in Ergebnisse um um die Eingabegeschwindigkeit zu erhöhen
+
+        Args:
+            input_strs: Liste mit den inputstrs pro schüler
+            tasks: Dictionary mit Tasks aus Examobjekt
+
+            (input_str: Name des Schülers, Punktzahlen mit " " getrennt)
+        """
+        for i in input_strs:
+            student_name, earned_points = i.split(name_seperator_char)
+            earned_points = earned_points.strip().split(task_seperator_char)
+
+            for i in range(len(earned_points)):
+                try:    earned_points[i] = int(i)
+                except: pass
+
+            total_points_earned = sum(earned_points)
+            percentage = total_points_earned / exam.max_points * 100
+
+            if len(earned_points) != len(exam.tasks):
+                raise Warning(f'Ungültige Aufgabenanzahl bei Schüler {student_name}. Dieser Schüler wurde übersprungen.')
+            else:
+                # ergebnis deictionary erstellen
+                student_result_dict = {key: earned_points.pop(0) for key in exam.tasks}
+
+                self.add_result(student_name, total_points_earned, percentage, student_result_dict)
+
+    
     def write_to_csv(self) -> None:
         """ Schreibt ein Result- Objekt in eine .csv-Datei um 
        
@@ -117,12 +172,6 @@ class Result:
                     studentindex = int(i)
             student_information = {}
 
-            """Überprüfen ob der Schülername existiert"""
-            if studentindex == math.inf:
-                student_information["name"]="Schüler existiert nicht"
-                students_information.append(student_information)
-                continue
-
             """ Einfügen der nicht zu errechnenden Werte"""
             title = "Ergebnis " + (self.get_exam()).exam_name
             student_information["title"] = title
@@ -140,11 +189,11 @@ class Result:
 
             """ Berechnung der Note in der sek1 wird mithilfe der ereichten Punkte durchgeführt, um plus/minus bei einem Punkt darüber/darunter mit einzubeziehen."""
             if grading_scheme == "sek1":
-                mark_1_points = math.ceil(0.95*(self.get_exam()).max_points)
-                mark_2_points = math.ceil(0.8*(self.get_exam()).max_points)
-                mark_3_points = math.ceil(0.6*(self.get_exam()).max_points)
-                mark_4_points = math.ceil(0.4*(self.get_exam()).max_points)
-                mark_5_points = math.ceil(0.8*(self.get_exam()).max_points)
+                mark_1_points = math.ceil(mark_percentage_borders_sek1[1] * (self.get_exam()).max_points)
+                mark_2_points = math.ceil(mark_percentage_borders_sek1[2] * (self.get_exam()).max_points)
+                mark_3_points = math.ceil(mark_percentage_borders_sek1[3] * (self.get_exam()).max_points)
+                mark_4_points = math.ceil(mark_percentage_borders_sek1[4] * (self.get_exam()).max_points)
+                mark_5_points = math.ceil(mark_percentage_borders_sek1[5] * (self.get_exam()).max_points)
 
                 if points_earned > mark_1_points:
                     mark = "1"
@@ -181,51 +230,37 @@ class Result:
                 
                 if print_average:
                     marks.append(mark[0])
+                    
             elif grading_scheme == "sek2":
-                mark_15_percentage = 95
-                mark_14_percentage = 90
-                mark_13_percentage = 85
-                mark_12_percentage = 80
-                mark_11_percentage = 75
-                mark_10_percentage = 70
-                mark_9_percentage = 65
-                mark_8_percentage = 60
-                mark_7_percentage = 55
-                mark_6_percentage = 50
-                mark_5_percentage = 45
-                mark_4_percentage = 40
-                mark_3_percentage = 33.33
-                mark_2_percentage = 26.66
-                mark_1_percentage = 20
-                if percentage_earned >= mark_15_percentage:
+                if percentage_earned >= mark_percentage_borders_sek2[15] * 100:
                     mark = "15"
-                elif percentage_earned >= mark_14_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[14] * 100:
                     mark = "14"
-                elif percentage_earned >= mark_13_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[13] * 100:
                     mark = "13"
-                elif percentage_earned >= mark_12_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[12] * 100:
                     mark = "12"
-                elif percentage_earned >= mark_11_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[11] * 100:
                     mark = "11"
-                elif percentage_earned >= mark_10_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[10] * 100:
                     mark = "10"
-                elif percentage_earned >= mark_9_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[9] * 100:
                     mark = "9"
-                elif percentage_earned >= mark_8_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[8] * 100:
                     mark = "8"
-                elif percentage_earned >= mark_7_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[7] * 100:
                     mark = "7"
-                elif percentage_earned >= mark_6_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[6] * 100:
                     mark = "6"
-                elif percentage_earned >= mark_5_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[5] * 100:
                     mark = "5"
-                elif percentage_earned >= mark_4_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[4] * 100:
                     mark = "4"
-                elif percentage_earned >= mark_3_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[3] * 100:
                     mark = "3"
-                elif percentage_earned >= mark_2_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[2] * 100:
                     mark = "2"
-                elif percentage_earned >= mark_1_percentage:
+                elif percentage_earned >= mark_percentage_borders_sek2[1] * 100:
                     mark = "1"
                 else:
                     mark = "0"

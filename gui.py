@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import *
+from PyQt6.QtGui import QPalette, QColor
 from PyQt6.QtCore import Qt
 from printer import printer_templates
 from windows.mainwindow import Ui_MainWindow
@@ -34,7 +35,7 @@ selected_course = None
 selected_exam = None
 selected_date = ""
 
-def get_exams():
+def get_exams() -> list[str]:
     if not os.path.isdir("exams/"):
         os.mkdir("exams/")
     names = [
@@ -44,7 +45,7 @@ def get_exams():
     ]
     return names
 
-def get_courses():
+def get_courses() -> list[str]:
     if not os.path.isdir("courses/"):
         os.mkdir("courses/")
     names = [
@@ -54,7 +55,7 @@ def get_courses():
     ]
     return names
 
-def get_results():
+def get_results() -> list[str]:
     if not os.path.isdir("results/"):
         os.mkdir("results/")
     results = [
@@ -62,39 +63,7 @@ def get_results():
     for f in os.listdir("results/")
     if f.endswith(".csv")
     ]
-    return results
-
-
-def search_exam(searched_exam: str, exam_list: list):
-    """
-        Durchsucht die Liste von Klausuren nach einer spezifischen Klausur nach Name
-
-        Args:
-            searched_exam (str): Name der gesuchten Klausur
-            exam_list (list): Zu durchsuchende Liste
-        Returns:
-            exam (Exam): gesuchte Klausur
-    """
-
-    for exam in exam_list:
-        if exam.exam_name == searched_exam:
-            return (exam)
-
-
-def search_course(searched_course: str, course_list: list):
-    """
-        Durchsucht eine liste von Kursen anhand eines Namen
-
-        Args:
-            searched_course (str): Name des gesuchten Kurses
-            course_list (list): Zu durchsuchende Liste
-        Returns:
-            course (Course): gesuchter Kurs
-    """
-
-    for course in course_list:
-        if course.course_name == searched_course:
-            return (course)
+    return results 
 
 def show_edit_course_window() -> None:
     """
@@ -130,10 +99,13 @@ def save_course() -> None:
     students_raw = edit_course_ui.students_textbox.toPlainText()
     students = students_raw.strip().split('\n')
     # Erstellen und Speichern des neuen Kurses
-    new_course = Course(name, grading_scheme, students)
-    course_to_json(new_course)
-    update_content()
-    edit_course_window.close()
+    if name != "":
+        new_course = Course(name, grading_scheme, students)
+        course_to_json(new_course)
+        update_content()
+        edit_course_window.close()
+    else:
+        edit_course_ui.name_input.setText("Bitte einen Namen eingeben!")
 
 def show_edit_exam_window() -> None:
     """
@@ -218,33 +190,41 @@ def load_results_table() -> None:
 def save_results() -> None:
     """
     Erstellt ein Objekt der Klasse Result aus den Eingaben
-    """   
+    """
+    try:
+        result = Result([selected_course], [], selected_date, selected_exam)
 
-    result = Result([selected_course], [], selected_date, selected_exam)
+        for i in range(len(selected_course.student_names)):
+            # Daten des Schülers definieren
+            student_name = selected_course.student_names[i]
+            points_earned = 0
+            tasks = {}
 
-    for i in range(len(selected_course.student_names)):
-        # Daten des Schülers definieren
-        student_name = selected_course.student_names[i]
-        points_earned = 0
-        tasks = {}
+            for j in range(len(selected_exam.tasks)):
+                # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
+                task_name = list(selected_exam.tasks.keys())[j]
+                item = edit_result_ui.results_table.item(i + 2, j + 1)
+                if item is None:
+                    scored_points_task = 0
+                elif 0 > int(edit_result_ui.results_table.item(i + 2, j + 1).text()) or int(edit_result_ui.results_table.item(i + 2, j + 1).text()) > int(edit_result_ui.results_table.item(1, j + 1).text()):
+                    # falls eine fehlerhafte Eingabe besteht, wird die Scheife abgebrochen
+                    raise None
+                else:
+                    scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
+                tasks[task_name] = scored_points_task
 
-        for j in range(len(selected_exam.tasks)):
-            # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
-            task_name = list(selected_exam.tasks.keys())[j]
-            scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
-            tasks[task_name] = scored_points_task
+                points_earned = points_earned + scored_points_task
 
-            points_earned = points_earned + scored_points_task
+            percentage_earned = (points_earned / selected_exam.max_points) * 100
 
-        percentage_earned = (points_earned / selected_exam.max_points) * 100
+            # Eintrag im Ergebnis für den Schüler
+            result.add_result(student_name, points_earned, percentage_earned, tasks)
+        result.write_to_csv()
+        update_content()
+        edit_result_window.close()
 
-        # Eintrag im Ergebnis für den Schüler
-        result.add_result(student_name, points_earned, percentage_earned, tasks)
-    
-    result.write_to_csv()
-    update_content()
-    edit_result_window.close()
-
+    except:
+        QMessageBox.critical(mainwindow, "Fehler", "Bitte geben Sie korrekte Punktzahlen ein!")
 def fill_results_table(result) -> None:
     """
     Füllt die Ergebnisse aus einem Result-Objekt in das TableWidget im Result-Editor.
@@ -283,7 +263,7 @@ def fill_results_table(result) -> None:
                 points = student_result.get(task_name, 0)
                 edit_result_ui.results_table.setItem(2 + i, j + 1, QTableWidgetItem(str(points)))
 
-def show_delete_course_window():
+def show_delete_course_window() -> None:
     delete_window.setWindowTitle("Kurs löschen")
     delete_ui.select_box.clear()
     delete_ui.select_box.addItems(course_list)
@@ -291,13 +271,13 @@ def show_delete_course_window():
     delete_ui.delete_button.clicked.connect(delete_course)
     delete_window.show()
 
-def delete_course():
+def delete_course() -> None:
     name = delete_ui.select_box.currentText()
     os.remove(f"courses/course_{name}.json")
     update_content()
     delete_window.close()
 
-def show_delete_exam_window():
+def show_delete_exam_window() -> None:
     delete_window.setWindowTitle("Klausur löschen")
     delete_ui.select_box.clear()
     delete_ui.select_box.addItems(exam_list)
@@ -305,13 +285,13 @@ def show_delete_exam_window():
     delete_ui.delete_button.clicked.connect(delete_exam)
     delete_window.show()
 
-def delete_exam():
+def delete_exam() -> None:
     name = delete_ui.select_box.currentText()
     os.remove(f"exams/exam_{name}.json")
     update_content()
     delete_window.close()
 
-def show_delete_result_window():
+def show_delete_result_window() -> None:
     delete_window.setWindowTitle("Ergebnisse löschen")
     delete_ui.select_box.clear()
     delete_ui.select_box.addItems(result_list)
@@ -319,7 +299,7 @@ def show_delete_result_window():
     delete_ui.delete_button.clicked.connect(delete_result)
     delete_window.show()
 
-def delete_result():
+def delete_result() -> None:
     name = delete_ui.select_box.currentText()
     os.remove(f"results/{name}.csv")
     update_content()
@@ -478,6 +458,18 @@ def update_content() -> None:
     result_list = get_results()
 
 app = QApplication([])
+light_palette = QPalette()
+light_palette.setColor(QPalette.ColorRole.Window, QColor(255, 255, 255))
+light_palette.setColor(QPalette.ColorRole.WindowText, Qt.GlobalColor.black)
+light_palette.setColor(QPalette.ColorRole.Base, QColor(245, 245, 245))
+light_palette.setColor(QPalette.ColorRole.AlternateBase, QColor(255, 255, 255))
+light_palette.setColor(QPalette.ColorRole.ToolTipBase, Qt.GlobalColor.white)
+light_palette.setColor(QPalette.ColorRole.ToolTipText, Qt.GlobalColor.black)
+light_palette.setColor(QPalette.ColorRole.Text, Qt.GlobalColor.black)
+light_palette.setColor(QPalette.ColorRole.Button, QColor(255, 255, 255))
+light_palette.setColor(QPalette.ColorRole.ButtonText, Qt.GlobalColor.black)
+light_palette.setColor(QPalette.ColorRole.BrightText, Qt.GlobalColor.red)
+app.setPalette(light_palette)
 mainwindow = QMainWindow()
 mainwindow_ui = Ui_MainWindow()
 mainwindow_ui.setupUi(mainwindow)

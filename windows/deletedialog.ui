@@ -26,7 +26,10 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+selection-color: rgb(255, 255, 255);
+selection-background-color: rgb(151, 145, 174);</string>
    </property>
   </widget>
   <widget class="QPushButton" name="delete_button">
@@ -41,7 +44,7 @@
    <property name="styleSheet">
     <string notr="true">background-color: rgb(127, 169, 112);
 border-style: outset;
-porder-width: 2px;
+border-width: 2px;
 border-radius:  10px;
 border-color: white;
 font: bold 14px;</string>
@@ -62,7 +65,7 @@ font: bold 14px;</string>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(127, 169, 112);
 border-style: outset;
-porder-width: 2px;
+border-width: 2px;
 border-radius:  10px;
 border-color: white;
 font: bold 14px;</string>
