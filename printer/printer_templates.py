@@ -59,11 +59,11 @@ class PrinterTemplates(PrinterLibrary):
         
         # Tabelle mit Namen des Schülers        
         name_table = [
-            ("Name:", kwargs["student_name"])
+            ("Name:", kwargs["student"])
         ]
         PrinterTemplates.printer.activate("table_2", content=name_table)
         
-        # Trennstrich
+        # Trennstrich        
         PrinterTemplates.printer.activate("break")
         PrinterTemplates.printer.activate("line")
         PrinterTemplates.printer.activate("break")
@@ -77,11 +77,11 @@ class PrinterTemplates(PrinterLibrary):
         PrinterTemplates.printer.activate("line")
         PrinterTemplates.printer.activate("break")
         
-        # Gesamte Punkte und Note als Tabelle
-        PrinterTemplates.printer.activate("table_3", content=[("Punkte:", kwargs["points_earned"], kwargs["max_points"])])
+        # Gesamte Punkte und Note als Tabelle        
+        PrinterTemplates.printer.activate("table_3", content=[("Punkte:", kwargs["points"], kwargs["max_points"])])
         PrinterTemplates.printer.activate("table_2", content=[("Note:", kwargs["mark"])])
         
-        if "average_mark" in kwargs:
+        if "average" in kwargs:
             PrinterTemplates.printer.activate("table_2", content=[("Durchschnitt:", kwargs["average"])])
             
     @staticmethod

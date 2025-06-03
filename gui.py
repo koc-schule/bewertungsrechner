@@ -229,10 +229,7 @@ def save_results() -> None:
         for j in range(len(selected_exam.tasks)):
             # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
             task_name = list(selected_exam.tasks.keys())[j]
-            if edit_result_ui.results_table.item(i + 2, j + 1).text() == "":
-                scored_points_task = 0
-            else:
-                scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
+            scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
             tasks[task_name] = scored_points_task
 
             points_earned = points_earned + scored_points_task
@@ -436,26 +433,32 @@ def select_all_students() -> None:
         item.setCheckState(Qt.CheckState.Checked)
 
 def print_students():
+    log.log("1.")
     student_names = []
     for i in range(print_ui.student_list.count()):
+        log.log(f"{i} clause")
         item = print_ui.student_list.item(i)
         if item.checkState() == Qt.CheckState.Checked:
             student_names.append(item.text())
+    
+    log.log("2.")
+
     result = csv_to_result(print_ui.resultname_label.text())
+    log.log("3.")
     list_infos = result.gather_print_information(student_names)
-    try:
-        for i in list_infos:
-            print(str(i))
-            
-            printer_templates.PrinterTemplates.student_result_receipt(**i)
-    except Exception as e:
-        log.log(str(e))
+    log.log("4.")
+    for i in list_infos:
+        printer_templates.PrinterTemplates.student_result_receipt(**i)
 
 def print_analysis():
     try:
+        log.log("1.")
         result = csv_to_result(print_ui.resultname_label.text())
+        log.log("2.")
         infos = result.result_analysis()
+        log.log("3.")
         printer_templates.PrinterTemplates.course_result_receipt(**infos)
+        log.log("4.")
     except Exception as e:
         log.log(str(e))
 
