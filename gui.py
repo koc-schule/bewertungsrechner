@@ -128,10 +128,13 @@ def save_course() -> None:
     students_raw = edit_course_ui.students_textbox.toPlainText()
     students = students_raw.strip().split('\n')
     # Erstellen und Speichern des neuen Kurses
-    new_course = Course(name, grading_scheme, students)
-    course_to_json(new_course)
-    update_content()
-    edit_course_window.close()
+    if name is not "":
+        new_course = Course(name, grading_scheme, students)
+        course_to_json(new_course)
+        update_content()
+        edit_course_window.close()
+    else:
+        edit_course_ui.name_input.setText("Bitte einen Namen eingeben!")
 
 def show_edit_exam_window() -> None:
     """
