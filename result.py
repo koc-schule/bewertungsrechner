@@ -111,6 +111,7 @@ class Result:
         returns:
         list[dict]
         """
+        marks = []
         students_information = []
         for student_name in student_names:
             """ bestimmen des Indizes des Schülers in self.results für einfacheren Zugriff"""
@@ -181,6 +182,7 @@ class Result:
                     mark = "6+"
                 else:
                     mark = "6"
+                marks.append(mark[0])
             elif grading_scheme == "sek2":
                 mark_15_percentage = 95
                 mark_14_percentage = 90
@@ -229,8 +231,9 @@ class Result:
                     mark = "1"
                 else:
                     mark = "0"
+                marks.append(mark)
             student_information["mark"] = mark
-
+            
             """Sammeln von Aufgabenname, erreichte Punkte und maximale Punkte pro Aufgabe"""
             tasks = []
             for task in list(((self.get_exam()).tasks).keys()):
@@ -239,9 +242,17 @@ class Result:
                 max_points = (self.get_exam()).tasks[task]
                 tasks.append((task_name, points_earned, max_points))
             student_information["tasks"] = tasks
-
+            
             """Hinzufügen der Daten des Schülers zur Liste der Schülerdaten"""
             students_information.append(student_information)
+            
+        """Berechnen der durchschnittlichen Note"""
+        marks_sum = 0
+        for mark in marks:
+            marks_sum += mark
+        average_mark = marks_sum / len(student_names)
+        for student in students_information:
+            student["average"] = avrage_mark
 
         """ Rückgabe der gesammelten Informationen """
         return students_information
