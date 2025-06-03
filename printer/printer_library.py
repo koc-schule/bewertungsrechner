@@ -41,6 +41,15 @@ class PrinterLibrary:
         return item
     
     def get(self, function: str) -> bool:
+        """
+        Gibt das gesuchte Asset zurück
+
+        Args:
+            function (str): ID des Assets
+
+        Returns:
+            bool: Rückgabewert der Funktion
+        """
         if function in self.dict:
             return self.dict[function]
         log.log("The given function is not represented in the library\n\t>>> Empty function returned (given statement will have no effect)")
@@ -60,6 +69,10 @@ class PrinterLibrary:
     #endregion
 
     def initialize_printer(self) -> None:
+        """
+        Schließt den Printer an
+        """
+        # Zusammenfassung: Connected den Printer und fängt Fehler ab
         try:
             backend = libusb_package.get_libusb1_backend()
             log.log(f"Backend found: {bool(backend)}")
@@ -74,7 +87,7 @@ class PrinterLibrary:
             self.printer = Usb(0x28e9, 0x0289, 0, profile="ZJ-5870", backend=backend)
             
             log.log(f"Printer usable: {self.printer.is_usable()}")
-            log.log(f"Printer online: {self.printer.is_online()}")
+            # log.log(f"Printer online: {self.printer.is_online()}") # Diese Funktion crasht irgendwie
         except Exception as e:
             log.log(str(e))
             PrinterLibrary.isPrinterConnected = False
@@ -83,6 +96,9 @@ class PrinterLibrary:
         
     
     def initialize_assets(self) -> None:
+        """
+        Initialisiert die Assets
+        """
         self.add(
             "write_text",
             lambda **kwargs: PrinterLibrary.base.action_text(
@@ -97,15 +113,15 @@ class PrinterLibrary:
         self.add(
             "table_2",
             lambda **kwargs: PrinterLibrary.base.action_table_2(
-                kwargs["content"],
-                kwargs.get("ratio", (15, 15))
+                content=kwargs["content"],
+                ratio=kwargs.get("ratio", (15, 15))
             )
         )
         self.add(
             "table_3",
             lambda **kwargs: PrinterLibrary.base.action_table_3(
-                kwargs["content"],
-                kwargs.get("ratio", (10, 10, 9))
+                content=kwargs["content"],
+                ratio=kwargs.get("ratio", (10, 10, 9))
             )
         )
         self.add(
@@ -133,37 +149,25 @@ class PrinterLibrary:
             print(text)
             log.log(text)
             return True
-        PrinterLibrary.base.printer.set(align=align, bold=bold, width=width, height=height)
+        PrinterLibrary.base.printer.set(align=align, bold=bold, width=width, height=height, double_height=False, double_width=False)
         PrinterLibrary.base.printer.text(f"{text}\n")
-
-        # Tabellenkopf
-        # PrinterLibrary.base.printer.text("Aufgabe       Punkte    Erreicht\n")
-        # PrinterLibrary.base.printer.text("-" * 32 + "\n")
-
-        """# Beispielzeilen
-        items = [
-            ("Durchfall", 2, "4.00$"),
-            ("Fentanyl", 1, "18.99$"),
-            ("🚬", 3, "12.50$"),
-        ]
-
-        # Spaltenformatierung
-        for name, qty, price in items:
-            line = "{:<15} {:>5} {:>10}".format(name[:18], qty, price.rjust(10))
-            PrinterLibrary.base.printer.text(line + "\n")
-
-        PrinterLibrary.base.printer.text("-" * 32 + "\n")
-        PrinterLibrary.base.printer.text("{:<15} {:>5} {:>10}".format("Gesamt", "", "35.49€") + "\n")
-
-        # Schnitt
-        PrinterLibrary.base.printer.cut()"""
     
     @staticmethod
     def action_line():
+        """
+        Aktion für eine Line
+        """
         PrinterLibrary.base.activate("write_text", text="-" * 31)
         
     @staticmethod        
     def action_table_2(content: list[tuple[str, str]], ratio: tuple[int, int]):
+        """
+        Aktion für Table mit zwei Spalten
+
+        Args:
+            content (list[tuple[str, str]]): Content
+            ratio (tuple[int, int]): Verhältnis der Spalten
+        """
         for left, right in content:
             ratio_right, ratio_left = ratio
             line = "{:<{}} {:>{}}".format(left, ratio_right, right, ratio_left)
@@ -171,6 +175,13 @@ class PrinterLibrary:
             
     @staticmethod
     def action_table_3(content: list[tuple[str, str, str]], ratio: tuple[int, int, int]):
+        """
+        Aktion für Table mit drei Spalten
+
+        Args:
+            content (list[tuple[str, str]]): Content
+            ratio (tuple[int, int]): Verhältnis der Spalten
+        """
         for left, center, right in content:
             ratio_right, ratio_center, ratio_left = ratio
             line = "{:<{}} {:>{}} {:>{}}".format(left, ratio_right, center, ratio_center, right, ratio_left)

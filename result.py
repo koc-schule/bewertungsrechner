@@ -98,13 +98,16 @@ class Result:
             
             file.write(studentdata)  
 
-    def gather_print_information(self, student_names: list[str])-> list[dict]:
+    def gather_print_information(self, student_names: list[str], print_average: bool = False)-> list[dict]:
         """ Sammelt Informationen über einen Schüler, welche eine Klausur geschrieben hat, damit diese (Informationen) anschließend gedruckt werden können
         Args:
         student_names: list[str]
         returns:
         list[dict]
         """
+        marks: list = None
+        if print_average:
+            marks = []
         students_information = []
         for student_name in student_names:
             """ bestimmen des Indizes des Schülers in self.results für einfacheren Zugriff"""
@@ -125,7 +128,7 @@ class Result:
             student_information["title"] = title
             student_information["date"] = self.get_date()
             student_information["teacher"] = "Herr Koch"
-            student_information["subject"] = "Informatik "
+            student_information["subject"] = "Informatik"
             student_information["student_name"] = self.results[studentindex]["name"]
             student_information["points_earned"] = self.results[studentindex]["points_earned"]
             student_information["max_points"] =  (self.get_exam()).max_points
@@ -175,6 +178,9 @@ class Result:
                     mark = "6+"
                 else:
                     mark = "6"
+                
+                if print_average:
+                    marks.append(mark[0])
             elif grading_scheme == "sek2":
                 mark_15_percentage = 95
                 mark_14_percentage = 90
@@ -223,6 +229,9 @@ class Result:
                     mark = "1"
                 else:
                     mark = "0"
+                
+                if print_average:
+                    marks.append(mark)
             student_information["mark"] = mark
 
             """Sammeln von Aufgabenname, erreichte Punkte und maximale Punkte pro Aufgabe"""
@@ -238,6 +247,17 @@ class Result:
             students_information.append(student_information)
 
         """ Rückgabe der gesammelten Informationen """
+        """Berechnen der durchschnittlichen Note"""
+        if print_average:
+            marks_sum = 0
+            for mark in marks:
+                # mark.replace("+", "")
+                # mark.replace("-", "")
+                marks_sum += int(mark)
+            average_mark = round(marks_sum / len(student_names), 2)
+            for student in students_information:
+                student["average"] = average_mark
+        
         return students_information
 
     def result_analysis(self) -> dict:
@@ -249,7 +269,7 @@ class Result:
         """
         analysis = {} 
         """ Sammeln aller zur Auswertung nötigen Informationen """
-        result = self.gather_print_information()
+        result = self.gather_print_information(list(student["name"] for student in self.results))
         """Hinzufügen der bekannten/sich nicht ändernden Werte """
         analysis["title"] = result[0]["title"]
         analysis["date"] = result[0]["date"]
@@ -279,7 +299,7 @@ class Result:
                 for i in range (len(list(((self.get_exam()).tasks).keys()))):
                     if student["tasks"][i][0] == task_name: taskindex = i 
                 points_sum += student["tasks"][taskindex][1]
-            average_points = points_sum / students_counter 
+            average_points = round(points_sum / students_counter, 2)
             tasks.append((task_name, average_points, max_points))
         analysis["tasks"] = tasks
 
@@ -302,8 +322,8 @@ class Result:
             marks_sum = 0
             for mark in marks: 
                 marks_sum += mark
-            average_mark = marks_sum / students_counter
-            analysis["average"] = average_mark
+            average_mark = round(marks_sum / students_counter, 2)
+            analysis["average"] = round(average_mark)
 
         """ Zurückgeben der gesammelten Daten"""
         return analysis

@@ -14,6 +14,8 @@ from result import Result
 from utils.json_parser import *
 from utils.parser import csv_to_result
 import os
+import printer
+from printer import printer_templates
 from printer import log
 
 # test Course
@@ -433,32 +435,34 @@ def select_all_students() -> None:
         item.setCheckState(Qt.CheckState.Checked)
 
 def print_students():
-    log.log("1.")
-    student_names = []
-    for i in range(print_ui.student_list.count()):
-        log.log(f"{i} clause")
-        item = print_ui.student_list.item(i)
-        if item.checkState() == Qt.CheckState.Checked:
-            student_names.append(item.text())
-    
-    log.log("2.")
-
-    result = csv_to_result(print_ui.resultname_label.text())
-    log.log("3.")
-    list_infos = result.gather_print_information(student_names)
-    log.log("4.")
-    for i in list_infos:
-        printer_templates.PrinterTemplates.student_result_receipt(**i)
+    """
+    Druckt für Schüler
+    """
+    try:
+        student_names = []
+        for i in range(print_ui.student_list.count()):
+            item = print_ui.student_list.item(i)
+            if item.checkState() == Qt.CheckState.Checked:
+                student_names.append(item.text())
+        result = csv_to_result(print_ui.resultname_label.text())
+        list_infos = result.gather_print_information(student_names, print_ui.check_box_average.isChecked())
+        counter_lines = len(list_infos)
+        for i in list_infos:
+            printer_templates.PrinterTemplates.student_result_receipt(**i)
+            counter_lines -= 1
+            if counter_lines != 0:
+                printer_templates.PrinterTemplates.break_line()
+    except Exception as e:
+        log.log(e)
 
 def print_analysis():
+    """
+    Druckt Übersicht
+    """
     try:
-        log.log("1.")
         result = csv_to_result(print_ui.resultname_label.text())
-        log.log("2.")
         infos = result.result_analysis()
-        log.log("3.")
         printer_templates.PrinterTemplates.course_result_receipt(**infos)
-        log.log("4.")
     except Exception as e:
         log.log(str(e))
 

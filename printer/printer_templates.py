@@ -59,7 +59,7 @@ class PrinterTemplates(PrinterLibrary):
         
         # Tabelle mit Namen des Schülers        
         name_table = [
-            ("Name:", kwargs["student"])
+            ("Name:", kwargs["student_name"])
         ]
         PrinterTemplates.printer.activate("table_2", content=name_table)
         
@@ -77,12 +77,17 @@ class PrinterTemplates(PrinterLibrary):
         PrinterTemplates.printer.activate("line")
         PrinterTemplates.printer.activate("break")
         
-        # Gesamte Punkte und Note als Tabelle        
-        PrinterTemplates.printer.activate("table_3", content=[("Punkte:", kwargs["points"], kwargs["max_points"])])
-        PrinterTemplates.printer.activate("table_2", content=[("Note:", kwargs["mark"])])
-        
         if "average" in kwargs:
             PrinterTemplates.printer.activate("table_2", content=[("Durchschnitt:", kwargs["average"])])
+        
+        # Gesamte Punkte und Note als Tabelle        
+        PrinterTemplates.printer.activate("table_3", content=[("Punkte:", kwargs["points_earned"], kwargs["max_points"])])
+        PrinterTemplates.printer.activate("table_2", content=[("Note:", kwargs["mark"])])
+        
+        # Platz für Unterschrift
+        PrinterTemplates.printer.activate("break")
+        PrinterTemplates.printer.activate("break")
+        PrinterTemplates.printer.activate("break")
             
     @staticmethod
     def course_result_receipt(**kwargs) -> None:
@@ -131,12 +136,16 @@ class PrinterTemplates(PrinterLibrary):
         PrinterTemplates.printer.activate("line")
         PrinterTemplates.printer.activate("break")
         
-        # Gesamte Punkte und Note als Tabelle
-        # PrinterTemplates.printer.activate("table_3", content=[("Punkte:", kwargs["points"], kwargs["max_points"])])
-        # PrinterTemplates.printer.activate("table_2", content=[("Note:", kwargs["mark"])])
-        
         if "average" in kwargs:
             PrinterTemplates.printer.activate("table_2", content=[("Durchschnitt:", kwargs["average"])])
+    
+    @staticmethod
+    def break_line() -> None:
+        """
+        Druckt einen Trennstrich zwischen zwei Bons.
+        """
+        # Trennstrich
+        PrinterTemplates.printer.activate("line")
         
         
 PrinterTemplates.printer = PrinterTemplates()
