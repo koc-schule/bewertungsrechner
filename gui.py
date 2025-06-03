@@ -14,6 +14,7 @@ from result import Result
 from utils.json_parser import *
 from utils.parser import csv_to_result
 import os
+from printer import log
 
 # test Course
 klasse = Course("klasse", "sek1", ["Schüler1", "Schüler2", "Schüler3"])
@@ -432,21 +433,34 @@ def select_all_students() -> None:
         item.setCheckState(Qt.CheckState.Checked)
 
 def print_students():
+    log.log("1.")
     student_names = []
     for i in range(print_ui.student_list.count()):
+        log.log(f"{i} clause")
         item = print_ui.student_list.item(i)
         if item.checkState() == Qt.CheckState.Checked:
             student_names.append(item.text())
+    
+    log.log("2.")
 
     result = csv_to_result(print_ui.resultname_label.text())
+    log.log("3.")
     list_infos = result.gather_print_information(student_names)
+    log.log("4.")
     for i in list_infos:
         printer_templates.PrinterTemplates.student_result_receipt(**i)
 
 def print_analysis():
-    result = csv_to_result(print_ui.resultname_label.text())
-    infos = result.result_analysis()
-    printer_templates.PrinterTemplates.course_result_receipt(**infos)
+    try:
+        log.log("1.")
+        result = csv_to_result(print_ui.resultname_label.text())
+        log.log("2.")
+        infos = result.result_analysis()
+        log.log("3.")
+        printer_templates.PrinterTemplates.course_result_receipt(**infos)
+        log.log("4.")
+    except Exception as e:
+        log.log(str(e))
 
 def update_content() -> None:
     """
