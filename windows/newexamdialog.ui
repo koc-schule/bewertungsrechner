@@ -26,7 +26,13 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(216, 204, 231);</string>
+    <string notr="true">background-color: rgb(216, 204, 231);
+border-style: outset;
+border-width: 2px;
+border-radius:  10px;
+border-color: black;
+border-color: gray;
+font: 14px;</string>
    </property>
    <property name="text">
     <string>Bestätigen</string>
@@ -42,7 +48,10 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255,255,255);</string>
+    <string notr="true">background-color: rgb(255,255,255);
+border-style: outset;
+border-radius:  10px;
+font: 14px;</string>
    </property>
   </widget>
   <widget class="QTextEdit" name="name_textEdit">
@@ -56,6 +65,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(255, 255, 255);
+border-style: outset;
+border-radius:  10px;
+font: 14px;
 </string>
    </property>
   </widget>
@@ -69,7 +81,10 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+border-style: outset;
+border-radius:  10px;
+font: 14px;</string>
    </property>
   </widget>
   <widget class="QLabel" name="notes_label">
@@ -121,7 +136,10 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+border-style: outset;
+border-radius:  10px;
+font: 14px;</string>
    </property>
   </widget>
   <widget class="QLabel" name="tasks_label">
@@ -140,14 +158,18 @@
   <widget class="QPushButton" name="cancel_pushButton">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>140</x>
      <y>460</y>
-     <width>75</width>
+     <width>81</width>
      <height>24</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(127, 169, 112);</string>
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;</string>
    </property>
    <property name="text">
     <string>Abbrechen</string>
@@ -156,14 +178,18 @@
   <widget class="QPushButton" name="confirm_tasks_pushButton">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>234</x>
      <y>460</y>
-     <width>75</width>
+     <width>91</width>
      <height>24</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(127, 169, 112);</string>
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;</string>
    </property>
    <property name="text">
     <string>Bestätigen</string>

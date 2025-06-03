@@ -39,7 +39,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(127, 169, 112);</string>
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+porder-width: 2px;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;</string>
    </property>
    <property name="text">
     <string>Löschen</string>
@@ -55,7 +60,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(127, 169, 112);</string>
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+porder-width: 2px;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;</string>
    </property>
    <property name="text">
     <string>Abbrechen</string>

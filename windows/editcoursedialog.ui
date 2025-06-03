@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>268</width>
-    <height>322</height>
+    <width>259</width>
+    <height>260</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,7 +49,10 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+border-style: outset;
+border-radius:  10px;
+font: 14px;</string>
    </property>
    <property name="placeholderText">
     <string>Name</string>
@@ -65,7 +68,10 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+border-style: outset;
+border-radius:  10px;
+font: 14px;</string>
    </property>
    <property name="editable">
     <bool>false</bool>
@@ -97,7 +103,10 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+border-style: outset;
+border-radius:  10px;
+font: 14px;</string>
    </property>
    <property name="placeholderText">
     <string>Add Student Name</string>
@@ -113,7 +122,13 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(216, 204, 231);</string>
+    <string notr="true">background-color: rgb(216, 204, 231);
+border-style: outset;
+border-width: 2px;
+border-radius:  10px;
+border-color: black;
+border-color: gray;
+font: 14px;</string>
    </property>
    <property name="text">
     <string>Add</string>
@@ -129,7 +144,10 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+border-style: outset;
+border-radius:  10px;
+font: 14px;</string>
    </property>
    <property name="readOnly">
     <bool>false</bool>
@@ -145,7 +163,12 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(127, 169, 112);</string>
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;
+</string>
    </property>
    <property name="text">
     <string>Speichern</string>
@@ -161,7 +184,11 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(127, 169, 112);</string>
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;</string>
    </property>
    <property name="text">
     <string>Abbrechen</string>

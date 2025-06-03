@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>282</height>
+    <height>322</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,15 +22,29 @@
      <height>201</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: outset;
+border-radius:  10px;
+font: 14px;</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="selectall_button">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>220</y>
+     <y>260</y>
      <width>381</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(216, 204, 231);
+border-style: outset;
+border-width: 2px;
+border-radius:  10px;
+border-color: black;
+border-color: gray;
+font: 14px;</string>
    </property>
    <property name="text">
     <string>Alle auswählen</string>
@@ -40,10 +54,17 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>250</y>
-     <width>120</width>
+     <y>290</y>
+     <width>151</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;</string>
    </property>
    <property name="text">
     <string>Auswertung Drucken</string>
@@ -53,10 +74,17 @@
    <property name="geometry">
     <rect>
      <x>270</x>
-     <y>250</y>
+     <y>220</y>
      <width>120</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;</string>
    </property>
    <property name="text">
     <string>Abbrechen</string>
@@ -65,11 +93,18 @@
   <widget class="QPushButton" name="printstudent_button">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>250</y>
+     <x>270</x>
+     <y>290</y>
      <width>120</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(127, 169, 112);
+border-style: outset;
+border-radius:  10px;
+border-color: white;
+font: bold 14px;</string>
    </property>
    <property name="text">
     <string>Schüler Drucken</string>
@@ -91,12 +126,42 @@
     <string/>
    </property>
   </widget>
+  <widget class="QCheckBox" name="CheckBoxDurchschnitt">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>220</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>-1</pointsize>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(216, 204, 231);
+border-style: outset;
+border-width: 2px;
+border-radius:  10px;
+border-color: black;
+border-color: gray;
+font: 14px;</string>
+   </property>
+   <property name="text">
+    <string>Durchschnitt</string>
+   </property>
+  </widget>
   <zorder>resultname_label</zorder>
   <zorder>student_list</zorder>
   <zorder>selectall_button</zorder>
   <zorder>printoverview_button</zorder>
   <zorder>exit_button</zorder>
   <zorder>printstudent_button</zorder>
+  <zorder>CheckBoxDurchschnitt</zorder>
  </widget>
  <resources/>
  <connections>
