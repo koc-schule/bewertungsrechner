@@ -189,7 +189,6 @@ def save_results() -> None:
     """
     Erstellt ein Objekt der Klasse Result aus den Eingaben
     """
-
     try:
         result = Result([selected_course], [], selected_date, selected_exam)
 
