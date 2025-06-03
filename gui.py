@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import *
+from PyQt6.QtGui import QPalette, QColor
 from PyQt6.QtCore import Qt
 from printer import printer_templates
 from windows.mainwindow import Ui_MainWindow
@@ -445,6 +446,18 @@ def update_content() -> None:
     result_list = get_results()
 
 app = QApplication([])
+light_palette = QPalette()
+light_palette.setColor(QPalette.ColorRole.Window, QColor(255, 255, 255))
+light_palette.setColor(QPalette.ColorRole.WindowText, Qt.GlobalColor.black)
+light_palette.setColor(QPalette.ColorRole.Base, QColor(245, 245, 245))
+light_palette.setColor(QPalette.ColorRole.AlternateBase, QColor(255, 255, 255))
+light_palette.setColor(QPalette.ColorRole.ToolTipBase, Qt.GlobalColor.white)
+light_palette.setColor(QPalette.ColorRole.ToolTipText, Qt.GlobalColor.black)
+light_palette.setColor(QPalette.ColorRole.Text, Qt.GlobalColor.black)
+light_palette.setColor(QPalette.ColorRole.Button, QColor(255, 255, 255))
+light_palette.setColor(QPalette.ColorRole.ButtonText, Qt.GlobalColor.black)
+light_palette.setColor(QPalette.ColorRole.BrightText, Qt.GlobalColor.red)
+app.setPalette(light_palette)
 mainwindow = QMainWindow()
 mainwindow_ui = Ui_MainWindow()
 mainwindow_ui.setupUi(mainwindow)
