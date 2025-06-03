@@ -216,33 +216,41 @@ def load_results_table() -> None:
 def save_results() -> None:
     """
     Erstellt ein Objekt der Klasse Result aus den Eingaben
-    """   
+    """
 
-    result = Result([selected_course], [], selected_date, selected_exam)
+    try:
+        result = Result([selected_course], [], selected_date, selected_exam)
 
-    for i in range(len(selected_course.student_names)):
-        # Daten des Schülers definieren
-        student_name = selected_course.student_names[i]
-        points_earned = 0
-        tasks = {}
+        for i in range(len(selected_course.student_names)):
+            # Daten des Schülers definieren
+            student_name = selected_course.student_names[i]
+            points_earned = 0
+            tasks = {}
 
-        for j in range(len(selected_exam.tasks)):
-            # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
-            task_name = list(selected_exam.tasks.keys())[j]
-            scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
-            tasks[task_name] = scored_points_task
+            for j in range(len(selected_exam.tasks)):
+                # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
+                task_name = list(selected_exam.tasks.keys())[j]
+                item = edit_result_ui.results_table.item(i + 2, j + 1)
+                if item is None:
+                    scored_points_task = 0
+                elif 0 > int(edit_result_ui.results_table.item(i + 2, j + 1).text()) or int(edit_result_ui.results_table.item(i + 2, j + 1).text()) > int(edit_result_ui.results_table.item(1, j + 1).text()):
+                    raise None
+                else:
+                    scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
+                tasks[task_name] = scored_points_task
 
-            points_earned = points_earned + scored_points_task
+                points_earned = points_earned + scored_points_task
 
-        percentage_earned = (points_earned / selected_exam.max_points) * 100
+            percentage_earned = (points_earned / selected_exam.max_points) * 100
 
-        # Eintrag im Ergebnis für den Schüler
-        result.add_result(student_name, points_earned, percentage_earned, tasks)
-    
-    result.write_to_csv()
-    update_content()
-    edit_result_window.close()
+            # Eintrag im Ergebnis für den Schüler
+            result.add_result(student_name, points_earned, percentage_earned, tasks)
+        result.write_to_csv()
+        update_content()
+        edit_result_window.close()
 
+    except:
+        QMessageBox.critical(mainwindow, "Fehler", "Bitte geben Sie korrekte Punktzahlen ein!")
 def fill_results_table(result) -> None:
     """
     Füllt die Ergebnisse aus einem Result-Objekt in das TableWidget im Result-Editor.
