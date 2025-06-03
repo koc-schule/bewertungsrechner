@@ -18,6 +18,7 @@ import os
 import printer
 from printer import printer_templates
 from printer import log
+import webbrowser
 
 # test Course
 klasse = Course("klasse", "sek1", ["Schüler1", "Schüler2", "Schüler3"])
@@ -457,6 +458,9 @@ def update_content() -> None:
     course_list = get_courses()
     result_list = get_results()
 
+def show_help_document():
+    webbrowser.open_new("help_doc.pdf")
+
 app = QApplication([])
 light_palette = QPalette()
 light_palette.setColor(QPalette.ColorRole.Window, QColor(255, 255, 255))
@@ -492,6 +496,9 @@ print_window = QDialog()
 print_ui = Ui_print_dialog()
 print_ui.setupUi(print_window)
 
+
+
+
 # Verknüpfung der Buttons mit Funktionen
 mainwindow_ui.actionCourseAdd.triggered.connect(show_edit_course_window)
 mainwindow_ui.actionCourseView.triggered.connect(show_view_course_window)
@@ -502,6 +509,7 @@ mainwindow_ui.actionResultAdd.triggered.connect(show_edit_result_window)
 mainwindow_ui.actionCourseRemove.triggered.connect(show_delete_course_window)
 mainwindow_ui.actionExamRemove.triggered.connect(show_delete_exam_window)
 mainwindow_ui.actionResultRemove.triggered.connect(show_delete_result_window)
+mainwindow_ui.actionHilfe.triggered.connect(show_help_document)
 
 edit_course_ui.save_button.clicked.connect(save_course)
 edit_course_ui.add_student_button.clicked.connect(add_student_to_list)
