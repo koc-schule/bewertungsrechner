@@ -33,7 +33,7 @@ selected_course = None
 selected_exam = None
 selected_date = ""
 
-def get_exams():
+def get_exams() -> list[str]:
     if not os.path.isdir("exams/"):
         os.mkdir("exams/")
     names = [
@@ -43,7 +43,7 @@ def get_exams():
     ]
     return names
 
-def get_courses():
+def get_courses() -> list[str]:
     if not os.path.isdir("courses/"):
         os.mkdir("courses/")
     names = [
@@ -53,7 +53,7 @@ def get_courses():
     ]
     return names
 
-def get_results():
+def get_results() -> list[str]:
     if not os.path.isdir("results/"):
         os.mkdir("results/")
     results = [
@@ -97,7 +97,7 @@ def save_course() -> None:
     students_raw = edit_course_ui.students_textbox.toPlainText()
     students = students_raw.strip().split('\n')
     # Erstellen und Speichern des neuen Kurses
-    if name is not "":
+    if name != "":
         new_course = Course(name, grading_scheme, students)
         course_to_json(new_course)
         update_content()
@@ -188,33 +188,41 @@ def load_results_table() -> None:
 def save_results() -> None:
     """
     Erstellt ein Objekt der Klasse Result aus den Eingaben
-    """   
+    """
+    try:
+        result = Result([selected_course], [], selected_date, selected_exam)
 
-    result = Result([selected_course], [], selected_date, selected_exam)
+        for i in range(len(selected_course.student_names)):
+            # Daten des Schülers definieren
+            student_name = selected_course.student_names[i]
+            points_earned = 0
+            tasks = {}
 
-    for i in range(len(selected_course.student_names)):
-        # Daten des Schülers definieren
-        student_name = selected_course.student_names[i]
-        points_earned = 0
-        tasks = {}
+            for j in range(len(selected_exam.tasks)):
+                # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
+                task_name = list(selected_exam.tasks.keys())[j]
+                item = edit_result_ui.results_table.item(i + 2, j + 1)
+                if item is None:
+                    scored_points_task = 0
+                elif 0 > int(edit_result_ui.results_table.item(i + 2, j + 1).text()) or int(edit_result_ui.results_table.item(i + 2, j + 1).text()) > int(edit_result_ui.results_table.item(1, j + 1).text()):
+                    # falls eine fehlerhafte Eingabe besteht, wird die Scheife abgebrochen
+                    raise None
+                else:
+                    scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
+                tasks[task_name] = scored_points_task
 
-        for j in range(len(selected_exam.tasks)):
-            # Dictionary der Aufgaben mit Erreichten Punkten eines Schülers definieren
-            task_name = list(selected_exam.tasks.keys())[j]
-            scored_points_task = int(edit_result_ui.results_table.item(i + 2, j + 1).text())
-            tasks[task_name] = scored_points_task
+                points_earned = points_earned + scored_points_task
 
-            points_earned = points_earned + scored_points_task
+            percentage_earned = (points_earned / selected_exam.max_points) * 100
 
-        percentage_earned = (points_earned / selected_exam.max_points) * 100
+            # Eintrag im Ergebnis für den Schüler
+            result.add_result(student_name, points_earned, percentage_earned, tasks)
+        result.write_to_csv()
+        update_content()
+        edit_result_window.close()
 
-        # Eintrag im Ergebnis für den Schüler
-        result.add_result(student_name, points_earned, percentage_earned, tasks)
-    
-    result.write_to_csv()
-    update_content()
-    edit_result_window.close()
-
+    except:
+        QMessageBox.critical(mainwindow, "Fehler", "Bitte geben Sie korrekte Punktzahlen ein!")
 def fill_results_table(result) -> None:
     """
     Füllt die Ergebnisse aus einem Result-Objekt in das TableWidget im Result-Editor.
@@ -253,7 +261,7 @@ def fill_results_table(result) -> None:
                 points = student_result.get(task_name, 0)
                 edit_result_ui.results_table.setItem(2 + i, j + 1, QTableWidgetItem(str(points)))
 
-def show_delete_course_window():
+def show_delete_course_window() -> None:
     delete_window.setWindowTitle("Kurs löschen")
     delete_ui.select_box.clear()
     delete_ui.select_box.addItems(course_list)
@@ -261,13 +269,13 @@ def show_delete_course_window():
     delete_ui.delete_button.clicked.connect(delete_course)
     delete_window.show()
 
-def delete_course():
+def delete_course() -> None:
     name = delete_ui.select_box.currentText()
     os.remove(f"courses/course_{name}.json")
     update_content()
     delete_window.close()
 
-def show_delete_exam_window():
+def show_delete_exam_window() -> None:
     delete_window.setWindowTitle("Klausur löschen")
     delete_ui.select_box.clear()
     delete_ui.select_box.addItems(exam_list)
@@ -275,13 +283,13 @@ def show_delete_exam_window():
     delete_ui.delete_button.clicked.connect(delete_exam)
     delete_window.show()
 
-def delete_exam():
+def delete_exam() -> None:
     name = delete_ui.select_box.currentText()
     os.remove(f"exams/exam_{name}.json")
     update_content()
     delete_window.close()
 
-def show_delete_result_window():
+def show_delete_result_window() -> None:
     delete_window.setWindowTitle("Ergebnisse löschen")
     delete_ui.select_box.clear()
     delete_ui.select_box.addItems(result_list)
@@ -289,7 +297,7 @@ def show_delete_result_window():
     delete_ui.delete_button.clicked.connect(delete_result)
     delete_window.show()
 
-def delete_result():
+def delete_result() -> None:
     name = delete_ui.select_box.currentText()
     os.remove(f"results/{name}.csv")
     update_content()
@@ -404,7 +412,7 @@ def select_all_students() -> None:
         item = print_ui.student_list.item(i)
         item.setCheckState(Qt.CheckState.Checked)
 
-def print_students():
+def print_students() -> None:
     log.log("1.")
     student_names = []
     for i in range(print_ui.student_list.count()):
@@ -422,7 +430,7 @@ def print_students():
     for i in list_infos:
         printer_templates.PrinterTemplates.student_result_receipt(**i)
 
-def print_analysis():
+def print_analysis() -> None:
     try:
         log.log("1.")
         result = csv_to_result(print_ui.resultname_label.text())
