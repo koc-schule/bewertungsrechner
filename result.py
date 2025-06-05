@@ -124,8 +124,13 @@ class Result:
         """
 
         """Auswählen der Datei"""
+<<<<<<< HEAD
+        filename  = "results/" + str((self.get_courses())[0].course_name) + "_" + str((self.get_exam()).exam_name) + ".csv"
+        file = open(filename,"w", encoding = "utf-8")
+=======
         filename  = "resources/results/" + str((self.get_courses())[0].course_name) + "_" + str((self.get_exam()).exam_name) + ".csv"
         file = open(filename,"w")
+>>>>>>> d4326c6d02b16969b605d35f71bca214e6b6feab
 
         """Erstellen der ersten Zeile der csv_datei (Spaltennamen)"""
         task_names_list = list(((self.get_exam()).tasks).keys())
