@@ -61,7 +61,7 @@ class Ui_print_dialog(object):
         self.check_box_average = QtWidgets.QCheckBox(parent=print_dialog)
         self.check_box_average.setGeometry(QtCore.QRect(20, 220, 191, 31))
         font = QtGui.QFont()
-        font.setPointSize(-1)
+        font.setPointSize(1)
         font.setBold(False)
         font.setItalic(False)
         self.check_box_average.setFont(font)
