@@ -1,7 +1,12 @@
-from PyQt6.QtWidgets import *
+import os
+import webbrowser
+
+from PyQt6.QtWidgets import (
+    QApplication, QMainWindow, QDialog, QListWidgetItem, QMessageBox, QTableWidgetItem
+)
 from PyQt6.QtGui import QPalette, QColor
 from PyQt6.QtCore import Qt
-from printer import printer_templates
+
 from windows.mainwindow import Ui_MainWindow
 from windows.editcoursedialog import Ui_edit_course_dialog
 from windows.editexamdialog import Ui_edit_exam_dialog
@@ -9,16 +14,15 @@ from windows.editresultsdialog import Ui_edit_result_dialog
 from windows.deletedialog import Ui_delete_dialog
 from windows.viewdialog import Ui_view_dialog
 from windows.printdialog import Ui_print_dialog
+
 from exam import Exam
 from course import Course
 from result import Result
+
 from utils.json_parser import *
 from utils.parser import csv_to_result
-import os
-import printer
-from printer import printer_templates
-from printer import log
-import webbrowser
+
+from printer import printer_templates, log
 
 course_list = []
 exam_list = []
