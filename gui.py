@@ -451,7 +451,8 @@ def update_content() -> None:
     result_list = get_results()
 
 def show_help_document():
-    webbrowser.open_new("resources/help_doc.pdf")
+    path = os.getcwd()
+    webbrowser.open_new(path + "/resources/help_doc.pdf")
 
 app = QApplication([])
 light_palette = QPalette()
