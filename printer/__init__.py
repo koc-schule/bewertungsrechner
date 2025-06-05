@@ -13,3 +13,4 @@ import usb.backend.libusb1
 import libusb_package
 import time
 import os
+import math

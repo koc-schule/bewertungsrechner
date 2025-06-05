@@ -83,11 +83,11 @@ class PrinterLibrary:
                 return
             else:
                 log.log("Device found successfully")
-                
+
             self.printer = Usb(0x28e9, 0x0289, 0, profile="ZJ-5870", backend=backend)
             
             log.log(f"Printer usable: {self.printer.is_usable()}")
-            # log.log(f"Printer online: {self.printer.is_online()}") # Diese Funktion crasht irgendwie
+            log.log(f"Printer online: {self.printer.is_online()}") # Diese Funktion crasht irgendwie
         except Exception as e:
             log.log(str(e))
             PrinterLibrary.isPrinterConnected = False
@@ -145,6 +145,8 @@ class PrinterLibrary:
             width (int): The width of the text
             height (int): The height of the text
         """
+        if len(text) > 31:
+            text = f"{text[:23]}...{text[-5:]}"
         if not PrinterLibrary.isPrinterConnected:
             print(text)
             log.log(text)
@@ -169,8 +171,20 @@ class PrinterLibrary:
             ratio (tuple[int, int]): Verhältnis der Spalten
         """
         for left, right in content:
-            ratio_right, ratio_left = ratio
-            line = "{:<{}} {:>{}}".format(left, ratio_right, right, ratio_left)
+            ratio_left, ratio_right = ratio
+            
+            left = str(left)
+            right = str(right)
+            
+            # Sorgt für Kürzung von den Sachen
+            if len(str(left)) > ratio_left:
+                length_left = ratio_left - 3
+                left = f"{left[:math.floor(length_left * 2 / 3)]}...{left[-math.floor(length_left / 3):]}"
+            if len(str(right)) > ratio_right:
+                length_right = ratio_right - 3
+                right = f"{right[:math.floor(length_right * 2 / 3)]}...{right[-math.floor(length_right / 3):]}"
+                
+            line = "{:<{}} {:>{}}".format(left, ratio_left, right, ratio_right)
             PrinterLibrary.base.activate("write_text", text=line, line_break=True)
             
     @staticmethod
@@ -183,6 +197,21 @@ class PrinterLibrary:
             ratio (tuple[int, int]): Verhältnis der Spalten
         """
         for left, center, right in content:
-            ratio_right, ratio_center, ratio_left = ratio
-            line = "{:<{}} {:>{}} {:>{}}".format(left, ratio_right, center, ratio_center, right, ratio_left)
+            ratio_left, ratio_center, ratio_right = ratio
+            left = str(left)
+            center = str(center)
+            right = str(right)
+            
+            # Gesamter Block sorgt für Kürzung von Texten            
+            if len(left) > ratio_left:
+                length_left = ratio_left - 3
+                left = f"{left[:math.floor(length_left * 2 / 3)]}...{left[-math.floor(length_left / 3):]}"
+            if len(center) > ratio_center:
+                length_center = ratio_center - 3
+                center = f"{center[:math.floor(length_center * 2 / 3)]}...{center[-math.floor(length_center / 3):]}"
+            if len(right) > ratio_right:
+                length_right = ratio_right - 3
+                right = f"{right[:math.floor(length_right * 2 / 3)]}...{left[-math.floor(length_right / 3):]}"
+            
+            line = "{:<{}} {:>{}} {:>{}}".format(left, ratio_left, center, ratio_center, right, ratio_right)
             PrinterLibrary.base.activate("write_text", text=line, line_break=True)

@@ -1,6 +1,6 @@
 from . import *
 
-IS_DEV = False
+IS_DEV = True
 CLEAR_OLD_LOGS = True
 current_log_file_path = ""
 

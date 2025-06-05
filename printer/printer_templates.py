@@ -6,6 +6,7 @@ from .printer_library import *
 class PrinterTemplates(PrinterLibrary):
     """
     Bibliothek mit möglichen Templates für den Druck von Kassenbons.
+    Über diese Klassen werden die statischen Methoden für die Grundlegenden Templates gestartet.
     """
     #region Access
     printer: PrinterTemplates = None
@@ -52,7 +53,7 @@ class PrinterTemplates(PrinterLibrary):
         ]
         PrinterTemplates.printer.activate("table_2", content=header_table)
         
-        # Trennstrich        
+        # Trennstrich
         PrinterTemplates.printer.activate("break")
         PrinterTemplates.printer.activate("line")
         PrinterTemplates.printer.activate("break")
@@ -63,14 +64,14 @@ class PrinterTemplates(PrinterLibrary):
         ]
         PrinterTemplates.printer.activate("table_2", content=name_table)
         
-        # Trennstrich        
+        # Trennstrich
         PrinterTemplates.printer.activate("break")
         PrinterTemplates.printer.activate("line")
         PrinterTemplates.printer.activate("break")
         
-        # Tabelle mit Aufgaben und den jeweils erreichten Punkten und Kopfzeile        
+        # Tabelle mit Aufgaben und den jeweils erreichten Punkten und Kopfzeile
         kwargs["tasks"].insert(0, ("Aufgabe", "Erreicht", "Maximal"))
-        PrinterTemplates.printer.activate("table_3", content=kwargs["tasks"])
+        PrinterTemplates.printer.activate("table_3", content=kwargs["tasks"], ratio=(12, 9, 8))
         
         # Trennstrich
         PrinterTemplates.printer.activate("break")
@@ -78,11 +79,11 @@ class PrinterTemplates(PrinterLibrary):
         PrinterTemplates.printer.activate("break")
         
         if "average" in kwargs:
-            PrinterTemplates.printer.activate("table_2", content=[("Durchschnitt:", kwargs["average"])])
+            PrinterTemplates.printer.activate("table_2", content=[("Durchschnitt:", kwargs["average"])], ratio=(26, 4))
         
         # Gesamte Punkte und Note als Tabelle        
-        PrinterTemplates.printer.activate("table_3", content=[("Punkte:", kwargs["points_earned"], kwargs["max_points"])])
-        PrinterTemplates.printer.activate("table_2", content=[("Note:", kwargs["mark"])])
+        PrinterTemplates.printer.activate("table_3", content=[("Punkte:", kwargs["points_earned"], kwargs["max_points"])], ratio=(19, 5, 5))
+        PrinterTemplates.printer.activate("table_2", content=[("Note:", kwargs["mark"])], ratio=(26, 4))
         
         # Platz für Unterschrift
         PrinterTemplates.printer.activate("break")
@@ -129,7 +130,7 @@ class PrinterTemplates(PrinterLibrary):
         
         # Tabelle mit Aufgaben und den jeweils erreichten Punkten und Kopfzeile        
         kwargs["marks"].insert(0, ("Schueler", "Note"))
-        PrinterTemplates.printer.activate("table_2", content=kwargs["marks"])
+        PrinterTemplates.printer.activate("table_2", content=kwargs["marks"], ratio=(26, 4))
         
         # Trennstrich
         PrinterTemplates.printer.activate("break")
@@ -137,7 +138,7 @@ class PrinterTemplates(PrinterLibrary):
         PrinterTemplates.printer.activate("break")
         
         if "average" in kwargs:
-            PrinterTemplates.printer.activate("table_2", content=[("Durchschnitt:", kwargs["average"])])
+            PrinterTemplates.printer.activate("table_2", content=[("Durchschnitt:", kwargs["average"])], ratio=(26, 4))
     
     @staticmethod
     def break_line() -> None:
