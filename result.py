@@ -124,7 +124,7 @@ class Result:
         """
 
         """Auswählen der Datei"""
-        filename  = "results/" + str((self.get_courses())[0].course_name) + "_" + str((self.get_exam()).exam_name) + ".csv"
+        filename  = "resources/results/" + str((self.get_courses())[0].course_name) + "_" + str((self.get_exam()).exam_name) + ".csv"
         file = open(filename,"w")
 
         """Erstellen der ersten Zeile der csv_datei (Spaltennamen)"""

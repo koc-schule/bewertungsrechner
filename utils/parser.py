@@ -10,51 +10,6 @@ import sys
 parent = os.path.dirname(current)
 sys.path.append(parent)"""
 
-
-def course_csv_file_to_object(name: str) -> Course:
-    """
-    Einlesen der .csv-Dateien für Klassen
-
-    Args:
-        name (str): Name des Kurses (aus Course.course_name)
-
-    Returns:
-        Course: Course-Objekt aus der csv-Datei
-    """
-
-    path = os.getcwd() + "/csv_files/" + "course_" + name + ".csv"
-    all_lines = utils.csv.read_csv_lines(path)
-    return Course(all_lines[0][:-1], all_lines[1][:-1], all_lines[2].split(";"))
-
-
-def exam_csv_file_to_object(name: str) -> Exam:
-    """
-    Einlesen der .csv-Dateien für Exams
-
-    Args:
-        name (str): Name der Exam (wie in Exam.exam_name)
-
-    Returns:
-        Exam: Exam-Objekt aus der csv-Datei
-    """
-
-    path = os.getcwd() + "/csv_files/" + "exam_" + name + ".csv"
-    all_lines = utils.csv.read_csv_lines(path)
-
-    exam_return = Exam(all_lines[0][:-1], all_lines[1][:-1].replace(";", "\n"))
-
-    """String des Dictionaries wird angepasst"""
-    tasks_polished = all_lines[2].replace('"', '').replace(", ", "\n").replace(": ", ":").replace("'", "")
-    tasks_polished = tasks_polished.replace("{", "").replace("}", "")
-    exam_return.quick_add_tasks(tasks_polished, names_given=True)
-    return exam_return
-
-
-"""
-Aus einer .csv-Datei werden Ergebnisse herausgelesen und in einer list[dict] zurückgegeben
-"""
-
-
 def results_csv_file_to_object(csv_name: str, new_csv: bool) -> list[dict]:
     """erstellt eine Liste, in der dictionaries gespeichert werden, die die ergebnisse enthalten
         Args:
@@ -64,7 +19,7 @@ def results_csv_file_to_object(csv_name: str, new_csv: bool) -> list[dict]:
             list[dict], in der alle Schüler und deren Ergebnisse stehen
         """
     results = []
-    filename = "./csv_files/" + csv_name
+    filename = "resources/results/" + csv_name
     file = open(filename, "r")
     i = 1
 
@@ -106,7 +61,7 @@ def csv_to_result(name: str) -> Result:
     """
     Erzeugt ein Result object aus einer CSV tabelle
     """
-    csv_path = f"results/{name}.csv"
+    csv_path = f"resources/results/{name}.csv"
     results = []
     date = ""
     course_name, exam_name = name.strip().split("_")

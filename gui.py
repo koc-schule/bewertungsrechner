@@ -20,14 +20,6 @@ from printer import printer_templates
 from printer import log
 import webbrowser
 
-# test Course
-klasse = Course("klasse", "sek1", ["Schüler1", "Schüler2", "Schüler3"])
-
-# test Exam
-lk = Exam("lk", "")
-lk.add_task("A1", 5)
-lk.add_task("A2", 4)
-
 course_list = []
 exam_list = []
 result_list = []
@@ -37,31 +29,31 @@ selected_exam = None
 selected_date = ""
 
 def get_exams() -> list[str]:
-    if not os.path.isdir("exams/"):
-        os.mkdir("exams/")
+    if not os.path.isdir("resources/exams/"):
+        os.mkdir("resources/exams/")
     names = [
     f.removeprefix("exam_").removesuffix(".json")
-    for f in os.listdir("exams/")
+    for f in os.listdir("resources/exams/")
     if f.startswith("exam_") and f.endswith(".json")
     ]
     return names
 
 def get_courses() -> list[str]:
-    if not os.path.isdir("courses/"):
-        os.mkdir("courses/")
+    if not os.path.isdir("resources/courses/"):
+        os.mkdir("resources/courses/")
     names = [
     f.removeprefix("course_").removesuffix(".json")
-    for f in os.listdir("courses/")
+    for f in os.listdir("resources/courses/")
     if f.startswith("course_") and f.endswith(".json")
     ]
     return names
 
 def get_results() -> list[str]:
-    if not os.path.isdir("results/"):
-        os.mkdir("results/")
+    if not os.path.isdir("resources/results/"):
+        os.mkdir("resources/results/")
     results = [
     f.removesuffix(".csv")
-    for f in os.listdir("results/")
+    for f in os.listdir("resources/results/")
     if f.endswith(".csv")
     ]
     return results 
@@ -274,7 +266,7 @@ def show_delete_course_window() -> None:
 
 def delete_course() -> None:
     name = delete_ui.select_box.currentText()
-    os.remove(f"courses/course_{name}.json")
+    os.remove(f"resources/courses/course_{name}.json")
     update_content()
     delete_window.close()
 
@@ -288,7 +280,7 @@ def show_delete_exam_window() -> None:
 
 def delete_exam() -> None:
     name = delete_ui.select_box.currentText()
-    os.remove(f"exams/exam_{name}.json")
+    os.remove(f"resources/exams/exam_{name}.json")
     update_content()
     delete_window.close()
 
@@ -302,7 +294,7 @@ def show_delete_result_window() -> None:
 
 def delete_result() -> None:
     name = delete_ui.select_box.currentText()
-    os.remove(f"results/{name}.csv")
+    os.remove(f"resources/results/{name}.csv")
     update_content()
     delete_window.close()
 
@@ -459,7 +451,7 @@ def update_content() -> None:
     result_list = get_results()
 
 def show_help_document():
-    webbrowser.open_new("help_doc.pdf")
+    webbrowser.open_new("resources/help_doc.pdf")
 
 app = QApplication([])
 light_palette = QPalette()
