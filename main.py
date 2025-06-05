@@ -1,5 +1,7 @@
 """
 Bitte nicht eigenständig bearbeiten, hier soll die generelle Klassenstruktur etc. pp hin.
+
+Diese Datei wurde nicht weiterentwickelt. Um das Programm zu starten, nutzen Sie bitte gui.py
 """
 from typing import Callable
 from course import Course
@@ -13,7 +15,7 @@ results = []
 
 def terminal_user_interface() -> None:
     """
-    Software Steuerung über das Terminal
+    Software Steuerung über das Terminal (dysfunktional)
     """
     def print_heading(heading_text: str, is_subheading: bool=False) -> None:
         if not is_subheading:
