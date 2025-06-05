@@ -123,7 +123,7 @@ class Ui_MainWindow(object):
         self.label_2.setPalette(palette)
         self.label_2.setStyleSheet("")
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("resources/icon_detailed.png"))
+        self.label_2.setPixmap(QtGui.QPixmap("windows/../../../../../../resources/icon_detailed.png"))
         self.label_2.setScaledContents(True)
         self.label_2.setObjectName("label_2")
         MainWindow.setCentralWidget(self.centralwidget)
@@ -186,7 +186,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Røund Up"))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:24pt; color:#9791ae;\">Røund Up</span></p></body></html>"))
         self.menuOptionen.setTitle(_translate("MainWindow", "Optionen"))
         self.menuKlausur.setTitle(_translate("MainWindow", "Klausur"))

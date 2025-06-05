@@ -1,0 +1,6 @@
+escpos
+libusb
+libusb_package
+usb
+math
+PIL

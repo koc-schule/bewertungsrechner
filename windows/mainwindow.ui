@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Røund Up</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(206, 211, 196);</string>
@@ -344,7 +344,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>/resources/icon_detailed.png</pixmap>
+     <pixmap>../../../../../../resources/icon_detailed.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
