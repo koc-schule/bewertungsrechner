@@ -58,28 +58,28 @@ class Ui_print_dialog(object):
         self.resultname_label.setGeometry(QtCore.QRect(200, 100, 47, 13))
         self.resultname_label.setText("")
         self.resultname_label.setObjectName("resultname_label")
-        self.CheckBoxDurchschnitt = QtWidgets.QCheckBox(parent=print_dialog)
-        self.CheckBoxDurchschnitt.setGeometry(QtCore.QRect(20, 220, 191, 31))
+        self.check_box_average = QtWidgets.QCheckBox(parent=print_dialog)
+        self.check_box_average.setGeometry(QtCore.QRect(20, 220, 191, 31))
         font = QtGui.QFont()
-        font.setPointSize(-1)
+        font.setPointSize(1)
         font.setBold(False)
         font.setItalic(False)
-        self.CheckBoxDurchschnitt.setFont(font)
-        self.CheckBoxDurchschnitt.setStyleSheet("background-color: rgb(216, 204, 231);\n"
+        self.check_box_average.setFont(font)
+        self.check_box_average.setStyleSheet("background-color: rgb(216, 204, 231);\n"
 "border-style: outset;\n"
 "border-width: 2px;\n"
 "border-radius:  10px;\n"
 "border-color: black;\n"
 "border-color: gray;\n"
 "font: 14px;")
-        self.CheckBoxDurchschnitt.setObjectName("CheckBoxDurchschnitt")
+        self.check_box_average.setObjectName("check_box_average")
         self.resultname_label.raise_()
         self.student_list.raise_()
         self.selectall_button.raise_()
         self.printoverview_button.raise_()
         self.exit_button.raise_()
         self.printstudent_button.raise_()
-        self.CheckBoxDurchschnitt.raise_()
+        self.check_box_average.raise_()
 
         self.retranslateUi(print_dialog)
         self.exit_button.clicked.connect(print_dialog.close) # type: ignore
@@ -87,9 +87,9 @@ class Ui_print_dialog(object):
 
     def retranslateUi(self, print_dialog):
         _translate = QtCore.QCoreApplication.translate
-        print_dialog.setWindowTitle(_translate("print_dialog", "Dialog"))
+        print_dialog.setWindowTitle(_translate("print_dialog", "Drucken"))
         self.selectall_button.setText(_translate("print_dialog", "Alle auswählen"))
         self.printoverview_button.setText(_translate("print_dialog", "Auswertung Drucken"))
         self.exit_button.setText(_translate("print_dialog", "Abbrechen"))
         self.printstudent_button.setText(_translate("print_dialog", "Schüler Drucken"))
-        self.CheckBoxDurchschnitt.setText(_translate("print_dialog", "Durchschnitt"))
+        self.check_box_average.setText(_translate("print_dialog", "Durchschnitt"))

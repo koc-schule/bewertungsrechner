@@ -35,7 +35,7 @@
     <string>Ergebnisse bearbeiten/hinzufügen</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
   <widget class="QComboBox" name="select_exam_box">
@@ -51,7 +51,10 @@
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);
+selection-color: rgb(255, 255, 255);
+selection-background-color: rgb(151, 145, 174);</string>
    </property>
   </widget>
   <widget class="QComboBox" name="select_course_box">
@@ -67,7 +70,10 @@ font: 14px;</string>
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);
+selection-color: rgb(255, 255, 255);
+selection-background-color: rgb(151, 145, 174);</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="date_edit">
@@ -83,7 +89,8 @@ font: 14px;</string>
     <string notr="true">background-color: rgb(255, 255, 255);
 border-style: outset;
 border-radius:  10px;
-font: 14px;</string>
+font: 14px;
+color: rgb(0, 0, 0);</string>
    </property>
    <property name="placeholderText">
     <string>Datum</string>
@@ -140,7 +147,7 @@ font: 14px;
    <property name="styleSheet">
     <string notr="true">background-color: rgb(127, 169, 112);
 border-style: outset;
-porder-width: 2px;
+border-width: 2px;
 border-radius:  10px;
 border-color: white;
 font: bold 14px;</string>
@@ -161,7 +168,7 @@ font: bold 14px;</string>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(127, 169, 112);
 border-style: outset;
-porder-width: 2px;
+border-width: 2px;
 border-radius:  10px;
 border-color: white;
 font: bold 14px;</string>
@@ -182,7 +189,7 @@ font: bold 14px;</string>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(127, 169, 112);
 border-style: outset;
-porder-width: 2px;
+border-width: 2px;
 border-radius:  10px;
 border-color: white;
 font: bold 14px;</string>

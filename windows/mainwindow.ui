@@ -36,7 +36,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; color:#9791ae;&quot;&gt;Røund Up&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -54,9 +54,9 @@
        <colorrole role="Button">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>207</red>
-          <green>199</green>
-          <blue>210</blue>
+          <red>206</red>
+          <green>211</green>
+          <blue>196</blue>
          </color>
         </brush>
        </colorrole>
@@ -146,9 +146,9 @@
        <colorrole role="Button">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>207</red>
-          <green>199</green>
-          <blue>210</blue>
+          <red>206</red>
+          <green>211</green>
+          <blue>196</blue>
          </color>
         </brush>
        </colorrole>
@@ -247,9 +247,9 @@
        <colorrole role="Button">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>207</red>
-          <green>199</green>
-          <blue>210</blue>
+          <red>206</red>
+          <green>211</green>
+          <blue>196</blue>
          </color>
         </brush>
        </colorrole>
@@ -337,11 +337,14 @@
       </disabled>
      </palette>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>resources/icon_detailed.png</pixmap>
+     <pixmap>/resources/icon_detailed.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -354,17 +357,20 @@
      <x>0</x>
      <y>0</y>
      <width>261</width>
-     <height>22</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+selection-background-color: rgb(151, 145, 174);</string>
    </property>
    <widget class="QMenu" name="menuOptionen">
     <property name="title">
      <string>Optionen</string>
     </property>
     <addaction name="actionBeenden"/>
+    <addaction name="separator"/>
+    <addaction name="actionHilfe"/>
    </widget>
    <widget class="QMenu" name="menuKlausur">
     <property name="title">
@@ -443,6 +449,11 @@
   <action name="actionResultRemove">
    <property name="text">
     <string>Entfernen</string>
+   </property>
+  </action>
+  <action name="actionHilfe">
+   <property name="text">
+    <string>Hilfe</string>
    </property>
   </action>
  </widget>

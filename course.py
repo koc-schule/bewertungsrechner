@@ -2,21 +2,22 @@
 Course Klasse
 """
 
+
 class Course:
     def __init__(self, name: str, grading_scheme: str, student_names: list[str]) -> None:
         """
         Erstellen der Klasse
 
         Args:
-            name: Name des Kurses
-            grading_scheme: "sek1" oder "sek2" zum Festlegen des Bewertungssystems
-            student_names: Liste mit den Schülernamen
+            name (str): Name des Kurses
+            grading_scheme (str): "sek1" oder "sek2" zum Festlegen des Bewertungssystems
+            student_names (list[str]): Liste mit den Schülernamen
         """
         self.course_name = name
         if grading_scheme in ('sek1', 'sek2'):
             self.grading_scheme = grading_scheme
         else:
-            raise Exception('invalid grading scheme. Choose "sek1" or "sek2"')
+            raise Exception('Invalid grading scheme. Choose "sek1" or "sek2"')
         self.student_names = student_names
 
     def set_name(self, name: str) -> None:
@@ -26,10 +27,10 @@ class Course:
         if grading_scheme in ('sek1', 'sek2'):
             self.grading_scheme = grading_scheme
         else:
-            raise Exception('invalid grading scheme. Choose "sek1" or "sek2"')
+            raise Exception('Invalid grading scheme. Choose "sek1" or "sek2"')
 
-    def set_student_names(self, studen_names: list[str]) -> None:
-        self.student_names = studen_names
+    def set_student_names(self, student_names: list[str]) -> None:
+        self.student_names = student_names
 
     def add_student(self, student_name: str) -> None:
         self.student_names.append(student_name)

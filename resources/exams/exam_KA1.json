@@ -1,0 +1,10 @@
+{
+    "name": "KA1",
+    "notes": "Keine Notizen",
+    "max_points": 9,
+    "tasks": {
+        "A1": 5,
+        "A2.1": 2,
+        "A2.2": 2
+    }
+}

@@ -3,7 +3,7 @@
 class Exam:
     def __init__(self, name: str, notes: str) -> None:
         """
-        Erstellen der eines Exam Objekts
+        Erstellen eines Exam Objekts
 
         Args:
             name (str): Name des Tests
@@ -28,7 +28,7 @@ class Exam:
         Hinzufügen einer Notiz zu self.notes
 
         Args: 
-            notes_to_add (str): Hinzuzufügender Wert zu self.notes
+            notes_to_add (str): Hinzuzufügender String zu self.notes
         """
         if self.notes == '':
             self.notes += notes_to_add
@@ -54,18 +54,18 @@ class Exam:
         Fügt eine Aufgabe zum Exam hinzu
 
         Args:
-            task_name: Name der Aufgabe
-            tast_points: Punktzahl der Aufgabe
+            task_name (str): Name der Aufgabe
+            tast_points (int): Punktzahl der Aufgabe
         """
         self.tasks[task_name] = task_points
         self.update_max_points()
 
     def remove_task(self, task_name: str) -> None:
         """
-        Entfernt Aufgabe
+        Entfernt eine Aufgabe
 
         Args:
-            task_name: Name der Aufgabe
+            task_name (str): Name der Aufgabe
         """
         self.max_points -= self.tasks.pop(task_name)
 
@@ -79,29 +79,28 @@ class Exam:
         Erstellt Aufgaben aus quick-input-string
 
         Args:
-            input_string: aufgaben mit ',' getrennt, unteraufgaben mit ' ', (bzw. angegeben Zeichen)
-                          nur punktzahlen, falls names_given=True stattdessen Name:Punkzahl (bzw. entsprechendes Zeichen)
-                          für jede (Unter-)Aufgabe
-                          Bsp: 'a1:5\n a2.2:4 a2.2:5\n a3:8'
+            input_string (str): aufgaben mit ',' getrennt, Unteraufgaben mit ' ', (bzw. angegebenen Zeichen)
+                            Nur Punktzahlen, falls names_given=True stattdessen Name:Punkzahl (bzw. anderes Zeichen)
+                            für jede (Unter-)Aufgabe
+                            Bsp: 'a1:5\n a2.2:4 a2.2:5\n a3:8'
                                '5\n 3 4 2\n 2 2'
                           
-            names_given: bool, True wenn namen angegeben werden sollen
-            numbering_scheme: falls names_given=False Schema der automatischen Aufgabennummerierung
+            names_given (bool): True wenn Namen angegeben werden sollen
+            numbering_scheme (str): falls names_given=False Schema der automatischen Aufgabennummerierung
                               'task:' nummerierung der aufgaben nach angegebenen muster
                               'subtask:' nummerierung der unteraufgaben nach angegebenen muster
                               muster: 'number' wird mit nummer ersetzt, 'letter' mit buchstabe
 
-            task_seperator_char: hier kann von obiger erklärung abweichendes Zeichen zum trennen der Aufgaben angegeben
-                                 werden
-            subtask_seperator_char: analog zu task_seperator_char
-            name_seperator_char: analog zu task_seperator_char
+            task_seperator_char (str): Hier kann abweichendes Zeichen zum Trennen der Aufgaben angegeben werden
+            subtask_seperator_char (str): Analog zu task_seperator_char
+            name_seperator_char (str): Analog zu task_seperator_char
         """
         tasks = input_string.strip().split(task_seperator_char)
 
 
-        # Aufgabennummerierung konfigurieren
+        """ Aufgabennummerierung konfigurieren """
         alphabet = 'abcdefghijklmnopqrstuvwxyz'
-        # gibt für buchstaben den nächsten (nach z wieder a) und für zahl ebenfalls die nächste
+        """ Gibt für Buchstaben den nächsten (nach z wieder a) und für Zahl ebenfalls die nächste an """
         next_numbering_char = lambda x: alphabet[(alphabet.index(x) + 1) % len(alphabet)] if type(x) == str else x + 1
 
         if 'subtask:number' in numbering_scheme:
@@ -121,11 +120,11 @@ class Exam:
             numbering_scheme = numbering_scheme.replace('task:letter', 'task')
 
 
-        # Aufgaben anlegen
+        """ Aufgaben anlegen """
         for task in tasks:
             task = task.strip()
 
-            # Fall 1: hat unteraufgaben
+            """ Fall 1: hat Unteraufgaben - Fall 2: keine Unteraufgaben"""
             if ' ' in task and names_given:
                 for subtask in task.split(subtask_seperator_char):
                     self.add_task(subtask.split(name_seperator_char)[0], int(subtask.split(name_seperator_char)[1]))
@@ -135,10 +134,10 @@ class Exam:
                         numbering_scheme.replace('subtask', str(next_subtaskchar)).replace('task', str(next_taskchar)),
                         int(subtask)
                     )
-                    # nächstes unteraufabenzeichen
+                    """ nächstes unteraufabenzeichen """
                     next_subtaskchar = next_numbering_char(next_subtaskchar)
 
-            # Fall 2: Keine Unteraufgaben
+
             elif not subtask_seperator_char in task and names_given:
                 self.add_task(task.split(name_seperator_char)[0], int(task.split(name_seperator_char)[1]))
             elif not ' ' in task and not names_given:
@@ -147,7 +146,7 @@ class Exam:
                     int(task)
                 )
 
-            # nächstes Aufgabenzeichen; erste Unteraufgabenzeichen setzen
+            """ nächstes Aufgabenzeichen; erste Unteraufgabenzeichen setzen """
             next_taskchar = next_numbering_char(next_taskchar)
             next_subtaskchar = start_subtaskchar
 

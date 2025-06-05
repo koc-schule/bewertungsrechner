@@ -1,16 +1,25 @@
 from . import *
 
-IS_DEV = True
+IS_DEV = False
 CLEAR_OLD_LOGS = True
 current_log_file_path = ""
 
 def log(content: str) -> None:
+    """
+    Schreibt in eine .log Datei
+
+    Args:
+        content (str): Content
+    """
     if not IS_DEV:
         return
     with open("logs/events.log", "a") as log:
         log.write(f"{content}\n")
 
 def reset() -> None:
+    """
+    Erstellt neue logs
+    """
     if CLEAR_OLD_LOGS:
         clear_logs()
     if not IS_DEV:
@@ -33,9 +42,7 @@ def exists_directory_and_log() -> bool:
     Returns:
         bool: False wenn events.log nicht existiert, True wenn existiert
     """
-    print("fdfuvudv")
     if not Path("logs").is_dir():
-        print("checked")
         os.mkdir("logs")
         return False
     elif not Path("logs/events.log").is_file():
@@ -50,5 +57,6 @@ def clear_logs() -> None:
     if Path("logs").is_dir():
         [f.unlink() for f in Path('logs').iterdir() if f.is_file()]
         [f.unlink() for f in Path('logs').iterdir() if f.is_file()]
-        
+
+# Führt bei import aus   
 reset()
